@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row, Grid, Well, Panel, Label, Image, PageHeader, Badge, Button, Clearfix, ButtonToolbar } from 'react-bootstrap';
-const userImgUrl = require('../../assets/user.png');
+const userImgUrl = require('../assets/user.png');
 
 
 class User extends React.Component {

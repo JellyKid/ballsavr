@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, Col, PageHeader, Button, Well} from 'react-bootstrap';
+import { Link } from 'react-router';
 
-import EmailForm from './EmailForm';
+import EmailForm from './login/EmailForm';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Login extends React.Component {
   render(){
     const loginChoice = (
           <div>
-            <Button bsStyle="primary" bsSize="large" block>Facebook</Button>
+            <Link to="/admin"><Button bsStyle="primary" bsSize="large" block>Facebook</Button></Link>
             <Button bsSize="large" block onClick={() => {this.setState({email: true});}}>
               E-Mail
             </Button>

@@ -1,8 +1,9 @@
 //express and middleware
 const express = require('express');
 const passport = require('passport');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 const expressSession = require('express-session');
 
 //DB connection
@@ -19,7 +20,7 @@ const app = express();
 
 //common middleware
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession({
   secret: secret,
   resave: false,
@@ -31,6 +32,7 @@ app.use(passport.session());
 //API middleware
 app.use(require('./lib/auth/local'));
 app.use(require('./lib/admin/addUser'));
+app.use(require('./lib/user/register'));
 
 app.listen(PORT, HOST);
 

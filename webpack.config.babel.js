@@ -14,6 +14,7 @@ import CleanPlugin from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import _ from "lodash";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
+import 'whatwg-fetch';
 
 const pkg = require('./package.json');
 
@@ -26,9 +27,6 @@ const PATHS = {
 };
 
 var common = {
-  entry: {
-    app: PATHS.app
-  },
   resolve:{
     extensions: ['','.js','.jsx']
   },
@@ -63,8 +61,12 @@ var common = {
 };
 
 var dev = {
+  entry: {
+    app: PATHS.app
+  },
   devtool: 'eval-source-map',
   devServer: {
+    // historyApiFallback: {index: path.join(PATHS.build, 'index.html')},
     historyApiFallback: true,
     hot: true,
     stats: 'errors-only',
@@ -73,7 +75,14 @@ var dev = {
     host: host,
     port: 80,
     proxy: {
-      "*" : "http://" + api_host + ":" + api_port
+      "/api" : {
+        target : {
+          host : api_host,
+          protocol : 'http:',
+          port : api_port
+        },
+        pathRewrite: {'^/api' : ''}
+      }
     }
   },
   module: {
@@ -100,6 +109,7 @@ var dev = {
 
 var build = {
   entry: {
+    app: PATHS.app,
     vendor: Object.keys(pkg.dependencies)
   },
   plugins: [
