@@ -26,8 +26,8 @@ class AddUser extends React.Component {
           <FormControl type="input" name="firstName" value={this.state.form.firstName} onChange={this.handleChange}/>
           <ControlLabel>Last Name</ControlLabel>
           <FormControl type="input" name="lastName" value={this.state.form.lastName} onChange={this.handleChange}/>
-          <ControlLabel>Email</ControlLabel>
-          <FormControl type="email" name="email" value={this.state.form.email} onChange={this.handleChange}/>
+          <ControlLabel>Email </ControlLabel>
+          <FormControl type="email" name="email" placeholder="This is the only required field" value={this.state.form.email} onChange={this.handleChange}/>
           <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Is Admin</Checkbox>
         </Col>
       </FormGroup>
@@ -45,7 +45,7 @@ class AddUser extends React.Component {
       return (
         <div>
           {form}
-          <Alert bsStyle="danger">{this.state.alertMessage}</Alert>;
+          <Alert bsStyle="danger">{this.state.alertMessage}</Alert>
         </div>
       );
     } else {

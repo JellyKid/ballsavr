@@ -21,11 +21,13 @@ export function handleSubmit(e){
     if(res.status === 200){
       return window.location.replace(res.url);
     }
-    return res.text();
-  }).then((message) => {
+    console.error(`Status:${res.status} ${res.statusText}`);
+    return res.json();
+  }).then((json) => {
+    console.error(json.error);
     this.setState({
       submitDisabled: false,
-      alertMessage: message
+      alertMessage: json.alert
     });
   });
 }
@@ -45,7 +47,7 @@ export function getUserByToken(token) {
         lastName: {$set: json.lastName},
         email: {$set: json.email},
         token: {$set: token}
-      }      
+      }
     }));
   });
 }

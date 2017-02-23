@@ -5,13 +5,13 @@ function getUserByToken(req, res, next) {
   return User.findByToken(token,
     (err, user) => {
       if(err){
-        return res.status(500).send(err);
+        return res.status(500).send({error: err});
       }
       if(user){
         res.locals.user = user;
         return next();
       }
-    return res.status(403).send("Error finding user by token");
+    return res.status(403).send({error: "Error finding user by token"});
   });
 }
 

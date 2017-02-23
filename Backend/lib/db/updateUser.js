@@ -3,7 +3,10 @@ const User = require('../../db/models/user');
 function updateUser(req, res, next) {
   if(!res.locals.user._id || !res.locals.updates){
     console.error("missing updates or user._id");
-    return res.status(500).send("missing local.updates or user._id");
+    return res.status(500).send({
+      alert: "Internal Error: Updating User",
+      error: "missing local.updates or user._id"
+    });
   }
   return User.findByIdAndUpdate(
     res.locals.user._id,
@@ -11,8 +14,11 @@ function updateUser(req, res, next) {
     {runValidators: true},
     (err, raw) => {
       if(err) {
-        console.error(err);
-        return res.status(500).send(err);
+        console.error(err, raw);
+        return res.status(500).send({
+          error: err,
+          alert: "Internal Error: Updating User"
+        });
       }
       else {return next();}
     }

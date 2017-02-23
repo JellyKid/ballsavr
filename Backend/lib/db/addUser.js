@@ -4,8 +4,8 @@ function addUser(req, res, next) {
   //See if there is already a user with that email. Send 403 on found.
   return User.findOne({email: req.body.email}, (err, found) => {
     if(found){
-      return res.status(403).send(
-        `User with email address ${req.body.email} already exists`
+      return res.status(409).send(
+        {alert: `User with email address ${req.body.email} already exists`}
       );
     }
     //creat new user object
@@ -21,7 +21,10 @@ function addUser(req, res, next) {
     //save user object to database
     return user.save((err, user) => {
       res.locals.user = user;
-      if(err){return res.status(500).send(err);}
+      if(err){return res.status(500).send({
+        alert: 'Internal Error: Saving to DB',
+        error: err
+      });}
       return next();
     });
   });
