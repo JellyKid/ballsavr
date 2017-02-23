@@ -2,14 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Route } from 'react-router';
 
-import Login from './components/Login';
+import MainApp from './MainApp';
 import Admin from './components/Admin';
 import Register from './components/Register';
 import User from './components/User';
 
 
 const routes = (
-    <Route path="/" component={Login}>
+    <Route path="/" component={MainApp}>
       <Route path="admin" component={Admin}>
 
       </Route>

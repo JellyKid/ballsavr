@@ -16,7 +16,8 @@ export function handleSubmit(e){
   this.setState({submitDisabled: true});
   return fetch(e.target.action, {
     method: 'POST',
-    body: new FormData(e.target)
+    body: new FormData(e.target),
+    credentials: 'same-origin'
   }).then((res) => {
     if(res.status === 200){
       return window.location.replace(res.url);

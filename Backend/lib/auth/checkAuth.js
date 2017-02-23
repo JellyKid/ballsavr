@@ -1,11 +1,8 @@
 function checkAuth(req, res, next) {
   if(req.user){
-    console.log(req.user);
-    next();
-  } else {
-    console.log("user not authenticated");
-    next();
+    return next();
   }
+  return res.status(401).send({alert: "Unauthorized"});
 }
 
 module.exports = checkAuth;

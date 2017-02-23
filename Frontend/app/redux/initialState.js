@@ -1,4 +1,5 @@
 export const INITIAL_STATE = {
+  authenticated: false,
   currentUser: {
     id: "58a8e8242c60030948fe729558a8e8242c60030948fe7295",
     firstName: "John",

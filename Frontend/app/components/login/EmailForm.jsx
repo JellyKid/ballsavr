@@ -1,14 +1,15 @@
 import React from 'react';
-
 import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, ControlLabel} from 'react-bootstrap';
+import { handleSubmit } from '../../helpers/handlers';
 
 class EmailForm extends React.Component {
   constructor(props) {
     super(props);
+    this.handleSubmit = handleSubmit.bind(this);
   }
   render(){
     return (
-      <Form horizontal action="/login" method="post">
+      <Form horizontal action="/api/login" method="post" onSubmit={this.handleSubmit}>
         <FormGroup controlId="loginFormEmail">
           <Col sm={2}>
             <ControlLabel>Emails</ControlLabel>

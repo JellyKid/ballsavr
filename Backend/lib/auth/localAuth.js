@@ -1,16 +1,32 @@
 const passport = require('passport');
 const strategy = require('passport-local').Strategy;
 const router = require('express').Router();
+const parseForm = require('multer')().none();
 
 const User = require('../../db/models/user');
+const crypto = require('../password/crypto');
 
 passport.use(new strategy(
   function(userid, password, done) {
     User.findOne({email: userid}, (err, user) => {
-      if(err) {return done(err);}
+      if(err) {
+        console.log(err);
+        return done(err);
+      }
       if(user){
         console.log(user.id);
-        return done(null, user.id);
+        return crypto.verify(
+          password,
+          user.hash,
+          (err, verified) => {
+            if(err) {return done(err);}
+            if(verified){
+              console.log("verified");
+              return done(null, user.id);
+            }
+            return done(null, false);
+          }
+        );
       }
       console.log(`user ${userid} not found`);
       return done(null, false);
@@ -22,8 +38,7 @@ passport.serializeUser((id, done) => {
   done(null, id);
 });
 
-passport.deserializeUser((serialized, done) => {
-  //console.log(serialized);
+passport.deserializeUser((serialized, done) => {  
   done(null, serialized);
 });
 
@@ -32,9 +47,9 @@ router.use(passport.session());
 
 router.post(
   '/login',
-  (req,res) => {console.log(req.body);},
-  passport.authenticate('local', {failureRedirect: 'http://localhost'}),
-  (req, res) => { res.redirect('http://localhost');}
+  parseForm,
+  passport.authenticate('local', {failureRedirect: '/'}),
+  (req, res) => { res.redirect('/');}
 );
 
 

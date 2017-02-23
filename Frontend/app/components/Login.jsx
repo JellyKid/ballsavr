@@ -30,11 +30,8 @@ class Login extends React.Component {
           </Well>
         </Col>
       </Grid>
-    );    
-
-    if(this.props.location.pathname !== '/'){
-      return (this.props.children);
-    }
+    );
+    
     return (main);
   }
 }
