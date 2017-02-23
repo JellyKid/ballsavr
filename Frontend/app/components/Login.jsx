@@ -21,16 +21,21 @@ class Login extends React.Component {
           </div>
     );
 
-    return (
-    <Grid>
-      <Col sm={6} smOffset={3}>
-        <PageHeader>Welcome to TCP<br /><small>please login below</small></PageHeader>
-        <Well>
-          {this.state.email ? <EmailForm cancelForm={() => {this.setState({email: false});}}/> : loginChoice}
-        </Well>
-      </Col>
-    </Grid>
-    );
+    const main = (
+      <Grid>
+        <Col sm={6} smOffset={3}>
+          <PageHeader>Welcome to TCP<br /><small>please login below</small></PageHeader>
+          <Well>
+            {this.state.email ? <EmailForm cancelForm={() => {this.setState({email: false});}}/> : loginChoice}
+          </Well>
+        </Col>
+      </Grid>
+    );    
+
+    if(this.props.location.pathname !== '/'){
+      return (this.props.children);
+    }
+    return (main);
   }
 }
 

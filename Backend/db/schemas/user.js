@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     authType: {type: String, default: 'local'},
     enabled: {type: Boolean, default: false},
     active: {type: Boolean, default: false},
-    invitationSent: {type: Boolean, default: false},
+    invitationSent: Date,
     verificationToken: String
   }
 });

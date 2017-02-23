@@ -31,7 +31,7 @@ app.use(passport.session());
 
 //API middleware
 app.use(require('./lib/auth/local'));
-app.use(require('./lib/admin/addUser'));
+app.use(require('./lib/admin/inviteUser'));
 app.use(require('./lib/user/register'));
 
 app.listen(PORT, HOST);

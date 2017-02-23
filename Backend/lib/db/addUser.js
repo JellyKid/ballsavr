@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../db/models/user');
 
 function addUser(req, res, next) {
   //See if there is already a user with that email. Send 403 on found.

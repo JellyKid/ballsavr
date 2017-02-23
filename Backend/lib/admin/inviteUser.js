@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const checkAuth = require('../auth/checkAuth');
-const addUserDB = require('../../db/middleware/addUser');
-const updateUser = require('../../db/middleware/updateUser');
+const addUserDB = require('../db/addUser');
+const updateUser = require('../db/updateUser');
 const sendVerification = require('./sendVerification');
 const parseForm = require('multer')().none(); //multipart body-parser
 

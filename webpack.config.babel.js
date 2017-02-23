@@ -99,6 +99,9 @@ var dev = {
       }
     ]
   },
+  output: {
+    publicPath: "/"
+  },
   plugins: [
     new npmInstallPlugin({
       save: true

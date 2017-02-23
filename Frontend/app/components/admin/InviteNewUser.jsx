@@ -19,7 +19,6 @@ class AddUser extends React.Component {
     this.handleCheck = handleCheck.bind(this);
   }
   render(){
-    const alertBox = <Alert bsStyle="danger">{this.state.alertMessage}</Alert>;
     const form = <Form horizontal action="/api/adduser" method="post" onSubmit={this.handleSubmit}>
       <FormGroup>
         <Col sm={12}>
@@ -46,7 +45,7 @@ class AddUser extends React.Component {
       return (
         <div>
           {form}
-          {alertBox}
+          <Alert bsStyle="danger">{this.state.alertMessage}</Alert>;
         </div>
       );
     } else {
