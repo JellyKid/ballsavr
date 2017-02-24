@@ -2,7 +2,7 @@ function checkAuth(req, res, next) {
   if(req.user){
     return next();
   }
-  return res.status(401).send({alert: "Unauthorized"});
+  return res.sendStatus(401);
 }
 
 module.exports = checkAuth;

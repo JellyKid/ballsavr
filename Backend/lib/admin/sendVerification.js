@@ -6,7 +6,8 @@ module.exports = (req, res, next) => {
   res.locals.updates = {
     $set : {
       "meta.verificationToken": token,
-      "meta.invitationSent": new Date()
+      "meta.invitationSent": new Date(),
+      "meta.enabled": true
     }
   };
   return next();

@@ -14,14 +14,12 @@ passport.use(new strategy(
         return done(err);
       }
       if(user){
-        console.log(user.id);
         return crypto.verify(
           password,
           user.hash,
           (err, verified) => {
             if(err) {return done(err);}
             if(verified){
-              console.log("verified");
               return done(null, user.id);
             }
             return done(null, false);
@@ -38,7 +36,7 @@ passport.serializeUser((id, done) => {
   done(null, id);
 });
 
-passport.deserializeUser((serialized, done) => {  
+passport.deserializeUser((serialized, done) => {
   done(null, serialized);
 });
 

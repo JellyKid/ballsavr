@@ -24,7 +24,10 @@ app.use(cookieParser());
 app.use(expressSession({
   secret: secret,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 604800000 //One week in milliseconds
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -33,6 +36,7 @@ app.use(passport.session());
 app.use(require('./lib/auth/localAuth'));
 app.use(require('./lib/admin/inviteUser'));
 app.use(require('./lib/user/register'));
+app.use(require('./lib/auth/externalCheckAuth'));
 
 app.listen(PORT, HOST);
 

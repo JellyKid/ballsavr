@@ -4,8 +4,7 @@ import InviteNewUser from './admin/InviteNewUser';
 
 class AdminTasks extends React.Component {
   constructor(props) {
-    super(props);
-    console.log('test');
+    super(props);    
   }
   render(){
     return (

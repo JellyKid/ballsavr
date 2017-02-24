@@ -1,33 +1,33 @@
 import React from 'react';
 import Login from './components/Login';
-import { connect } from 'react-redux';
+import checkAuth from './helpers/checkAuth';
 
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      authenticated : false
+    };
+    this.checkAuth = checkAuth.bind(this);
+  }
+
+  componentWillMount(){
+    return this.checkAuth();
   }
 
   render(){
-    console.log(this.props);
-
     const User = (
       <div>
         <h2>Authenticated</h2>
-        {this.props.children}
+
       </div>
     );
 
-    if(this.props.authenticated || this.props.location.pathname === "/register"){
-      return User;
+    if(this.state.authenticated || this.props.location.pathname === "/register"){
+      return (User);
     }
     return <Login />;
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    authenticated: state.authenticated
-  };
-}
-
-export default connect(mapStateToProps)(MainApp);
+export default MainApp;
