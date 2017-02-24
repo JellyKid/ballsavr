@@ -9,19 +9,28 @@ export default function checkAuth(){
     }
   ).then(
     (res) => {
-      console.log(res);
+
       if(res.status === 401){
-        return this.setState({authenticated: false});
+        // return this.setState({authenticated: false});
+        return {authenticated: false};
       }
       if(res.status === 200){
         return res.json().then(
           (json) => {
             console.log(json);
-            return this.setState({authenticated: true});
+            // return this.setState({authenticated: true});
+            return {
+              authenticated: true,
+              user: json
+            };
           }
         );
       }
-      return this.setState({alert: `Error: ${res.status} ${res.statusText}`});
+      // return this.setState({error: `Error: ${res.status} ${res.statusText}`});
+      return {
+        authenticated: false,
+        error: `Error: ${res.status} ${res.statusText}`
+      };
     }
   );
 }

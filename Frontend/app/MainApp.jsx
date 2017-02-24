@@ -1,18 +1,22 @@
 import React from 'react';
 import Login from './components/Login';
 import checkAuth from './helpers/checkAuth';
+import { connect } from 'react-redux';
+import {setUser, setAuth} from './redux/actions';
 
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      authenticated : false
-    };
     this.checkAuth = checkAuth.bind(this);
   }
 
   componentWillMount(){
-    return this.checkAuth();
+    return this.checkAuth().then((res) => {
+      if(res.authenticated && res.user){
+        return this.props.dispatch(setUser(res.user));
+      }
+      return this.props.dispatch(setAuth(false));
+    });
   }
 
   render(){
@@ -23,11 +27,21 @@ class MainApp extends React.Component {
       </div>
     );
 
-    if(this.state.authenticated || this.props.location.pathname === "/register"){
+    if(this.props.authenticated === null){
+      return <div></div>;
+    }
+
+    if(this.props.authenticated || this.props.location.pathname === "/register"){
       return (User);
     }
     return <Login />;
   }
 }
 
-export default MainApp;
+function mapStateToProps(state){
+  return {
+    authenticated: state.authenticated
+  };
+}
+
+export default connect(mapStateToProps)(MainApp);
