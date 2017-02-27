@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from './user/Navigation';
+import { Link } from 'react-router';
 
 
 class User extends React.Component {
@@ -22,7 +23,7 @@ class User extends React.Component {
     return (
       <div>
         <Navigation admin={this.props.user.meta.admin}/>
-        <h1>Nothing here</h1>
+        <Link to="/invite">invite</Link>
       </div>
     );
 

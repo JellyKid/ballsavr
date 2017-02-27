@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Route,  IndexRedirect} from 'react-router';
+import { Route,  IndexRoute} from 'react-router';
 
 //Redux components
 import MainApp from './MainApp';
@@ -28,20 +28,36 @@ function checkAuthentication(nextState, replace, done) {
   );
 }
 
+function checkAdmin(nextState, replace, done) {
+  checkAuth().then(
+    (res) => {
+      console.log(res);
+      if(!res.authenticated){
+        replace('/login');
+        return done();
+      }
+      this.dispatch(setUser(res.user));
+      if(!res.user.meta.admin){
+        replace('/');
+        return done();
+      }
+      return done();
+    }
+  );
+}
+
 function hookDispatch(dispatch){
 
   this.dispatch = dispatch;
   this.checkAuthentication = checkAuthentication.bind(this);
 
-  return (
-    <Route path="/" component={MainApp}>
-      <IndexRedirect to="/user" />
-      <Route path="login" component={Login} />
-      <Route path="invite" component={Invite} onEnter={this.checkAuthentication}/>
-      <Route path="register/:token" component={Register} />
-      <Route path="user" component={User} onEnter={this.checkAuthentication}/>
-    </Route>
-  );
+  return ([
+    <Route path="/" component={User} onEnter={this.checkAuthentication}>
+      <Route path="invite" component={Invite} />
+    </Route>,
+    <Route path="/login" component={Login} />,
+    <Route path="/register/:token" component={Register} />
+  ]);
 }
 
 export default (dispatch) => new hookDispatch(dispatch);

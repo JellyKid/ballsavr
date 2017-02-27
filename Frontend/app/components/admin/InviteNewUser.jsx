@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well } from 'react-bootstrap';
 import { handleChange, handleCheck, handleSubmit } from '../../helpers/handlers';
 
 class AddUser extends React.Component {
@@ -27,7 +27,7 @@ class AddUser extends React.Component {
           <ControlLabel>Last Name</ControlLabel>
           <FormControl type="input" name="lastName" value={this.state.form.lastName} onChange={this.handleChange}/>
           <ControlLabel>Email </ControlLabel>
-          <FormControl type="email" name="email" placeholder="This is the only required field" value={this.state.form.email} onChange={this.handleChange}/>
+          <FormControl type="email" name="email" placeholder="required field" value={this.state.form.email} onChange={this.handleChange}/>
           <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Is Admin</Checkbox>
         </Col>
       </FormGroup>
@@ -40,17 +40,20 @@ class AddUser extends React.Component {
         </Col>
       </FormGroup>
     </Form>;
-    
-    if(this.state.alertMessage){
-      return (
-        <div>
-          {form}
-          <Alert bsStyle="danger">{this.state.alertMessage}</Alert>
-        </div>
-      );
-    } else {
-      return (form);
-    }
+
+    const alert = this.state.alertMessage ? <Alert bsStyle="danger">{this.state.alertMessage}</Alert> : "";
+
+    return (
+      <Grid>
+        <Col sm={8} smOffset={2}>
+          <Well>
+            {form}
+            {alert}
+          </Well>
+        </Col>
+      </Grid>
+    );
+
   }
 }
 

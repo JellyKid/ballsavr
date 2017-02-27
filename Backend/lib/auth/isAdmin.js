@@ -1,5 +1,5 @@
 function checkAuth(req, res, next) {
-  if(res.locals.user && res.locals.user.meta.admin === true){
+  if(res.locals.currentUser && res.locals.currentUser.meta.admin === true){
     return next();
   }
   return res.status(401).send({alert: "Unauthorized"});

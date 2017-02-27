@@ -8,7 +8,7 @@ router.get(
   checkAuth,
   getCurrentUser,
   stripHash,
-  (req,res) => res.status(200).send(res.locals.user)
+  (req,res) => res.status(200).send(res.locals.currentUser)
 );
 
 module.exports = router;

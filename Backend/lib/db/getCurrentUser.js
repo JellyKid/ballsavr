@@ -8,7 +8,7 @@ function getCurrentUser(req, res, next) {
         return res.status(500).send({error: err});
       }
       if (user) {
-        res.locals.user = user;
+        res.locals.currentUser = user;
         return next();
       }
       return res.status(404).send({
@@ -17,7 +17,7 @@ function getCurrentUser(req, res, next) {
       });
     });
   }
-  return res.sendStatus(401);
+  return res.redirect('/');
 }
 
 module.exports = getCurrentUser;
