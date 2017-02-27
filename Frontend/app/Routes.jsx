@@ -1,29 +1,51 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Route } from 'react-router';
+import { Route,  IndexRedirect} from 'react-router';
 
+//Redux components
 import MainApp from './MainApp';
-import Admin from './components/Admin';
+import Invite from './components/admin/InviteNewUser';
 import Register from './components/Register';
+import Login from './components/Login';
 import User from './components/User';
 
+//ajax calls
+import checkAuth from './helpers/checkAuth';
 
-const routes = (
+//redux actions
+import { setUser } from './redux/actions';
+
+function checkAuthentication(nextState, replace, done) {
+  checkAuth().then(
+    (res) => {
+      if(!res.authenticated){
+        replace('/login');
+        return done();
+      }
+      this.dispatch(setUser(res.user));
+      return done();
+    }
+  );
+}
+
+function hookDispatch(dispatch){
+
+  this.dispatch = dispatch;
+  this.checkAuthentication = checkAuthentication.bind(this);
+
+  return (
     <Route path="/" component={MainApp}>
-      <Route path="admin" component={Admin}>
-
-      </Route>
-      <Route path="register/:token" component={Register}>
-
-      </Route>
-
+      <IndexRedirect to="/user" />
+      <Route path="login" component={Login} />
+      <Route path="invite" component={Invite} onEnter={this.checkAuthentication}/>
+      <Route path="register/:token" component={Register} />
+      <Route path="user" component={User} onEnter={this.checkAuthentication}/>
     </Route>
-);
+  );
+}
 
-// const routes = (
-//   <Route path="register" component={Register}>
+export default (dispatch) => new hookDispatch(dispatch);
 //
-//   </Route>
-// );
-
-export default routes;
+// export default (store) => {
+//   return hookStore(store);
+// };

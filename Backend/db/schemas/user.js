@@ -4,6 +4,7 @@ const schema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: String,
+  initials: {type: String, default: 'AAA'},
   hash: String,
   facebook: String,
   score: {type: Number, default: 0},

@@ -13,7 +13,7 @@ import Routes from './Routes';
 
 const app = (
   <Provider store={store}>
-    <Router history={browserHistory} routes={Routes} />
+    <Router history={browserHistory} routes={Routes(store.dispatch)} />
   </Provider>
 );
 

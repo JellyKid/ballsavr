@@ -4,7 +4,8 @@ export function setUser(state, user) {
   return update(state, {
     $set : {
       user: user,
-      authenticated: true
+      authenticated: true,
+      admin: user.meta.admin
     }
   });
 }

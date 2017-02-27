@@ -36,7 +36,7 @@ app.use(passport.session());
 app.use(require('./lib/auth/localAuth'));
 app.use(require('./lib/admin/inviteUser'));
 app.use(require('./lib/user/register'));
-app.use(require('./lib/auth/externalCheckAuth'));
+app.use(require('./lib/user/user'));
 
 app.listen(PORT, HOST);
 

@@ -16,8 +16,7 @@ export default function checkAuth(){
       }
       if(res.status === 200){
         return res.json().then(
-          (json) => {
-            console.log(json);
+          (json) => {            
             // return this.setState({authenticated: true});
             return {
               authenticated: true,
