@@ -5,12 +5,13 @@ const stripHash = require('../password/stripHash');
 const hashPassword = require('../password/hash');
 const updateUser = require('../db/updateUser');
 
-function createUpdates(req, res, next) {
+function createUpdates(req, res, next) {  
   res.locals.updates = {
     $set: {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       hash: res.locals.hash,
+      initials: req.body.initials,
       "meta.active": true
     },
     $unset: {
@@ -18,6 +19,16 @@ function createUpdates(req, res, next) {
     }
   };
   return next();
+}
+
+function logInUser(req, res, next) {
+  return req.login(
+    res.locals.user._id,
+    (err) => {
+      if(err) {return res.status(500).send({error: "Could not log in new user"});}
+      return next();
+    }
+  );
 }
 
 router.get(
@@ -34,6 +45,7 @@ router.post(
   hashPassword,
   createUpdates,
   updateUser,
+  logInUser,
   (req,res) => res.redirect('/')
 );
 

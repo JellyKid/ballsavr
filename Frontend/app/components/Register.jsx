@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, PageHeader, Grid, Well } from 'react-bootstrap';
 import { handleChange, handleCheck, handleSubmit, getUserByToken } from '../helpers/handlers';
+import update from 'immutability-helper';
 
 class Register extends React.Component {
   constructor(props){
@@ -10,6 +11,7 @@ class Register extends React.Component {
         firstName : '',
         lastName : '',
         email : '',
+        initials : 'AAA',
         admin : false
       },
       submitDisabled : true,
@@ -23,6 +25,7 @@ class Register extends React.Component {
     this.getUserByToken = getUserByToken.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordComplexCheck = this.passwordComplexCheck.bind(this);
+    this.handleInitialsChange = this.handleInitialsChange.bind(this);
   }
   componentDidMount(){
     this.getUserByToken(this.props.params.token);
@@ -73,29 +76,47 @@ class Register extends React.Component {
   handlePassChange(e){
     this.setState({[e.target.name]: e.target.value}, this.passwordMatch);
   }
+  handleInitialsChange(e){
+    if(e.target.value.length < 4){
+      this.setState(update(
+        this.state,
+        {
+          $set: {
+            form: {[e.target.name] : e.target.value.toUpperCase()}
+          }
+        }
+      ));
+    }
+  }
   render(){
     const form = (
       <Form horizontal action="/api/register" method="post" onSubmit={this.handleSubmit}>
-        <FormControl type="hidden" name="token" value={this.state.form.token} />
+        <FormControl type="hidden" name="token" value={this.props.params.token} />
         <FormGroup>
           <Col sm={2}>
             <ControlLabel>First Name</ControlLabel>
           </Col>
           <Col sm={4}>
-            <FormControl type="input" name="firstName" value={this.state.form.firstName} onChange={this.handleChange}/>
+            <FormControl type="text" name="firstName" value={this.state.form.firstName} onChange={this.handleChange}/>
           </Col>
           <Col sm={2}>
             <ControlLabel>Last Name</ControlLabel>
           </Col>
           <Col sm={4}>
-            <FormControl type="input" name="lastName" value={this.state.form.lastName} onChange={this.handleChange}/>
+            <FormControl type="text" name="lastName" value={this.state.form.lastName} onChange={this.handleChange}/>
           </Col>
         </FormGroup>
         <FormGroup>
           <Col sm={2}>
+            <ControlLabel>Initials</ControlLabel>
+          </Col>
+          <Col sm={4}>
+            <FormControl type="text" name="initials" value={this.state.form.initials} onChange={this.handleInitialsChange} />
+          </Col>
+          <Col sm={2}>
             <ControlLabel>Email</ControlLabel>
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl type="email" name="email" value={this.state.form.email} disabled={true}/>
           </Col>
         </FormGroup>

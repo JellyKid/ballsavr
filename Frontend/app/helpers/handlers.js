@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+import { browserHistory } from 'react-router';
 import 'whatwg-fetch';
 
 export function handleChange(e){
@@ -20,7 +21,8 @@ export function handleSubmit(e){
     credentials: 'same-origin'
   }).then((res) => {
     if(res.status === 200){
-      return window.location.replace(res.url);
+      return browserHistory.push(res.url);
+      // return window.location.replace(res.url);
     }
     console.error(`Status:${res.status} ${res.statusText}`);
     return res.json();
@@ -40,7 +42,8 @@ export function getUserByToken(token) {
     if(res.status === 200){
       return res.json();
     }
-    return window.location.replace('/');
+    return browserHistory.push('/');
+    // return window.location.replace('/');
   }).then((json) => {
     this.setState(update(this.state, {
       form: {
