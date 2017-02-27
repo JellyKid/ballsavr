@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Route,  IndexRoute} from 'react-router';
 
 //Redux components
-import MainApp from './MainApp';
 import Invite from './components/admin/InviteNewUser';
 import Register from './components/Register';
 import Login from './components/Login';

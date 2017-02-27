@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well } from 'react-bootstrap';
 import { handleChange, handleCheck, handleSubmit } from '../../helpers/handlers';
+import { browserHistory } from 'react-router';
 
 class AddUser extends React.Component {
   constructor(props){
@@ -35,7 +36,7 @@ class AddUser extends React.Component {
         <Col sm={12}>
           <ButtonToolbar>
             <Button disabled={this.state.submitDisabled} bsStyle='success' type='submit'>Send Invite</Button>
-            <Button disabled={this.state.submitDisabled}>Cancel</Button>
+            <Button onClick={() => browserHistory.push('/')}>Cancel</Button>
           </ButtonToolbar>
         </Col>
       </FormGroup>

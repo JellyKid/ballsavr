@@ -9,7 +9,6 @@ class User extends React.Component {
     super(props);
   }
   render(){
-    console.log(this.props);
 
     if(this.props.children){
       return (
