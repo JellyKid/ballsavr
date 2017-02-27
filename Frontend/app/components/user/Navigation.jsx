@@ -27,8 +27,9 @@ class Navigation extends React.Component {
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href='#'>{this.state.title}</a>
+            <a href='#'>{this.props.initials}</a>
           </Navbar.Brand>
+          <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
@@ -36,10 +37,10 @@ class Navigation extends React.Component {
             <NavItem eventKey={2} href="#">Link</NavItem>
             {adminLinks}
           </Nav>
-          <Nav pullRight>
+          {/* <Nav pullRight>
             <NavItem eventKey={1} href="#">Link Right</NavItem>
             <NavItem eventKey={2} href="#">Link Right</NavItem>
-          </Nav>
+          </Nav> */}
         </Navbar.Collapse>
       </Navbar>
     );

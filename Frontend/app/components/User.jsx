@@ -10,19 +10,10 @@ class User extends React.Component {
   }
   render(){
 
-    if(this.props.children){
-      return (
-        <div>
-          <Navigation admin={this.props.user.meta.admin}/>
-          {this.props.children}
-        </div>
-      );
-    }
-
     return (
       <div>
-        <Navigation admin={this.props.user.meta.admin}/>
-        <Link to="/invite">invite</Link>
+        <Navigation admin={this.props.user.meta.admin} initials={this.props.user.initials}/>
+        {this.props.children}
       </div>
     );
 
