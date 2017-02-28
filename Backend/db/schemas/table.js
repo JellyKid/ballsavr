@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  title: String,
-  year: String,
+  name: String,
+  manufactureDate: String,
   desc: String,
   specialNotes: String,
   localimg: String,
-  meta: {
-    enabled: {type: Boolean, default: false}
-  }
+  manufacturer: String,
+  ipdb_id: Number,
+  enabled: {type: Boolean, default: false}
 });
 
 schema.set('timestamps', true);

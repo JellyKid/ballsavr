@@ -33,7 +33,7 @@ class Navigation extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#">Link</NavItem>
+            <NavItem onSelect={() => browserHistory.push('/tables')}>Tables</NavItem>
             {adminLinks}
             <NavItem href='/api/logout'>Log Out</NavItem>
           </Nav>

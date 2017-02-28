@@ -7,6 +7,7 @@ import Invite from './components/admin/InviteNewUser';
 import Register from './components/Register';
 import Login from './components/Login';
 import User from './components/User';
+import Tables from './components/Tables';
 
 //ajax calls
 import checkAuth from './helpers/checkAuth';
@@ -53,6 +54,7 @@ function hookDispatch(dispatch){
   return ([
     <Route path="/" component={User} onEnter={this.checkAuthentication}>
       <Route path="invite" component={Invite} />
+      <Route path="tables" component={Tables} />
     </Route>,
     <Route path="/login" component={Login} />,
     <Route path="/register/:token" component={Register} />
