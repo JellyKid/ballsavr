@@ -1,7 +1,7 @@
 const User = require('../../db/models/user');
 
 function addUser(req, res, next) {
-  //See if there is already a user with that email. Send 403 on found.
+  //See if there is already a user with that email. Send 409 if found.
   return User.findOne({email: req.body.email}, (err, found) => {
     if(found){
       return res.status(409).send(

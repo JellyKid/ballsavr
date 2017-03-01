@@ -8,8 +8,7 @@ router.use(
   parseForm,
   addUserDB,
   sendVerification,
-  updateUser,
-  (req, res, next) => res.redirect('/')
+  updateUser  
 );
 
 

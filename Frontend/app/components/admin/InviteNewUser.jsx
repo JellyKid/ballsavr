@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well } from 'react-bootstrap';
-import { handleChange, handleCheck, handleSubmit } from '../../helpers/handlers';
+import { handleChange, handleCheck } from '../../helpers/handlers';
+import handleSubmit from '../../helpers/handleSubmit';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
 class AddUser extends React.Component {
   constructor(props){
@@ -58,4 +60,4 @@ class AddUser extends React.Component {
   }
 }
 
-export default AddUser;
+export default connect()(AddUser);
