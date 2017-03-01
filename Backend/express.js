@@ -33,8 +33,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //API middleware
-app.use(require('./lib/auth/localAuth'));
-app.use(require('./lib/admin/inviteUser'));
+app.use(require('./lib/Auth'));
+app.use(require('./lib/Admin'));
 app.use(require('./lib/user/register'));
 app.use(require('./lib/user/user'));
 app.use(require('./lib/db/updateTablesFromIPDB'));

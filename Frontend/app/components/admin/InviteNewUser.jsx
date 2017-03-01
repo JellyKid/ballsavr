@@ -20,7 +20,7 @@ class AddUser extends React.Component {
     this.handleCheck = handleCheck.bind(this);
   }
   render(){
-    const form = <Form horizontal action="/api/adduser" method="post" onSubmit={this.handleSubmit}>
+    const form = <Form horizontal action="/api/admin/invite" method="post" onSubmit={this.handleSubmit}>
       <FormGroup>
         <Col sm={12}>
           <ControlLabel>First Name</ControlLabel>

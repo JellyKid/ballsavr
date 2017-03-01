@@ -2,10 +2,10 @@ const router = require('express').Router();
 const getUserByToken = require('../db/getUserByToken');
 const parseForm = require('multer')().none(); //multipart body-parser
 const stripHash = require('../password/stripHash');
-const hashPassword = require('../password/hash');
+const hashPassword = require('../auth/hash');
 const updateUser = require('../db/updateUser');
 
-function createUpdates(req, res, next) {  
+function createUpdates(req, res, next) {
   res.locals.updates = {
     $set: {
       firstName: req.body.firstName,

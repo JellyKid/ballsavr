@@ -1,10 +1,8 @@
 const passport = require('passport');
 const strategy = require('passport-local').Strategy;
-const router = require('express').Router();
-const parseForm = require('multer')().none();
 
 const User = require('../../db/models/user');
-const crypto = require('../password/crypto');
+const crypto = require('./crypto');
 
 passport.use(new strategy(
   function(userid, password, done) {
@@ -40,15 +38,5 @@ passport.deserializeUser((serialized, done) => {
   done(null, serialized);
 });
 
-router.use(passport.initialize());
-router.use(passport.session());
 
-router.post(
-  '/login',
-  parseForm,
-  passport.authenticate('local', {failureRedirect: '/'}),
-  (req, res) => { res.redirect('/');}
-);
-
-
-module.exports = router;
+module.exports = passport;
