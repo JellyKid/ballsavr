@@ -1,7 +1,10 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, PageHeader, Grid, Well } from 'react-bootstrap';
-import { handleChange, handleCheck, handleSubmit, getUserByToken } from '../helpers/handlers';
+import { handleChange, handleCheck } from '../helpers/handlers';
+import getUserByToken from '../helpers/getUserByToken';
+import handleSubmit from '../helpers/handleSubmit';
 import update from 'immutability-helper';
+import { connect } from 'react-redux';
 
 class Register extends React.Component {
   constructor(props){
@@ -171,4 +174,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default connect()(Register);

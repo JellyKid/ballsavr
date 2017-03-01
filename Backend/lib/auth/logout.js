@@ -1,8 +1,8 @@
-function logout(req, res, next) {
+function logout(req, res, next) {  
   if(req.user){
     req.logout();
   }
-  return res.redirect('/');
+  return next();
 }
 
 module.exports = logout;

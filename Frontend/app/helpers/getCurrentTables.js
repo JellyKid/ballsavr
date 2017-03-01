@@ -4,31 +4,26 @@ import { browserHistory } from 'react-router';
 
 export default function getCurrentTables(){
   return fetch(
-    '/api/currentTables',
+    '/api/table/current',
     {
       credentials: 'same-origin'
     }
   ).then(
+    (raw) => raw.json()
+  ).then(
     (res) => {
-      if(res.status === 401){
-        window.location.pathname = '/';
+      if(!res){
+        console.log("UNHANDLED RESPONSE");
+        return ({alertMessage:"UNHANDLED RESPONSE"});
+      }
+      if(res.status === 200 && res.payload){
         return {
-          tables: [],
-          error: res.statusText
+          tables: res.payload
         };
       }
-      if(res.status === 200){
-        return res.json().then(
-          (json) => {
-
-            return {
-              tables: json
-            };
-          }
-        );
-      }
+      res.error = res.error || "NO ERROR RETURNED";
       return {
-        error: `Error: ${res.status} ${res.statusText}`
+        alertMessage: `Error: ${res.error}`
       };
     }
   );

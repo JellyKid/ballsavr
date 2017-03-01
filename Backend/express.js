@@ -35,10 +35,8 @@ app.use(passport.session());
 //API middleware
 app.use(require('./lib/Auth'));
 app.use(require('./lib/Admin'));
-app.use(require('./lib/user/register'));
-app.use(require('./lib/user/user'));
-app.use(require('./lib/db/updateTablesFromIPDB'));
-app.use(require('./lib/table/table'));
+app.use(require('./lib/User'));
+app.use(require('./lib/Table'));
 
 app.listen(PORT, HOST);
 

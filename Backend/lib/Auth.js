@@ -12,7 +12,10 @@ router.post(
   '/login',
   parseForm,
   localStrategy.authenticate('local', {failureRedirect: '/'}),
-  (req, res) => { res.redirect('/');}
+  (req, res) => res.status(200).send({
+    status: 200,
+    message: "Welcome Back"
+  })
 );
 
 

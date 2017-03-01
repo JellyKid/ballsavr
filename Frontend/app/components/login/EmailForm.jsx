@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, ControlLabel} from 'react-bootstrap';
-import { handleSubmit } from '../../helpers/handlers';
+import handleSubmit from '../../helpers/handleSubmit';
 
 class EmailForm extends React.Component {
   constructor(props) {

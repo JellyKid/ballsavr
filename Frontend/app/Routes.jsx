@@ -18,33 +18,35 @@ import { setUser } from './redux/actions';
 function checkAuthentication(nextState, replace, done) {
   checkAuth().then(
     (res) => {
+      console.log(res);
       if(!res.authenticated){
         replace('/login');
         return done();
       }
+
       this.dispatch(setUser(res.user));
       return done();
     }
   );
 }
 
-function checkAdmin(nextState, replace, done) {
-  checkAuth().then(
-    (res) => {
-      console.log(res);
-      if(!res.authenticated){
-        replace('/login');
-        return done();
-      }
-      this.dispatch(setUser(res.user));
-      if(!res.user.meta.admin){
-        replace('/');
-        return done();
-      }
-      return done();
-    }
-  );
-}
+// function checkAdmin(nextState, replace, done) {
+//   checkAuth().then(
+//     (res) => {
+//       console.log(res);
+//       if(!res.authenticated){
+//         replace('/login');
+//         return done();
+//       }
+//       this.dispatch(setUser(res.user));
+//       if(!res.user.meta.admin){
+//         replace('/');
+//         return done();
+//       }
+//       return done();
+//     }
+//   );
+// }
 
 function hookDispatch(dispatch){
 
