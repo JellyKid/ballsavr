@@ -5,6 +5,7 @@ const schema = new mongoose.Schema({
   manufactureDate: String,
   desc: String,
   specialNotes: String,
+  rulesheet: String,
   localimg: String,
   manufacturer: String,
   ipdb_id: Number,
@@ -12,5 +13,16 @@ const schema = new mongoose.Schema({
 });
 
 schema.set('timestamps', true);
+
+schema.index({name: "text"});
+
+schema.statics.findByName = function(name, cb){
+  return this.find({
+    name: {
+      $regex: new RegExp(name, 'i')
+    }
+  }, cb);
+};
+
 
 module.exports = schema;

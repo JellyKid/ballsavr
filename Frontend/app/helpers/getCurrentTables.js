@@ -16,6 +16,9 @@ export default function getCurrentTables(){
         console.log("UNHANDLED RESPONSE");
         return ({alertMessage:"UNHANDLED RESPONSE"});
       }
+      if(res.status === 401){
+        window.location.replace('/');
+      }
       if(res.status === 200 && res.payload){
         return {
           tables: res.payload
