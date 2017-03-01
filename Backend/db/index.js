@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const server = env.get('HOST') || 'localhost';
 const database = env.get('database') || 'TCP';
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://' + server + '/' + database);
 
 const db = mongoose.connection;
