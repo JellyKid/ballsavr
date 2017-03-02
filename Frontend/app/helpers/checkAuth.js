@@ -9,7 +9,8 @@ export default function checkAuth(){
     }
   ).then(
     (res) => {
-        if(res.status !== 200){
+      console.log(res);
+      if(res.status !== 200){
         return {authenticated: false};
       }
       return res.json().then(

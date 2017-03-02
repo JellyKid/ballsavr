@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, ControlLabel} from 'react-bootstrap';
 import handleSubmit from '../../helpers/handleSubmit';
+import { connect } from 'react-redux';
 
 class EmailForm extends React.Component {
   constructor(props) {
@@ -52,4 +53,4 @@ class EmailForm extends React.Component {
   }
 }
 
-export default EmailForm;
+export default connect()(EmailForm);

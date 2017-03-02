@@ -4,5 +4,9 @@ export const INITIAL_STATE = {
   user: {},
   events: [],
   games: [],
-  message: ""
+  message: "",
+  messageBox: {
+    visible: [],
+    log: []
+  }
 };

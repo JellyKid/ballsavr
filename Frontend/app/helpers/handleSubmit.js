@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { setMessage } from '../redux/actions';
+import { addInfoMsg } from '../redux/actions';
 
 export default function handleSubmit(e){
   e.preventDefault();
@@ -32,7 +32,7 @@ export default function handleSubmit(e){
       });
     }
     if(this.props.dispatch && res.message){
-      this.props.dispatch(setMessage(res.message));
+      this.props.dispatch(addInfoMsg(res.message));
     }
     res.redirect = res.redirect || '/'; //if not set, set it;
     return browserHistory.push(res.redirect);

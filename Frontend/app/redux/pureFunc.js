@@ -18,10 +18,36 @@ export function setAuth(state, auth) {
   });
 }
 
-export function setMessage(state, message) {
-  return update(state, {
-    $merge : {
-      message: message
+export function addMessage(state, message, style) {
+  return update(
+    state,
+    {
+      messageBox: {
+        visible : {
+          $push: [{
+            text: message,
+            style: style
+          }]
+        },
+        log : {
+          $push: [{
+            message: message
+          }]
+        }
+      }
     }
-  });
+  );
+}
+
+export function clearMessage(state, index) {
+  return update(
+    state,
+    {
+      messageBox: {
+        visible: {
+          $splice : [[index, 1]]
+        }
+      }
+    }
+  );
 }
