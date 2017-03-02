@@ -51,3 +51,14 @@ export function clearMessage(state, index) {
     }
   );
 }
+
+export function setCurrentTables(state, tables) {
+  return update(
+    state,
+    {
+      currentTables: {
+        $set : tables
+      }
+    }
+  );
+}

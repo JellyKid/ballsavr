@@ -1,7 +1,9 @@
 import { INITIAL_STATE } from './initialState';
 import {SET_USER, SET_AUTH, SET_MESSAGE, ADD_ERROR_MSG,
-        ADD_SUCCESS_MSG, ADD_INFO_MSG, CLEAR_MESSAGE } from './actions';
-import {setUser, setAuth, addMessage, clearMessage } from './pureFunc';
+        ADD_SUCCESS_MSG, ADD_INFO_MSG, CLEAR_MESSAGE,
+        SET_CURRENT_TABLES} from './actions';
+import {setUser, setAuth, addMessage, clearMessage,
+        setCurrentTables } from './pureFunc';
 
 export default function(state = INITIAL_STATE, action){
   switch (action.type) {
@@ -10,7 +12,7 @@ export default function(state = INITIAL_STATE, action){
     case SET_USER:
       return setUser(state, action.payload);
     case SET_AUTH:
-      return setAuth(state, action.payload);    
+      return setAuth(state, action.payload);
     case ADD_ERROR_MSG:
       return addMessage(state, action.payload, "danger");
     case ADD_SUCCESS_MSG:
@@ -19,6 +21,8 @@ export default function(state = INITIAL_STATE, action){
       return addMessage(state, action.payload, "info");
     case CLEAR_MESSAGE:
       return clearMessage(state, action.payload);
+    case SET_CURRENT_TABLES:
+      return setCurrentTables(state, action.payload);
     default:
       return state;
   }

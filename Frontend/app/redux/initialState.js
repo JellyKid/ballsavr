@@ -3,7 +3,7 @@ export const INITIAL_STATE = {
   admin : false,
   user: {},
   events: [],
-  games: [],
+  currentTables: [],
   message: "",
   messageBox: {
     visible: [],

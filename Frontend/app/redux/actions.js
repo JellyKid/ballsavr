@@ -6,7 +6,7 @@ export function setUser(user) {
   };
 }
 
-export const SET_AUTH = 'SET_USET_AUTHSER';
+export const SET_AUTH = 'SET_AUTH';
 export function setAuth(auth) {
   return {
     type: SET_AUTH,
@@ -43,5 +43,13 @@ export function clearMessage(index) {
   return {
     type: CLEAR_MESSAGE,
     payload: index
+  };
+}
+
+export const SET_CURRENT_TABLES = 'SET_CURRENT_TABLES';
+export function setCurrentTables(tables) {
+  return {
+    type: SET_CURRENT_TABLES,
+    payload: tables
   };
 }
