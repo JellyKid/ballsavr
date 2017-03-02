@@ -3,11 +3,11 @@ import { browserHistory } from 'react-router';
 import {addErrorMsg, addSuccessMsg} from '../redux/actions';
 
 export default function handleGet(url,action) {
-  fetch(
+  return fetch(
     url,
     {credentials: 'same-origin'}
   ).then(
-    (res) => {
+    (res) => {      
       if(res.status === 401){ //if unauthorized return to login screen
         window.location.replace('/');
         throw new Error(res.statusText);

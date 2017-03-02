@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, PageHeader, Grid, Well } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../helpers/handlers';
-import getUserByToken from '../helpers/getUserByToken';
 import handleSubmit from '../helpers/handleSubmit';
+import handleGet from '../helpers/handleGet';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 
@@ -25,14 +25,28 @@ class Register extends React.Component {
     this.handleSubmit = handleSubmit.bind(this);
     this.handleChange = handleChange.bind(this);
     this.handlePassChange = this.handlePassChange.bind(this);
-    this.getUserByToken = getUserByToken.bind(this);
+    this.handleGet = handleGet.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordComplexCheck = this.passwordComplexCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
   }
-  componentDidMount(){
-    this.getUserByToken(this.props.params.token);
+  componentDidMount(){    
+    this.handleGet(
+      `/api/token?token=${this.props.params.token}`
+    ).then(
+      (user) => {
+        this.setState(update(
+          this.state,
+          {
+            form: {
+              $merge: user
+            }
+          }
+        ));
+      }
+    );
   }
+
   passwordComplexCheck(e){
     let p = e.target.value;
     let special = /[!@#\$%\^\*]/;
