@@ -1,14 +1,15 @@
 import React from 'react';
-import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert } from 'react-bootstrap';
+import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert, Button } from 'react-bootstrap';
 import handleGet from '../helpers/handleGet';
 import { setCurrentTables } from '../redux/actions';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alertMessage : ""
+            alertMessage : ""
     };
     this.handleGet = handleGet.bind(this);
   }
@@ -35,6 +36,16 @@ class Tables extends React.Component {
       }
     );
 
+    const editButton = this.props.admin ? (
+      <Button
+        bsSize="large"
+        bsStyle="primary"
+        onClick={() => browserHistory.push('/tables/edit')}
+        block>
+        Edit
+      </Button>
+    ) : "";
+
     return(
       <Grid>
         <Col sm={8} smOffset={2}>
@@ -42,6 +53,7 @@ class Tables extends React.Component {
           <ListGroup>
             {currentTables}
           </ListGroup>
+          {editButton}
           {alert}
         </Col>
       </Grid>
@@ -51,7 +63,8 @@ class Tables extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentTables: state.currentTables
+    currentTables: state.currentTables,
+    admin: state.user.meta.admin
   };
 }
 

@@ -28,16 +28,6 @@ class User extends React.Component {
         </Col>
       </Grid>
     ) : "";
-    // const message = this.props.message ? (
-    //   <Grid>
-    //     <Col sm={8} smOffset={2}>
-    //       <Alert bsStyle="success" onDismiss={this.dismissAlert} >
-    //         <h4>{this.props.message}</h4>
-    //       </Alert>
-    //     </Col>
-    //   </Grid>
-    // ) : "";
-
 
     return (
       <div>

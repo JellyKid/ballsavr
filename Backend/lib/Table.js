@@ -20,10 +20,7 @@ router.get(
 router.get(
   '/table/search/:query',
   findTableByName,
-  (req,res) => res.status(200).send({
-    status: 200,
-    payload: res.locals.searchResults
-  })
+  (req,res) => res.status(200).send(res.locals.searchResults)
 );
 
 module.exports = router;

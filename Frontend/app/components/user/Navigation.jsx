@@ -16,7 +16,7 @@ class Navigation extends React.Component {
     const adminLinks = this.props.admin ? (
       <NavDropdown title="Admin" id="admin-nav-links">
         <MenuItem onSelect={() => browserHistory.push('/invite')}>Invite New User</MenuItem>
-        <MenuItem eventKey={3.2}>Another action</MenuItem>
+        <MenuItem onSelect={() => browserHistory.push('/tables/edit')}>Edit Collection</MenuItem>
         <MenuItem eventKey={3.3}>Something else here</MenuItem>
         <MenuItem divider />
         <MenuItem eventKey={3.3}>Separated link</MenuItem>
