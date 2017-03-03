@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well, PageHeader } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../../helpers/handlers';
 import handleSubmit from '../../helpers/handleSubmit';
 import { browserHistory } from 'react-router';
@@ -49,6 +49,7 @@ class AddUser extends React.Component {
     return (
       <Grid>
         <Col sm={8} smOffset={2}>
+          <PageHeader>Invite User</PageHeader>
           <Well>
             {form}
             {alert}

@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 export default function checkAuth(){
   return fetch(

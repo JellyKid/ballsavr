@@ -1,8 +1,7 @@
 const Table = require('../../db/models/table');
 
 function updateTablesDB(req, res, next) {
-  res.locals.tables.forEach((table) => {
-    console.log(`Adding table ${table.name}`);
+  res.locals.tables.forEach((table) => {    
     Table.findOneAndUpdate(
       {name: table.name}, //table to find
       table, //updated info

@@ -14,7 +14,7 @@ import CleanPlugin from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import _ from "lodash";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 const pkg = require('./package.json');
 
@@ -51,7 +51,7 @@ var common = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join('node_modules','html-webpack-template','index.ejs'),
+      template: path.join('Frontend','index.ejs'),
       title: siteTitle,
       appMountId: 'app',
       inject: false,

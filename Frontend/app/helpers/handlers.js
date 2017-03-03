@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import { browserHistory } from 'react-router';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 export function handleChange(e){
   this.setState(update(this.state, {

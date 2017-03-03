@@ -49,7 +49,7 @@ class Tables extends React.Component {
     return(
       <Grid>
         <Col sm={8} smOffset={2}>
-          <PageHeader>Current Tables</PageHeader>
+          <PageHeader>Tables</PageHeader>
           <ListGroup>
             {currentTables}
           </ListGroup>

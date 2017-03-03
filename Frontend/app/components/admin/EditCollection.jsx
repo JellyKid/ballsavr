@@ -1,8 +1,11 @@
 import React from 'react';
-import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert, Button } from 'react-bootstrap';
-import handleGet from '../../helpers/handleGet';
-import { setCurrentTables } from '../../redux/actions';
+import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import handleGet from '../../helpers/handleGet';
+import handlePost from '../../helpers/handlePost';
+import { setCurrentTables } from '../../redux/actions';
+
 import update from 'immutability-helper';
 import SearchAndAdd from './SearchAndAdd';
 
@@ -14,6 +17,7 @@ class EditCollection extends React.Component {
             selected: []
     };
     this.handleGet = handleGet.bind(this);
+    this.handlePost = handlePost.bind(this);
     this.toggleTable = this.toggleTable.bind(this);
     this.getStyle = this.getStyle.bind(this);
 
@@ -70,6 +74,7 @@ class EditCollection extends React.Component {
             header={table.name}
             onClick={() => this.toggleTable(table._id)}
             bsStyle={this.getStyle(table._id)}
+            key={table._id}
           >
             {table.manufacturer} - {table.manufactureDate}
           </ListGroupItem>
@@ -81,7 +86,7 @@ class EditCollection extends React.Component {
       <Grid>
         <Col sm={8} smOffset={2}>
           {alert}
-          <PageHeader>Active Collection</PageHeader>
+          <PageHeader>Tables</PageHeader>
 
           <SearchAndAdd />
 
@@ -91,12 +96,28 @@ class EditCollection extends React.Component {
             {currentTables}
           </ListGroup>
           <Col sm={12}>
-            <Button
-              bsStyle="danger"
-              bsSize="large"
-              block
-              disabled={(this.state.selected.length === 0)}
-            >Remove selected</Button>
+            <ButtonToolbar>
+              <Button
+                bsStyle="danger"
+                bsSize="large"
+                block
+                disabled={(this.state.selected.length === 0)}
+                onClick={
+                  () => this.handlePost(
+                    '/api/table/admin/disable',
+                    this.state.selected,
+                    setCurrentTables
+                  ).then(
+                    () => this.setState({selected: []})
+                  )
+                }
+              >Remove selected</Button>
+              <Button
+                bsSize="large"
+                onClick={() => browserHistory.push('/tables')}
+                block>Cancel</Button>
+            </ButtonToolbar>
+
           </Col>
         </Col>
       </Grid>
