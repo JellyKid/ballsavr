@@ -8,13 +8,15 @@ import { setCurrentTables } from '../../redux/actions';
 
 import update from 'immutability-helper';
 import SearchAndAdd from './SearchAndAdd';
+import UpdateIPDBModal from './UpdateIPDBModal';
 
 class EditCollection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
             alertMessage : "",
-            selected: []
+            selected: [],
+            showModal: false
     };
     this.handleGet = handleGet.bind(this);
     this.handlePost = handlePost.bind(this);
@@ -82,40 +84,60 @@ class EditCollection extends React.Component {
       }
     );
 
+    const removeButton = (
+      <Button
+        bsStyle="danger"
+        bsSize="large"
+        block
+        disabled={(this.state.selected.length === 0)}
+        onClick={
+          () => this.handlePost(
+            '/api/table/admin/disable',
+            this.state.selected,
+            setCurrentTables
+          ).then(
+            () => this.setState({selected: []})
+          )
+        }>Remove selected</Button>
+    );
+
+    const cancelButton = (
+      <Button
+        bsSize="large"
+        onClick={() => browserHistory.push('/tables')}
+        block>
+        Cancel
+      </Button>
+    );
+
+    const updateButton = (
+      <Button
+        bsSize="large"
+        bsStyle="success"
+        block
+        onClick={
+          () => this.setState({showModal: true})
+        }>
+        Update pins from IPDB
+      </Button>
+    );
+
     return(
       <Grid>
+        <UpdateIPDBModal show={this.state.showModal} closeAction={() => this.setState({showModal: false})}/>
         <Col sm={8} smOffset={2}>
           {alert}
           <PageHeader>Tables</PageHeader>
-
           <SearchAndAdd />
-
-          <br />
-
+          <hr />
           <ListGroup>
             {currentTables}
           </ListGroup>
           <Col sm={12}>
             <ButtonToolbar>
-              <Button
-                bsStyle="danger"
-                bsSize="large"
-                block
-                disabled={(this.state.selected.length === 0)}
-                onClick={
-                  () => this.handlePost(
-                    '/api/table/admin/disable',
-                    this.state.selected,
-                    setCurrentTables
-                  ).then(
-                    () => this.setState({selected: []})
-                  )
-                }
-              >Remove selected</Button>
-              <Button
-                bsSize="large"
-                onClick={() => browserHistory.push('/tables')}
-                block>Cancel</Button>
+              {removeButton}
+              {updateButton}
+              {cancelButton}
             </ButtonToolbar>
 
           </Col>

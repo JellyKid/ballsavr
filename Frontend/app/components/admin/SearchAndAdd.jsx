@@ -8,7 +8,7 @@ import { setCurrentTables } from '../../redux/actions';
 
 class SearchAndAddForm extends React.Component {
   constructor(props) {
-    super(props);    
+    super(props);
     this.state = {
       tables : []
     };
@@ -59,14 +59,13 @@ class SearchAndAddForm extends React.Component {
       labelKey="name"
       onSearch={this.handleQuery}
       options={this.state.tables}
-      placeholder="search for tables to add..."
+      placeholder="search for pins to add..."
       maxHeight={500}
       maxResults={10}
       minLength={2}
-      // selected={this.state.selected}
       onChange={this.handleSelect}
       renderMenuItemChildren={this.renderChildren}
-      value=""
+      emptyLabel='No matching tables found, try updating first'
            />;
   }
 }
