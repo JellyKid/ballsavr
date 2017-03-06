@@ -7,7 +7,6 @@ const login = require('./auth/login');
 const getCurrentUserDB = require('./db/getCurrentUser');
 const getUserByToken = require('./db/getUserByToken');
 
-const stripHash = require('./user/stripHash');
 const register = require('./user/register');
 
 function formatFirstName(firstName) {
@@ -27,7 +26,6 @@ router.all(
 router.get(
   '/user/current',
   getCurrentUserDB,
-  stripHash,
   (req,res) => res.status(200).send({
     status: 200,
     user: res.locals.currentUser
@@ -43,7 +41,6 @@ router.get(
 router.get(
   '/token',
   getUserByToken,
-  stripHash, //if sending back across the web make sure to always strip hash
   (req, res) => res.status(200).send(res.locals.user)
 );
 

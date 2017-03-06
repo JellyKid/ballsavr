@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
   lastName: String,
   email: String,
   initials: {type: String, default: 'AAA'},
-  hash: String,
+  hash: {type: String, select: false},
   facebook: String,
   score: {type: Number, default: 0},
   meta: {

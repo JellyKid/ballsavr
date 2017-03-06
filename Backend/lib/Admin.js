@@ -4,7 +4,9 @@ const isAdmin = require('./auth/isAdmin');
 const inviteUser = require('./admin/inviteUser');
 const updateTablesFromIPDB = require('./admin/updateTablesFromIPDB');
 const getUsers = require('./db/getUsers');
-const stripHash = require('./user/stripHash');
+const parseUpdates = require('./user/parseUpdates');
+const updateUser = require('./db/updateUser');
+const jsonParser = require('body-parser').json();
 
 router.all(
   '/admin/*',
@@ -34,8 +36,7 @@ router.get(
 
 router.get(
   '/admin/users',
-  getUsers,
-  stripHash,
+  getUsers,  
   (req, res) => res.status(200).send({
     status: 200,
     payload: res.locals.users
@@ -43,5 +44,15 @@ router.get(
 );
 
 
+router.post(
+  '/admin/user',
+  jsonParser,
+  parseUpdates,
+  updateUser,
+  (req, res) => res.status(200).send({
+    status: 200,
+    message: `user ${res.body.email} updated`
+  })
+);
 
 module.exports = router;
