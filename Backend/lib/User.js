@@ -10,6 +10,14 @@ const getUserByToken = require('./db/getUserByToken');
 const stripHash = require('./user/stripHash');
 const register = require('./user/register');
 
+function formatFirstName(firstName) {
+  return firstName.toLowerCase()
+          .replace(
+            /^[a-z]/,
+            (match) => match.toUpperCase()
+          );
+}
+
 
 router.all(
   '/user/*',
@@ -45,7 +53,7 @@ router.post(
   login,
   (req,res) => res.status(200).send({
     status: 200,
-    message: `Welcome ${res.locals.user.firstName} to Tricity Pinball!`
+    message: `Welcome ${formatFirstName(res.locals.user.firstName)} to Tricity Pinball!`
   })
 );
 

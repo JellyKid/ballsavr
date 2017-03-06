@@ -10,11 +10,9 @@ export default function handleSubmit(e){
     credentials: 'same-origin'
   })
   .then((raw) => {
-    console.log(raw);
     return raw.json();
   })
-  .then((res) => {
-    console.log(res);
+  .then((res) => {    
     if(!res.status){
       console.error('ERROR: UNHANDLED RESULT');
       return this.setState({

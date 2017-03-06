@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert, Button, ButtonToolbar } from 'react-bootstrap';
+import { Grid, Col, ListGroup, ListGroupItem, PageHeader, Alert, Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import handleGet from '../../helpers/handleGet';
@@ -101,12 +101,12 @@ class EditCollection extends React.Component {
         }>Remove selected</Button>
     );
 
-    const cancelButton = (
+    const backButton = (
       <Button
         bsSize="large"
         onClick={() => browserHistory.push('/tables')}
         block>
-        Cancel
+        <Glyphicon glyph="arrow-left"/> Back
       </Button>
     );
 
@@ -134,11 +134,11 @@ class EditCollection extends React.Component {
             {currentTables}
           </ListGroup>
           <Col sm={12}>
-            <ButtonToolbar>
-              {removeButton}
-              {updateButton}
-              {cancelButton}
-            </ButtonToolbar>
+
+            {removeButton}
+            {backButton}
+            <hr />
+            {updateButton}
 
           </Col>
         </Col>
