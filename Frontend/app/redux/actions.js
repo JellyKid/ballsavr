@@ -53,3 +53,11 @@ export function setCurrentTables(tables) {
     payload: tables
   };
 }
+
+export const SET_USERS = 'SET_USERS';
+export function setUsers(users) {
+  return {
+    type: SET_USERS,
+    payload: users
+  };
+}

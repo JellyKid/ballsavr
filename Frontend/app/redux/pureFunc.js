@@ -10,6 +10,14 @@ export function setUser(state, user) {
   });
 }
 
+export function setUsers(state, users) {
+  return update(state, {
+    users : {
+      $set : users
+    }
+  });
+}
+
 export function setAuth(state, auth) {
   return update(state, {
     $merge : {

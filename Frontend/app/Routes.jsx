@@ -9,6 +9,7 @@ import Login from './components/Login';
 import User from './components/User';
 import Tables from './components/Tables';
 import EditCollection from './components/admin/EditCollection';
+import EditUsers from './components/admin/EditUsers';
 
 //ajax calls
 import checkAuth from './helpers/checkAuth';
@@ -40,6 +41,7 @@ function hookDispatch(dispatch){
       <Route path="invite" component={Invite} />
       <Route path="tables/edit" component={EditCollection} />
       <Route path="tables" component={Tables} />
+      <Route path="users" component={EditUsers} />
     </Route>,
     <Route path="/login" component={Login} />,
     <Route path="/register/:token" component={Register} />

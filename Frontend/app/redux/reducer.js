@@ -1,8 +1,8 @@
 import { INITIAL_STATE } from './initialState';
 import {SET_USER, SET_AUTH, SET_MESSAGE, ADD_ERROR_MSG,
         ADD_SUCCESS_MSG, ADD_INFO_MSG, CLEAR_MESSAGE,
-        SET_CURRENT_TABLES} from './actions';
-import {setUser, setAuth, addMessage, clearMessage,
+        SET_CURRENT_TABLES, SET_USERS} from './actions';
+import {setUser, setUsers, setAuth, addMessage, clearMessage,
         setCurrentTables } from './pureFunc';
 
 export default function(state = INITIAL_STATE, action){
@@ -11,6 +11,8 @@ export default function(state = INITIAL_STATE, action){
     //   return someAction(state, action.payload);
     case SET_USER:
       return setUser(state, action.payload);
+    case SET_USERS:
+      return setUsers(state, action.payload);
     case SET_AUTH:
       return setAuth(state, action.payload);
     case ADD_ERROR_MSG:
