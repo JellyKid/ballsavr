@@ -9,7 +9,7 @@ function getCurrentTables(req,res,next) {
           alert: "Internal error while trying to get current tables"
         });
       }
-      res.locals.currentTables = tables ? tables : [];
+      res.locals.currentTables = tables || [];
       return next();
     }
   );
