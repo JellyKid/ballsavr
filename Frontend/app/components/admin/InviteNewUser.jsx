@@ -1,8 +1,9 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, Grid, Well, PageHeader } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../../helpers/handlers';
-import handleSubmit from '../../helpers/handleSubmit';
+import handlePost from '../../helpers/handlePost';
 import { browserHistory } from 'react-router';
+import { addErrorMsg } from '../../redux/actions';
 import { connect } from 'react-redux';
 
 class AddUser extends React.Component {
@@ -18,8 +19,29 @@ class AddUser extends React.Component {
       submitDisabled : false
     };
     this.handleChange = handleChange.bind(this);
-    this.handleSubmit = handleSubmit.bind(this);
+    this.handlePost = handlePost.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheck = handleCheck.bind(this);
+  }
+  handleSubmit(e){
+    e.preventDefault();
+    if(this.state.submitDisabled === false){
+      this.setState({ submitDisabled: true });
+      this.handlePost(
+        '/api/admin/invite',
+        e.target
+      ).then(
+        (res) => {
+          if(res.status === 200){
+            return browserHistory.push('/');
+          }
+          if(res.error){
+            this.props.dispatch(addErrorMsg(res.error));
+          }
+          return this.setState({submitDisabled: false});
+        }
+      );
+    }
   }
   render(){
     const form = <Form horizontal action="/api/admin/invite" method="post" onSubmit={this.handleSubmit}>

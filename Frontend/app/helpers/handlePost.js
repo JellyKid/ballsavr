@@ -58,7 +58,8 @@ export default function handlePost(url,data,action) {
   ).catch(
     (err) => {
       console.error(`Details: ${err}`);
-      return {error: String(err).substr(0,100)};
+      this.props.dispatch(addErrorMsg(String(err).substr(0,100)));
+      return {error: String(err).substr(0,100)};      
     }
   );
 }

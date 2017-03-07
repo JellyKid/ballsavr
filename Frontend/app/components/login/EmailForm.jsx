@@ -3,19 +3,21 @@ import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, Con
 import handlePost from '../../helpers/handlePost';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { clearAllMessages } from '../../redux/actions';
 
 class EmailForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       submitDisabled : false,
-      alertMessage: ""
+      alertMessage : ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePost = handlePost.bind(this);
   }
   handleSubmit(e){
     e.preventDefault();
+    console.log(e.target);
     if(this.state.submitDisabled == false){
       this.setState({submitDisabled: true});
       this.handlePost(
@@ -23,15 +25,14 @@ class EmailForm extends React.Component {
         e.target
       ).then(
         (res) => {
-          if(res.error){
-            this.setState({
-              submitDisabled: false,
-              alertMessage: "Incorrect username or password."
-            });
-          }
           if(res.status === 200){
+            this.props.dispatch(clearAllMessages());
             browserHistory.push('/');
           }
+          return this.setState({
+            submitDisabled: false,
+            alertMessage: "Incorrect username or password"
+          });
         }
       );
     }
@@ -70,7 +71,7 @@ class EmailForm extends React.Component {
         <FormGroup>
           <Col smOffset={2} sm={10}>
             <ButtonToolbar>
-              <Button type="submit">
+              <Button type="submit" disabled={this.state.submitDisabled}>
                 Sign in
               </Button>
               <Button onClick={this.props.cancelForm}>

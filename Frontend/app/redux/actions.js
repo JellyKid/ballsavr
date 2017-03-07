@@ -46,6 +46,13 @@ export function clearMessage(index) {
   };
 }
 
+export const CLEAR_ALL_MESSAGES = 'CLEAR_ALL_MESSAGES';
+export function clearAllMessages() {
+  return {
+    type: CLEAR_ALL_MESSAGES
+  };
+}
+
 export const SET_CURRENT_TABLES = 'SET_CURRENT_TABLES';
 export function setCurrentTables(tables) {
   return {

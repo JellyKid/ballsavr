@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from './user/Navigation';
+import MessageBox from './user/MessageBox';
 import { Link } from 'react-router';
 import { Alert, Grid, Col } from 'react-bootstrap';
 import { clearMessage } from '../redux/actions';
@@ -32,7 +33,11 @@ class User extends React.Component {
     return (
       <div>
         <Navigation admin={this.props.user.admin} initials={this.props.user.initials}/>
-        {messageBox}
+        <Grid>
+          <Col sm={8} smOffset={2}>
+            <MessageBox />
+          </Col>
+        </Grid>
         {this.props.children}
       </div>
     );

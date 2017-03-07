@@ -49,11 +49,22 @@ class EditUserForm extends React.Component {
     }
   }
   render(){
-    const adminCheck = <Checkbox
-      name="admin"
-      checked={this.state.form.admin}
-      validationState={this.state.form.admin ? "error" : null}
-      onChange={this.handleCheck}>Admin</Checkbox>;
+    const adminCheck = (
+      <Checkbox
+        name="admin"
+        checked={this.state.form.admin}
+        validationState={this.state.form.admin ? "error" : null}
+        onChange={this.handleCheck}>
+        Admin
+      </Checkbox>
+    );
+
+    const activated = !this.props.user.meta.activated ? (
+      <div style={{color: "red"}}>
+        <h4>Not Activated </h4>
+      </div>
+    ) : "";
+
     const form = (
       <Form horizontal onSubmit={this.handleSubmit}>
         <FormGroup>
@@ -113,6 +124,7 @@ class EditUserForm extends React.Component {
                 )
               }
             </h4>
+            {activated}
           </Col>
         </FormGroup>
 
@@ -120,6 +132,7 @@ class EditUserForm extends React.Component {
           <Col sm={12}>
             <ButtonToolbar>
               <Button disabled={this.state.submitDisabled} bsStyle='success' >Save</Button>
+              <Button disabled={this.state.submitDisabled} bsStyle='danger'>Delete</Button>
               <Button onClick={this.props.cancelEdit}>Cancel</Button>
             </ButtonToolbar>
           </Col>

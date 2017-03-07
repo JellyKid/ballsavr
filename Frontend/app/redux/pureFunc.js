@@ -60,6 +60,19 @@ export function clearMessage(state, index) {
   );
 }
 
+export function clearAllMessages(state, index) {
+  return update(
+    state,
+    {
+      messageBox: {
+        visible: {
+          $set : []
+        }
+      }
+    }
+  );
+}
+
 export function setCurrentTables(state, tables) {
   return update(
     state,
