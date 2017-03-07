@@ -13,7 +13,7 @@ const schema = new mongoose.Schema(
     enabled: {type: Boolean, default: false},
     meta: {
       authType: {type: String, default: 'local'},
-      active: {type: Boolean, default: false},
+      activated: {type: Boolean, default: false},
       invitationSent: Date,
       verificationToken: {type: String, select: false}
     }

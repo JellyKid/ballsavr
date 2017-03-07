@@ -36,6 +36,7 @@ import { setUser, addInfoMsg } from './redux/actions';
 function checkAuthentication(nextState, replace, done) {
   handleGet('/api/currentuser').then(
     (res) => {
+      console.log(res);
       if(res.status === 202){
         replace('/setup');
         return done();

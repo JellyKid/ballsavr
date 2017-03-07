@@ -11,8 +11,8 @@ router.use(localStrategy.session());
 
 router.post(
   '/login',
-  parseForm,
-  localStrategy.authenticate('local', {failureRedirect: '/'}),
+  parseForm,  
+  localStrategy.authenticate('local'),
   (req, res) => res.status(200).send({status: 200})
 );
 

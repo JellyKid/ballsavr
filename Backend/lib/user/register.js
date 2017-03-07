@@ -11,7 +11,7 @@ function createUpdates(req, res, next) {
       lastName: req.body.lastName,
       hash: res.locals.hash,
       initials: req.body.initials,
-      "meta.active": true
+      "meta.activated": true
     },
     $unset: {
       "meta.verificationToken": ""

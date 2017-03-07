@@ -1,38 +1,56 @@
+import update from 'immutability-helper';
 import { browserHistory } from 'react-router';
-import { addInfoMsg } from '../redux/actions';
+import {addErrorMsg, addSuccessMsg} from '../redux/actions';
 
-export default function handleSubmit(e){
-  e.preventDefault();
-  this.setState({submitDisabled: true});
-  return fetch(e.target.action, {
-    method: 'POST',
-    body: new FormData(e.target),
-    credentials: 'same-origin'
-  })
-  .then((raw) => {
-    return raw.json();
-  })
-  .then((res) => {    
-    if(!res.status){
-      console.error('ERROR: UNHANDLED RESULT');
-      return this.setState({
-        submitDisabled: false,
-        alertMessage: 'ERROR: UNHANDLED RESULT'
-      });
+export default function handleSubmit(url,form,action) {
+  return fetch(
+    url,
+    {
+      credentials: 'same-origin',
+      method: "POST",
+      body: new FormData(form)
     }
-    if(res.status !== 200){
-      if(res.error){
-        console.error(res.error);
+  ).then(
+    (res) => {
+      if(res.status === 401){ //if unauthorized return to login screen
+        window.location.replace('/');
+        throw new Error(res.statusText);
       }
-      return this.setState({
-        submitDisabled: false,
-        alertMessage: res.alert
-      });
+      if(res.status >= 300){
+        console.error(res.status,res.statusText);
+      }
+      return res.text();
     }
-    if(this.props.dispatch && res.message){
-      this.props.dispatch(addInfoMsg(res.message));
+  ).then(
+    (text) => {
+      try {
+        let json = JSON.parse(text); //test if json
+        return json;
+      } catch (e) {
+        return {error: String(text).substr(0,100)};
+      }
     }
-    res.redirect = res.redirect || '/'; //if not set, set it;
-    return browserHistory.push(res.redirect);
-  });
+  ).then(
+    (json) => {
+
+      if(json.error){
+        throw new Error(json.error);
+      }
+      if(this && json.message){
+        this.props.dispatch(addSuccessMsg(json.message));
+      }
+      if(this && json.payload){
+        return this.props.dispatch(action(json.payload));
+      }
+      return json;
+    }
+  ).catch(
+    (err) => {
+      if(this){
+        this.props.dispatch(addErrorMsg(`Error in POST response from ${url}, check logs for more info`));
+      }
+      console.error(`Error in POST response from ${url}`,err);
+      return {error: String(err).substr(0,100)};
+    }
+  );
 }

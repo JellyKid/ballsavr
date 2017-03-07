@@ -3,62 +3,62 @@ import { browserHistory } from 'react-router';
 import {addErrorMsg, addSuccessMsg} from '../redux/actions';
 
 export default function handlePost(url,data,action) {
-  console.log(data);
-  console.log(JSON.stringify(data));
+  var body, headers;
+  if(data.tagName === 'FORM'){
+    body = new FormData(data);
+    headers = {};
+  } else {
+    body = JSON.stringify(data);
+    headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    };
+  }
   return fetch(
     url,
     {
       credentials: 'same-origin',
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        // 'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+      body: body,
+      headers: headers
     }
   ).then(
     (res) => {
       if(res.status === 401){ //if unauthorized return to login screen
-        window.location.replace('/');
+        browserHistory.push('/login');
         throw new Error(res.statusText);
       }
       if(res.status >= 300){
         console.error(res.status,res.statusText);
       }
-      console.log(res);
       return res.text();
     }
   ).then(
     (text) => {
-      console.log(text);
       try {
         let json = JSON.parse(text); //test if json
         return json;
       } catch (e) {
-        return {error: String(text).length(100)};
+        return {error: String(text).substr(0,100)};
       }
     }
   ).then(
     (json) => {
-
       if(json.error){
         throw new Error(json.error);
       }
-      if(this.props.dispatch && json.message){
+      if(this && json.message){
         this.props.dispatch(addSuccessMsg(json.message));
       }
-      if(this.props.dispatch && json.payload){
-        return this.props.dispatch(action(json.payload));
+      if(this && json.payload){
+        this.props.dispatch(action(json.payload));
       }
       return json;
     }
   ).catch(
     (err) => {
-      if(this.props.dispatch){
-        this.props.dispatch(addErrorMsg(`Error in POST response from ${url}, check logs for more info`));
-      }
-      console.error(`Error in POST response from ${url}`,err);
-      return {error: String(err).length(100)};
+      console.error(`Details: ${err}`);
+      return {error: String(err).substr(0,100)};
     }
   );
 }

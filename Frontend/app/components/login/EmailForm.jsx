@@ -1,19 +1,51 @@
 import React from 'react';
-import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, ControlLabel} from 'react-bootstrap';
-import handleSubmit from '../../helpers/handleSubmit';
+import { Col, Form, FormGroup, FormControl, Checkbox, Button, ButtonToolbar, ControlLabel, Alert} from 'react-bootstrap';
+import handlePost from '../../helpers/handlePost';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 class EmailForm extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = handleSubmit.bind(this);
+    this.state = {
+      submitDisabled : false,
+      alertMessage: ""
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePost = handlePost.bind(this);
+  }
+  handleSubmit(e){
+    e.preventDefault();
+    if(this.state.submitDisabled == false){
+      this.setState({submitDisabled: true});
+      this.handlePost(
+        '/api/login',
+        e.target
+      ).then(
+        (res) => {
+          if(res.error){
+            this.setState({
+              submitDisabled: false,
+              alertMessage: "Incorrect username or password."
+            });
+          }
+          if(res.status === 200){
+            browserHistory.push('/');
+          }
+        }
+      );
+    }
   }
   render(){
-    return (
+    const alert = this.state.alertMessage ? (
+      <Alert bsStyle="danger">{this.state.alertMessage}</Alert>
+    ) : "";
+
+    const form = (
       <Form horizontal action="/api/login" method="post" onSubmit={this.handleSubmit}>
         <FormGroup controlId="loginFormEmail">
           <Col sm={2}>
-            <ControlLabel>Emails</ControlLabel>
+            <ControlLabel>Email</ControlLabel>
           </Col>
           <Col sm={10}>
             <FormControl type="input" placeholder="Email" name="username"/>
@@ -29,11 +61,11 @@ class EmailForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <Col smOffset={2} sm={10}>
-            <Checkbox>Remember me</Checkbox>
+          <Checkbox name="remember">Remember me</Checkbox>
           </Col>
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup>
           <Col smOffset={2} sm={10}>
@@ -48,7 +80,13 @@ class EmailForm extends React.Component {
           </Col>
         </FormGroup>
       </Form>
+    );
 
+    return (
+      <div>
+        {form}
+        {alert}
+      </div>
     );
   }
 }

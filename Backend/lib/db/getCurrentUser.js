@@ -23,7 +23,7 @@ function getCurrentUser(req, res, next) {
       message: "No users found. First time setup, please create a new user."
     });
   }
-  return res.redirect('/');
+  return res.sendStatus(401);
 }
 
 module.exports = getCurrentUser;

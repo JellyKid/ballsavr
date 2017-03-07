@@ -26,7 +26,7 @@ function createFirstUserUpdates(req, res, next) {
       initials: req.body.initials,
       enabled: true,
       admin: true,
-      "meta.active": true
+      "meta.activated": true
     },
     $unset: {
       "meta.verificationToken": ""

@@ -18,7 +18,7 @@ class EditUserForm extends React.Component {
         admin : this.props.user.admin,
         enabled: this.props.user.enabled
       },
-      lastModified: this.props.user.updatedAt,
+      lastModified: this.props.user.meta.updatedAt,
       submitDisabled : false
     };
     this.handlePost = handlePost.bind(this);
@@ -28,14 +28,13 @@ class EditUserForm extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  // handleSave(){
-  //   this.setState({submitDisabled: false});
-  //   this.handlePost(
-  //     '/api/admin/user',
-  //     this.state.form,
-  //
-  //   );
-  // }
+  handleSave(){
+    this.setState({submitDisabled: false});
+    this.handlePost(
+      '/api/admin/user',
+      this.state.form
+    );
+  }
 
   handleInitialsChange(e){
     if(e.target.value.length < 4){
@@ -99,7 +98,21 @@ class EditUserForm extends React.Component {
           <Col sm={12}>
             <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Admin</Checkbox>
             <Checkbox name="enabled" checked={this.state.form.enabled} onChange={this.handleCheck}>Enabled</Checkbox>
-            <h4>Last Modified : {this.state.lastModified}</h4>
+            <h4>
+              Updated : {
+                new Date(this.state.lastModified).toLocaleString(
+                  'en-us',
+                  {
+
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric"
+                  }
+                )
+              }
+            </h4>
           </Col>
         </FormGroup>
 
