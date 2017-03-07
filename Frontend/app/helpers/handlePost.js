@@ -3,6 +3,8 @@ import { browserHistory } from 'react-router';
 import {addErrorMsg, addSuccessMsg} from '../redux/actions';
 
 export default function handlePost(url,data,action) {
+  console.log(data);
+  console.log(JSON.stringify(data));
   return fetch(
     url,
     {
@@ -10,7 +12,7 @@ export default function handlePost(url,data,action) {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        'Accept': 'application/json',
+        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }
@@ -20,13 +22,25 @@ export default function handlePost(url,data,action) {
         window.location.replace('/');
         throw new Error(res.statusText);
       }
-      if(res.status !== 200){
+      if(res.status >= 300){
         console.error(res.status,res.statusText);
       }
-      return res.json();
+      console.log(res);
+      return res.text();
+    }
+  ).then(
+    (text) => {
+      console.log(text);
+      try {
+        let json = JSON.parse(text); //test if json
+        return json;
+      } catch (e) {
+        return {error: String(text).length(100)};
+      }
     }
   ).then(
     (json) => {
+
       if(json.error){
         throw new Error(json.error);
       }
@@ -43,7 +57,8 @@ export default function handlePost(url,data,action) {
       if(this.props.dispatch){
         this.props.dispatch(addErrorMsg(`Error in POST response from ${url}, check logs for more info`));
       }
-      return console.error(`Error in POST response from ${url}`,err);
+      console.error(`Error in POST response from ${url}`,err);
+      return {error: String(err).length(100)};
     }
   );
 }

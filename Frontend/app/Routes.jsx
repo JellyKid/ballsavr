@@ -10,25 +10,45 @@ import User from './components/User';
 import Tables from './components/Tables';
 import EditCollection from './components/admin/EditCollection';
 import EditUsers from './components/admin/EditUsers';
+import Setup from './components/Setup';
 
 //ajax calls
 import checkAuth from './helpers/checkAuth';
+import handleGet from './helpers/handleGet';
 
 //redux actions
-import { setUser } from './redux/actions';
+import { setUser, addInfoMsg } from './redux/actions';
+
+// function checkAuthentication(nextState, replace, done) {
+//   checkAuth().then(
+//     (res) => {
+//       if(!res.authenticated){
+//         replace('/login');
+//         return done();
+//       }
+//
+//       this.dispatch(setUser(res.user));
+//       return done();
+//     }
+//   );
+// }
 
 function checkAuthentication(nextState, replace, done) {
-  checkAuth().then(
+  handleGet('/api/currentuser').then(
     (res) => {
-      if(!res.authenticated){
-        replace('/login');
+      if(res.status === 202){
+        replace('/setup');
         return done();
       }
-
-      this.dispatch(setUser(res.user));
+      if(res.user){
+        this.dispatch(setUser(res.user));
+        return done();
+      }
+      replace('/login');
       return done();
     }
   );
+
 }
 
 function hookDispatch(dispatch){
@@ -43,6 +63,7 @@ function hookDispatch(dispatch){
       <Route path="users" component={EditUsers} />
       <Route path="invite" component={Invite} />
     </Route>,
+    <Route path="/setup" component={Setup} />,
     <Route path="/login" component={Login} />,
     <Route path="/register/:token" component={Register} />
   ]);

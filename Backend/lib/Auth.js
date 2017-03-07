@@ -2,8 +2,9 @@ const router = require('express').Router();
 const parseForm = require('multer')().none();
 
 const localStrategy = require('./auth/localStrategy');
-const getCurrentUser = require('./db/getCurrentUser');
-
+const logout = require('./auth/logout');
+const getCurrentUserDB = require('./db/getCurrentUser');
+const noUsersCheck = require('./user/noUsersCheck');
 
 router.use(localStrategy.initialize());
 router.use(localStrategy.session());
@@ -13,6 +14,22 @@ router.post(
   parseForm,
   localStrategy.authenticate('local', {failureRedirect: '/'}),
   (req, res) => res.status(200).send({status: 200})
+);
+
+router.get(
+  '/logout',
+  logout,
+  (req,res) => res.redirect('/')
+);
+
+router.get(
+  '/currentUser',
+  noUsersCheck,
+  getCurrentUserDB,
+  (req,res) => res.status(200).send({
+    status: 200,
+    user: res.locals.currentUser
+  })
 );
 
 

@@ -3,14 +3,21 @@ import update from 'immutability-helper';
 
 export default function checkAuth(){
   return fetch(
-    '/api/user/current',
+    '/api/currentuser',
     {
       credentials: 'same-origin'
     }
   ).then(
-    (res) => {      
-      if(res.status !== 200){
+    (res) => {
+      console.log(res);
+      if(res.status > 299){
         return {authenticated: false};
+      }
+      if(res.status === 202){
+        return {
+          authenticated:false,
+          firstUser: true
+        };
       }
       return res.json().then(
         (json) => {

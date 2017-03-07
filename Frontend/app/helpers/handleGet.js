@@ -7,9 +7,9 @@ export default function handleGet(url,action) {
     url,
     {credentials: 'same-origin'}
   ).then(
-    (res) => {      
+    (res) => {
       if(res.status === 401){ //if unauthorized return to login screen
-        window.location.replace('/');
+        window.location.replace('/login');
         throw new Error(res.statusText);
       }
       if(res.status !== 200){
@@ -22,17 +22,17 @@ export default function handleGet(url,action) {
       if(json.error){
         throw new Error(json.error);
       }
-      if(this.props.dispatch && json.message){
+      if(this && json.message){
         this.props.dispatch(addSuccessMsg(json.message));
       }
-      if(this.props.dispatch && json.payload){
+      if(this && json.payload){
         return this.props.dispatch(action(json.payload));
       }
       return json;
     }
   ).catch(
     (err) => {
-      if(this.props.dispatch){
+      if(this){
         this.props.dispatch(addErrorMsg(`Error in GET response from ${url}, check logs for more info`));
       }
       return console.error(`Error in GET response from ${url}`,err);

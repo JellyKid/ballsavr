@@ -17,6 +17,12 @@ function getCurrentUser(req, res, next) {
       });
     });
   }
+  if(res.locals.nousers){
+    return res.status(202).send({
+      status: 202,
+      message: "No users found. First time setup, please create a new user."
+    });
+  }
   return res.redirect('/');
 }
 

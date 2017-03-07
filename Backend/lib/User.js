@@ -4,6 +4,7 @@ const checkAuth = require('./auth/checkAuth');
 const logout = require('./auth/logout');
 const login = require('./auth/login');
 
+const noUsersCheck = require('./user/noUsersCheck');
 const getCurrentUserDB = require('./db/getCurrentUser');
 const getUserByToken = require('./db/getUserByToken');
 
@@ -20,6 +21,7 @@ function formatFirstName(firstName) {
 
 router.all(
   '/user/*',
+  noUsersCheck,
   checkAuth
 );
 
@@ -32,27 +34,27 @@ router.get(
   })
 );
 
-router.get(
-  '/logout',
-  logout,
-  (req,res) => res.redirect('/')
-);
-
-router.get(
-  '/token',
-  getUserByToken,
-  (req, res) => res.status(200).send(res.locals.user)
-);
-
-router.post(
-  '/register',
-  register,
-  login,
-  (req,res) => res.status(200).send({
-    status: 200,
-    message: `Welcome ${formatFirstName(res.locals.user.firstName)} to Tricity Pinball!`
-  })
-);
+// router.get(
+//   '/logout',
+//   logout,
+//   (req,res) => res.redirect('/')
+// );
+//
+// router.get(
+//   '/token',
+//   getUserByToken,
+//   (req, res) => res.status(200).send(res.locals.user)
+// );
+//
+// router.post(
+//   '/register',
+//   register,
+//   login,
+//   (req,res) => res.status(200).send({
+//     status: 200,
+//     message: `Welcome ${formatFirstName(res.locals.user.firstName)} to Tricity Pinball!`
+//   })
+// );
 
 
 module.exports = router;
