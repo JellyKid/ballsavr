@@ -8,18 +8,22 @@ const schema = new mongoose.Schema({
   hash: {type: String, select: false},
   facebook: String,
   score: {type: Number, default: 0},
+  admin: {type: Boolean, default: false},
+  enabled: {type: Boolean, default: false},
   meta: {
-    admin: {type: Boolean, default: false},
     authType: {type: String, default: 'local'},
-    enabled: {type: Boolean, default: false},
     active: {type: Boolean, default: false},
     invitationSent: Date,
-    verificationToken: String
+    verificationToken: {type: String, select: false}
   }
 });
 
-schema.set('timestamps', true);
-// schema.set('collection', 'users');
+schema.set({
+  timestamps: {
+    createdAt: 'meta.createdAt',
+    updatedAt: 'meta.updatedAt'
+  }
+});
 
 schema.statics.findByEmail = function(email, cb){
   return this.find({email: new RegExp(email, 'i')}, cb);

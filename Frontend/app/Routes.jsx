@@ -38,10 +38,10 @@ function hookDispatch(dispatch){
 
   return ([
     <Route path="/" component={User} onEnter={this.checkAuthentication}>
-      <Route path="invite" component={Invite} />
       <Route path="tables/edit" component={EditCollection} />
       <Route path="tables" component={Tables} />
       <Route path="users" component={EditUsers} />
+      <Route path="invite" component={Invite} />
     </Route>,
     <Route path="/login" component={Login} />,
     <Route path="/register/:token" component={Register} />

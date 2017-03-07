@@ -13,9 +13,7 @@ function addUser(req, res, next) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      meta: {
-        admin: req.body.admin
-      }
+      admin: req.body.admin      
     });
 
     //save user object to database

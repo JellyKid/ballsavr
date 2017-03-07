@@ -31,7 +31,7 @@ class User extends React.Component {
 
     return (
       <div>
-        <Navigation admin={this.props.user.meta.admin} initials={this.props.user.initials}/>
+        <Navigation admin={this.props.user.admin} initials={this.props.user.initials}/>
         {messageBox}
         {this.props.children}
       </div>

@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     $set : {
       "meta.verificationToken": token,
       "meta.invitationSent": new Date(),
-      "meta.enabled": true
+      enabled : true
     }
   };
   return next();

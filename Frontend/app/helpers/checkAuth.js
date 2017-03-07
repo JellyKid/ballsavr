@@ -8,8 +8,7 @@ export default function checkAuth(){
       credentials: 'same-origin'
     }
   ).then(
-    (res) => {
-      console.log(res);
+    (res) => {      
       if(res.status !== 200){
         return {authenticated: false};
       }

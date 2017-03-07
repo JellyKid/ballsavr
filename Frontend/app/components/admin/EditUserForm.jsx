@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../../helpers/handlers';
-import handleSubmit from '../../helpers/handleSubmit';
+import handlePost from '../../helpers/handlePost';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 
@@ -15,17 +15,27 @@ class EditUserForm extends React.Component {
         email : this.props.user.email,
         initials : this.props.user.initials,
         score: this.props.user.score,
-        admin : this.props.user.meta.admin,
-        enabled: this.props.user.meta.enabled
+        admin : this.props.user.admin,
+        enabled: this.props.user.enabled
       },
       lastModified: this.props.user.updatedAt,
       submitDisabled : false
     };
-    this.handleSubmit = handleSubmit.bind(this);
+    this.handlePost = handlePost.bind(this);
     this.handleChange = handleChange.bind(this);
     this.handleCheck = handleCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
+
+  // handleSave(){
+  //   this.setState({submitDisabled: false});
+  //   this.handlePost(
+  //     '/api/admin/user',
+  //     this.state.form,
+  //
+  //   );
+  // }
 
   handleInitialsChange(e){
     if(e.target.value.length < 4){
@@ -96,7 +106,7 @@ class EditUserForm extends React.Component {
         <FormGroup>
           <Col sm={12}>
             <ButtonToolbar>
-              <Button disabled={this.state.submitDisabled} bsStyle='success' type='submit'>Save</Button>
+              <Button disabled={this.state.submitDisabled} bsStyle='success' >Save</Button>
               <Button onClick={this.props.cancelEdit}>Cancel</Button>
             </ButtonToolbar>
           </Col>

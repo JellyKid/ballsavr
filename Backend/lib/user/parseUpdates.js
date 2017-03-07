@@ -14,7 +14,7 @@ function parseUpdates(req, res, next) {
         lastName: req.body.lastName,
         email: req.body.emailName,
         initials: req.body.initials,
-        "meta.admin" : req.body.admin
+        admin : req.body.admin
       }
     };
   } else if (req.user === req.body._id){

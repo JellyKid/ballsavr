@@ -64,7 +64,7 @@ class Tables extends React.Component {
 function mapStateToProps(state) {
   return {
     currentTables: state.currentTables,
-    admin: state.user.meta.admin
+    admin: state.user.admin
   };
 }
 

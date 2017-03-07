@@ -65,7 +65,7 @@ class EditUsers extends React.Component {
 function mapStateToProps(state) {
   return {
     users: state.users,
-    admin: state.user.meta.admin
+    admin: state.user.admin
   };
 }
 

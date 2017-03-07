@@ -5,7 +5,7 @@ export function setUser(state, user) {
     $merge : {
       user: user,
       authenticated: true,
-      admin: user.meta.admin
+      admin: user.admin
     }
   });
 }

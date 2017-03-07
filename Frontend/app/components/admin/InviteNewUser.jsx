@@ -31,7 +31,7 @@ class AddUser extends React.Component {
           <FormControl type="input" name="lastName" value={this.state.form.lastName} onChange={this.handleChange}/>
           <ControlLabel>Email </ControlLabel>
           <FormControl type="email" name="email" placeholder="required field" value={this.state.form.email} onChange={this.handleChange}/>
-          <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Is Admin</Checkbox>
+          <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Admin</Checkbox>
         </Col>
       </FormGroup>
       <FormGroup>
