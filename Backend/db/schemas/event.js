@@ -9,14 +9,14 @@ const schema = new mongoose.Schema(
     localimg: String,
     extlink: String,
     enabled: {type: Boolean, default: true},
-    startdate: Date,
-    enddate: Date,
+    start: Date,
+    end: Date,
     rounds : [
       {
         name: String,
         order: Number,
-        startdate: Date,
-        enddate: Date,
+        start: Date,
+        end: Date,
         tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}]
       }
     ]

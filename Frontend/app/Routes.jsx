@@ -11,6 +11,8 @@ import Tables from './components/Tables';
 import EditCollection from './components/admin/EditCollection';
 import EditUsers from './components/admin/EditUsers';
 import Setup from './components/Setup';
+import Events from './components/Events';
+import AddEventForm from './components/admin/AddEventForm';
 
 //ajax calls
 import checkAuth from './helpers/checkAuth';
@@ -48,6 +50,8 @@ function hookDispatch(dispatch){
       <Route path="tables" component={Tables} />
       <Route path="users" component={EditUsers} />
       <Route path="invite" component={Invite} />
+      <Route path="events" component={Events} />
+      <Route path="events/add" component={AddEventForm} />
     </Route>,
     <Route path="/setup" component={Setup} />,
     <Route path="/login" component={Login} />,

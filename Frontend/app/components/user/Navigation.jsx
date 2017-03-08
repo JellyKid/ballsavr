@@ -18,7 +18,9 @@ class Navigation extends React.Component {
         <MenuItem onSelect={() => browserHistory.push('/invite')}>Invite New User</MenuItem>
         <MenuItem onSelect={() => browserHistory.push('/users')}>Edit Users</MenuItem>
         <MenuItem divider />
-        <MenuItem onSelect={() => browserHistory.push('/tables/edit')}>Edit Collection</MenuItem>
+        <MenuItem onSelect={() => browserHistory.push('/tables/edit')}>Edit Tables</MenuItem>
+        <MenuItem divider />
+        <MenuItem onSelect={() => browserHistory.push('/events')}>Events</MenuItem>
       </NavDropdown>
     ) : "";
 
