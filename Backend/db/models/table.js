@@ -1,4 +1,4 @@
 const mongoose = require('mongoose');
-const userSchema = require('../schemas/table');
+const schema = require('../schemas/table');
 
-module.exports = mongoose.model('table', userSchema, 'tables');
+module.exports = mongoose.model('table', schema, 'tables');

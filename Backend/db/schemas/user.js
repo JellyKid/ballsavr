@@ -8,7 +8,6 @@ const schema = new mongoose.Schema(
     initials: {type: String, default: 'AAA'},
     hash: {type: String, select: false},
     facebook: String,
-    score: {type: Number, default: 0},
     admin: {type: Boolean, default: false},
     enabled: {type: Boolean, default: false},
     meta: {
@@ -20,25 +19,15 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: {
-      updatedAt: 'meta.updatedAt'
+      updatedAt: "meta.updatedAt",
+      createdAt: "meta.createdAt"
     }
   }
 );
 
-schema.set({timestamps: {updatedAt: 'meta.updatedAt'}  });
-schema.set({
-  timestamps: {
-    createdAt: 'meta.createdAt',
-    updatedAt: 'meta.updatedAt'
-  }
-});
 
 schema.statics.findByEmail = function(email, cb){
   return this.find({email: new RegExp(email, 'i')}, cb);
-};
-
-schema.query.byEmail = function(email){
-  return this.find({email: new RegExp(email,'i')});
 };
 
 schema.statics.findByToken = function(token, cb){
