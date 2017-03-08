@@ -2,6 +2,7 @@ const router = require('express').Router();
 const getCurrentUser = require('./db/getCurrentUser');
 const isAdmin = require('./auth/isAdmin');
 const inviteUser = require('./admin/inviteUser');
+const deleteUser = require('./admin/deleteUser');
 const updateTablesFromIPDB = require('./admin/updateTablesFromIPDB');
 const getUsers = require('./db/getUsers');
 const parseUpdates = require('./user/parseUpdates');
@@ -52,6 +53,15 @@ router.post(
   updateUser,
   (req, res) => res.status(200).send({
     status: 200
+  })
+);
+
+router.delete(
+  '/admin/user/:id',
+  deleteUser,
+  (req, res) => res.status(200).send({
+    status: 200,
+    message: `User ${res.locals.user.firstName + res.locals.user.lastName} deleted succesfully`
   })
 );
 

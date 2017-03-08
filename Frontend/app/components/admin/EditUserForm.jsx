@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well, Modal } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../../helpers/handlers';
-import handlePost from '../../helpers/handlePost';
-import handleGet from '../../helpers/handleGet';
+import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -25,8 +24,7 @@ class EditUserForm extends React.Component {
       submitDisabled : false,
       showWarn: false
     };
-    this.handlePost = handlePost.bind(this);
-    this.handleGet = handleGet.bind(this);
+    this.handleFetch = handleFetch.bind(this);
     this.handleChange = handleChange.bind(this);
     this.handleCheck = handleCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
@@ -35,21 +33,30 @@ class EditUserForm extends React.Component {
   }
 
   handleDelete(){
-    console.log('Would be deleted');
+    this.setState({submitDisabled: true, showWarn: false});
+    this.handleFetch('DELETE',`/api/admin/user/${this.props.user._id}`).
+      then(
+        (res) => {
+          if(res.status === 200){
+            this.handleFetch('GET','/api/admin/users',null,setUsers);
+            this.props.closeEditor();
+          }
+        }
+      );
   }
 
   handleSave(e){
     e.preventDefault();
-    this.setState({submitDisabled: false});
-    this.handlePost(
-      '/api/admin/user',
-      e.target
-    ).then(
-      () => {
-        this.handleGet('/api/admin/users', setUsers);
-        this.props.closeEditor();
-      }
-    );
+    this.setState({submitDisabled: true});
+    this.handleFetch('POST','/api/admin/user', e.target).
+      then(
+        (res) => {
+          if(res.status === 200){
+            this.handleFetch('GET','/api/admin/users',null,setUsers);
+            this.props.closeEditor();
+          }
+        }
+      );
   }
 
   handleInitialsChange(e){
@@ -77,7 +84,7 @@ class EditUserForm extends React.Component {
           <p>This change cannot be reversed. All scores associated with this user will be removed as well.</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleDelete} bsStyle="danger">Delete</Button>
+          <Button disabled={this.state.submitDisabled} onClick={this.handleDelete} bsStyle="danger" >Delete</Button>
           <Button onClick={() => this.setState({showWarn: false})}>Cancel</Button>
         </Modal.Footer>
       </Modal>
@@ -166,7 +173,7 @@ class EditUserForm extends React.Component {
         <FormGroup>
           <Col sm={12}>
             <ButtonToolbar>
-              <Button disabled={this.state.submitDisabled} bsStyle='success' type="submit">Save</Button>
+              <Button disabled={this.state.submitDisabled} bsStyle='success' type="submit" >Save</Button>
               <Button disabled={this.state.submitDisabled} onClick={() => this.setState({showWarn: true})} bsStyle='danger'>Delete</Button>
               <Button onClick={this.props.closeEditor}>Cancel</Button>
             </ButtonToolbar>

@@ -2,12 +2,27 @@ import update from 'immutability-helper';
 import { browserHistory } from 'react-router';
 import {addErrorMsg, addSuccessMsg} from '../redux/actions';
 
-export default function handleGet(url,action, secondaryMethod) {
+export default function handleFetch(method, url, data, action) {
+  var body, headers = {};
+  if(data){
+    if(data.tagName === 'FORM'){
+      body = new FormData(data);
+    } else {
+      body = JSON.stringify(data);
+      headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+    }
+  }
+
   return fetch(
     url,
     {
       credentials: 'same-origin',
-      method: secondaryMethod || 'GET'
+      method: method,
+      body: body,
+      headers: headers
     }
   ).then(
     (res) => {
