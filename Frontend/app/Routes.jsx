@@ -19,24 +19,9 @@ import handleGet from './helpers/handleGet';
 //redux actions
 import { setUser, addInfoMsg } from './redux/actions';
 
-// function checkAuthentication(nextState, replace, done) {
-//   checkAuth().then(
-//     (res) => {
-//       if(!res.authenticated){
-//         replace('/login');
-//         return done();
-//       }
-//
-//       this.dispatch(setUser(res.user));
-//       return done();
-//     }
-//   );
-// }
-
 function checkAuthentication(nextState, replace, done) {
   handleGet('/api/currentuser').then(
     (res) => {
-      console.log(res);
       if(res.status === 202){
         replace('/setup');
         return done();

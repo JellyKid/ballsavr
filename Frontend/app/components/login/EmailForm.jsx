@@ -28,6 +28,7 @@ class EmailForm extends React.Component {
           if(res.status === 200){
             this.props.dispatch(clearAllMessages());
             browserHistory.push('/');
+            return;
           }
           return this.setState({
             submitDisabled: false,

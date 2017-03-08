@@ -29,7 +29,7 @@ class Tables extends React.Component {
     const currentTables = this.props.currentTables.map(
       (table) => {
         return (
-          <ListGroupItem header={table.name}>
+          <ListGroupItem header={table.name} key={table._id}>
             {table.manufacturer} - {table.manufactureDate}
           </ListGroupItem>
         );
