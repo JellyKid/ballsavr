@@ -2,17 +2,19 @@ const User = require('../../db/models/User');
 
 function parseUpdates(req, res, next) {
   if(!req.body){
+    console.error("No body in post!");
     return next(new Error("No body in post!"));
   }
-
+  console.log(req.body);
   res.locals.user = req.body;
+
 
   if(res.locals.currentUser.admin){
     res.locals.updates = {
       $set: {
         firstName: req.body.firstName, //Here are the fields that the admin can update themselves
         lastName: req.body.lastName,
-        email: req.body.emailName,
+        email: req.body.email,
         initials: req.body.initials,
         admin : req.body.admin
       }
@@ -22,7 +24,7 @@ function parseUpdates(req, res, next) {
       $set: {
         firstName: req.body.firstName, //Here are the fields that the user can update themselves
         lastName: req.body.lastName,
-        email: req.body.emailName,
+        email: req.body.email,
         initials: req.body.initials
       }
     };

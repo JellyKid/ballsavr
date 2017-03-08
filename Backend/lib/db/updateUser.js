@@ -3,6 +3,8 @@ const User = require('../../db/models/user');
 function updateUser(req, res, next) {
   if(!res.locals.user._id || !res.locals.updates){
     console.error("missing updates or user._id");
+    console.error("user._id:",res.locals.user._id);
+    console.error("updates:",res.locals.updates);
     return res.status(500).send({
       alert: "Internal Error: Updating User",
       error: "missing local.updates or user._id"

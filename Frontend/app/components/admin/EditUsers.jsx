@@ -23,8 +23,6 @@ class EditUsers extends React.Component {
   }
 
   render(){
-
-
     const users = this.props.users.map(
       (user) => {
         return (
@@ -40,16 +38,9 @@ class EditUsers extends React.Component {
 
     const view = this.state.user ? ( //if user is selected show user edit page else show user list
       <Well>
-        <EditUserForm user={this.state.user} cancelEdit={  () => this.setState({ user: null }) }/>
+        <EditUserForm user={this.state.user} closeEditor={() => this.setState({ user: null })}/>
       </Well>
     ) : <ListGroup>{users}</ListGroup>;
-
-    // const view = this.state.user ? ( //if user is selected show user edit page else show user list
-    //   <div>
-    //     You would edit here
-    //   </div>
-    // ) : <ListGroup>{users}</ListGroup>;
-
 
     return(
       <Grid>

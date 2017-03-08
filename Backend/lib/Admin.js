@@ -7,6 +7,7 @@ const getUsers = require('./db/getUsers');
 const parseUpdates = require('./user/parseUpdates');
 const updateUser = require('./db/updateUser');
 const jsonParser = require('body-parser').json();
+const parseForm = require('multer')().none();
 
 router.all(
   '/admin/*',
@@ -36,7 +37,7 @@ router.get(
 
 router.get(
   '/admin/users',
-  getUsers,  
+  getUsers,
   (req, res) => res.status(200).send({
     status: 200,
     payload: res.locals.users
@@ -46,12 +47,11 @@ router.get(
 
 router.post(
   '/admin/user',
-  jsonParser,
+  parseForm,
   parseUpdates,
   updateUser,
   (req, res) => res.status(200).send({
-    status: 200,
-    message: `user ${res.body.email} updated`
+    status: 200
   })
 );
 

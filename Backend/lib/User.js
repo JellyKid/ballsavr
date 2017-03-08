@@ -34,27 +34,5 @@ router.get(
   })
 );
 
-// router.get(
-//   '/logout',
-//   logout,
-//   (req,res) => res.redirect('/')
-// );
-//
-// router.get(
-//   '/token',
-//   getUserByToken,
-//   (req, res) => res.status(200).send(res.locals.user)
-// );
-//
-// router.post(
-//   '/register',
-//   register,
-//   login,
-//   (req,res) => res.status(200).send({
-//     status: 200,
-//     message: `Welcome ${formatFirstName(res.locals.user.firstName)} to Tricity Pinball!`
-//   })
-// );
-
 
 module.exports = router;

@@ -1,9 +1,12 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well, Modal } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../../helpers/handlers';
 import handlePost from '../../helpers/handlePost';
+import handleGet from '../../helpers/handleGet';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import { setUsers } from '../../redux/actions';
 
 class EditUserForm extends React.Component {
   constructor(props){
@@ -19,20 +22,33 @@ class EditUserForm extends React.Component {
         enabled: this.props.user.enabled
       },
       lastModified: this.props.user.meta.updatedAt,
-      submitDisabled : false
+      submitDisabled : false,
+      showWarn: false
     };
     this.handlePost = handlePost.bind(this);
+    this.handleGet = handleGet.bind(this);
     this.handleChange = handleChange.bind(this);
     this.handleCheck = handleCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleSave(){
+  handleDelete(){
+    console.log('Would be deleted');
+  }
+
+  handleSave(e){
+    e.preventDefault();
     this.setState({submitDisabled: false});
     this.handlePost(
       '/api/admin/user',
-      this.state.form
+      e.target
+    ).then(
+      () => {
+        this.handleGet('/api/admin/users', setUsers);
+        this.props.closeEditor();
+      }
     );
   }
 
@@ -41,14 +57,32 @@ class EditUserForm extends React.Component {
       this.setState(update(
         this.state,
         {
-          $set: {
-            form: {initials : e.target.value.toUpperCase()}
+          form: {
+            initials: {$set : e.target.value.toUpperCase()}
           }
         }
       ));
     }
   }
   render(){
+    const deleteWarning = (
+      <Modal
+        show={this.state.showWarn}
+        onHide={() => this.setState({showWarn: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Are you sure you want to delete {this.props.user.firstName} {this.props.user.lastName}?</h4>
+          <p>This change cannot be reversed. All scores associated with this user will be removed as well.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleDelete} bsStyle="danger">Delete</Button>
+          <Button onClick={() => this.setState({showWarn: false})}>Cancel</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
     const adminCheck = (
       <Checkbox
         name="admin"
@@ -61,12 +95,13 @@ class EditUserForm extends React.Component {
 
     const activated = !this.props.user.meta.activated ? (
       <div style={{color: "red"}}>
-        <h4>Not Activated </h4>
+        <h4>Not Activated</h4>
       </div>
     ) : "";
 
     const form = (
-      <Form horizontal onSubmit={this.handleSubmit}>
+      <Form horizontal onSubmit={this.handleSave}>
+        <FormControl type="hidden" name="_id" value={this.props.user._id}/>
         <FormGroup>
           <Col sm={3} lg={2}>
             <ControlLabel>First Name</ControlLabel>
@@ -131,16 +166,21 @@ class EditUserForm extends React.Component {
         <FormGroup>
           <Col sm={12}>
             <ButtonToolbar>
-              <Button disabled={this.state.submitDisabled} bsStyle='success' >Save</Button>
-              <Button disabled={this.state.submitDisabled} bsStyle='danger'>Delete</Button>
-              <Button onClick={this.props.cancelEdit}>Cancel</Button>
+              <Button disabled={this.state.submitDisabled} bsStyle='success' type="submit">Save</Button>
+              <Button disabled={this.state.submitDisabled} onClick={() => this.setState({showWarn: true})} bsStyle='danger'>Delete</Button>
+              <Button onClick={this.props.closeEditor}>Cancel</Button>
             </ButtonToolbar>
           </Col>
         </FormGroup>
       </Form>
     );
 
-    return form;
+    return (
+      <div>
+        {deleteWarning}
+        {form}
+      </div>
+    );
   }
 }
 
