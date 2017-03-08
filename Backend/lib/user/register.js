@@ -22,7 +22,7 @@ function createUpdates(req, res, next) {
 
 router.use(
   parseForm,
-  getUserByToken,
+  getUserByToken,  
   hashPassword,
   createUpdates,
   updateUser

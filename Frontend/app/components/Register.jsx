@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Alert, PageHeader, Grid, Well } from 'react-bootstrap';
 import { handleChange, handleCheck } from '../helpers/handlers';
-import handleSubmit from '../helpers/handleSubmit';
+import handlePost from '../helpers/handlePost';
 import handleGet from '../helpers/handleGet';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 class Register extends React.Component {
   constructor(props){
@@ -17,20 +18,23 @@ class Register extends React.Component {
         initials : 'AAA',
         admin : false
       },
+      password: "",
+      passconf: "",
       submitDisabled : true,
       passwordValid : null,
       passwordMatch: null,
       alertMessage: ""
     };
-    this.handleSubmit = handleSubmit.bind(this);
+    this.handlePost = handlePost.bind(this);
     this.handleChange = handleChange.bind(this);
     this.handlePassChange = this.handlePassChange.bind(this);
     this.handleGet = handleGet.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordComplexCheck = this.passwordComplexCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
   }
-  componentDidMount(){    
+  componentDidMount(){
     this.handleGet(
       `/api/token?token=${this.props.params.token}`
     ).then(
@@ -45,6 +49,20 @@ class Register extends React.Component {
         ));
       }
     );
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    this.setState({submitDisabled:true});
+    this.handlePost('/api/register', e.target).
+      then(
+        (res) => {
+          if(res.status === 200){
+            return browserHistory.push('/');
+          }
+          this.setState({submitDisabled: false, alertMessage: res.error});
+        }
+      );
   }
 
   passwordComplexCheck(e){
@@ -98,8 +116,8 @@ class Register extends React.Component {
       this.setState(update(
         this.state,
         {
-          $set: {
-            form: {[e.target.name] : e.target.value.toUpperCase()}
+          form: {
+            initials: {$set : e.target.value.toUpperCase()}
           }
         }
       ));
@@ -143,7 +161,7 @@ class Register extends React.Component {
             <FormControl
               type="password"
               name="password"
-              value={this.state.form.password}
+              value={this.state.password}
               placeholder="password"
               onBlur={this.passwordComplexCheck}
               onChange={this.handlePassChange}/>
