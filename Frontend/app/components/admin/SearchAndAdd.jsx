@@ -37,7 +37,8 @@ class SearchAndAddForm extends React.Component {
       id,
       setCurrentTables
     ).then(
-      () => this.refs.searchAndUpdate.getInstance().clear()
+      // () => this.refs.searchAndUpdate.getInstance().clear()
+      () => this.searchAndUpdate.getInstance().clear()
     );
   }
 
@@ -53,7 +54,7 @@ class SearchAndAddForm extends React.Component {
 
   render(){
     return <AsyncTypeahead
-      ref="searchAndUpdate"
+      ref={(comp) => this.searchAndUpdate = comp}
       filterBy={(table) => !table.enabled}
       bsSize="large"
       labelKey="name"

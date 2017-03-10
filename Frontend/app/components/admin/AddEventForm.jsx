@@ -1,10 +1,13 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well, Grid } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well, Grid, Modal } from 'react-bootstrap';
 import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { setUsers } from '../../redux/actions';
+import moment from 'moment';
+import InputMoment from 'input-moment';
+import "../../style/input-moment.css";
 
 
 class AddEventForm extends React.Component {
@@ -14,16 +17,17 @@ class AddEventForm extends React.Component {
       event :{
         title: "",
         subtitle: "",
-        type: "Tournament - 4,2,0",
+        type: "",
         description: "",
         localimg: "",
         extlink: "",
         start: new Date(),
-        end: new Date(),
         rounds: []
       },
-      submitDisabled : false
+      submitDisabled : false,
+      showDateTime: false
     };
+
     this.handleFetch = handleFetch.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -57,35 +61,83 @@ class AddEventForm extends React.Component {
   render(){
 
 
+    const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
+
+    const datetime = (
+      <Modal
+        show={this.state.showDateTime}
+        onHide={() => this.setState({showDateTime: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>{formattedDateTime}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputMoment
+            moment={moment(this.state.event.start)}
+            onChange={
+              (m) => this.setState(update(
+                this.state,
+                {
+                  event: { start : {$set:m.toDate()}}
+                }
+              ))
+            }
+            onSave={() => this.setState({showDateTime: false})}/>
+        </Modal.Body>
+      </Modal>
+    );
+
     const form = (
       <Form horizontal onSubmit={this.handleSave}>
         <FormGroup>
-          <Col sm={2}>
+          <Col md={2}>
             <ControlLabel>Title</ControlLabel>
           </Col>
-          <Col sm={10}>
+          <Col md={10}>
             <FormControl type="text" name="title" value={this.state.event.title} onChange={this.handleChange}/>
           </Col>
-          <Col sm={2}>
+          <Col md={2}>
             <ControlLabel>Subtitle</ControlLabel>
           </Col>
-          <Col sm={10}>
+          <Col md={10}>
             <FormControl type="text" name="subtitle" value={this.state.event.subtitle} onChange={this.handleChange}/>
           </Col>
         </FormGroup>
 
         <FormGroup>
-          <Col sm={3} lg={2}>
-            <ControlLabel>Title</ControlLabel>
+          <Col md={2}>
+            <ControlLabel>Description</ControlLabel>
           </Col>
-          <Col sm={3} lg={4}>
-            <FormControl type="text" name="title" value={this.state.event.title} onChange={this.handleChange}/>
+          <Col sm={12}>
+            <FormControl name="Description" componentClass="textarea" placeholder="Place a short description here..." />
           </Col>
-          <Col sm={3} lg={2}>
-            <ControlLabel>Subtitle</ControlLabel>
+        </FormGroup>
+
+        <FormGroup>
+          <Col md={1}>
+            <ControlLabel>Type</ControlLabel>
           </Col>
-          <Col sm={3} lg={4}>
-            <FormControl type="text" name="subtitle" value={this.state.event.subtitle} onChange={this.handleChange}/>
+          <Col md={4}>
+            <FormControl componentClass="select" name="type" value={this.state.event.type} onChange={this.handleChange}>
+              <option value="tournament">Tournament</option>
+              <option value="leagues">Leagues</option>
+            </FormControl>
+          </Col>
+          <Col md={2}>
+            <ControlLabel>Start Time</ControlLabel>
+          </Col>
+          <Col md={4}>
+
+            <Button
+              // bsStyle="primary"
+              ref={(node) => {this.startTimeButton = node;}}
+              onClick={() => {this.setState({showDateTime: true});}}>{formattedDateTime}
+            </Button>
+
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={12}>
+            <Button bsStyle="success" block bsSize='large'>Create Event!</Button>
           </Col>
         </FormGroup>
 
@@ -93,15 +145,20 @@ class AddEventForm extends React.Component {
     );
 
     return (
-      <Grid>
-        <Col sm={8} smOffset={2}>
-          <Well>
-            <h2>Create New Event</h2>
-            <hr />
-            {form}
-          </Well>
-        </Col>
-      </Grid>
+      <div>
+        {datetime}
+        <Grid>
+          <Col sm={8} smOffset={2}>
+            <Well>
+              <h2>Create New Event</h2>
+              <hr />
+
+              {form}
+            </Well>
+          </Col>
+        </Grid>
+      </div>
+
     );
   }
 }
