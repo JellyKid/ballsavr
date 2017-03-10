@@ -1,0 +1,18 @@
+{
+  "vendor": [
+    "immutability-helper",
+    "input-moment",
+    "react",
+    "react-addons-update",
+    "react-bootstrap",
+    "react-bootstrap-typeahead",
+    "react-dom",
+    "react-redux",
+    "react-router",
+    "redux"
+  ],
+  "externals": {
+    "moment": "moment",
+    "lodash": "_"
+  }
+}

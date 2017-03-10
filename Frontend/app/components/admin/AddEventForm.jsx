@@ -144,7 +144,6 @@ class AddEventForm extends React.Component {
               disabled={this.state.submitDisabled}>Create Event!</Button>
           </Col>
         </FormGroup>
-
       </Form>
     );
 
@@ -155,7 +154,7 @@ class AddEventForm extends React.Component {
         save={(date) => this.setState(update(
           this.state,
           {
-            showDateTime: {$set: false}, 
+            showDateTime: {$set: false},
             event : {start : {$set:date}}
           }
         ))}/>

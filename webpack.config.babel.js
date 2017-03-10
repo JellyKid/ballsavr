@@ -12,11 +12,13 @@ import npmInstallPlugin from "npm-install-webpack-plugin";
 import webpack from "webpack";
 import CleanPlugin from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import _ from "lodash";
+// import _ from "lodash";
+import merge from 'webpack-merge';
 import ExtractTextPlugin from "extract-text-webpack-plugin";
+import nodeExternals from 'webpack-node-externals';
 // import 'whatwg-fetch';
 
-const pkg = require('./frontend.json');
+const pkg = require('./prod_package.json');
 
 
 var TARGET = process.env.npm_lifecycle_event;
@@ -49,15 +51,7 @@ var common = {
     ]
 
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join('Frontend','index.ejs'),
-      title: siteTitle,
-      appMountId: 'app',
-      inject: false,
-      mobile: true
-    })
-  ]
+  plugins: []
 };
 
 var dev = {
@@ -106,15 +100,28 @@ var dev = {
     new npmInstallPlugin({
       save: true
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.join('Frontend','dev.ejs'),
+      title: siteTitle,
+      appMountId: 'app',
+      inject: false,
+      mobile: true
+    })
   ]
 };
 
 var build = {
+  // entry: {
+  //   app: PATHS.app,
+  //   vendor: Object.keys(pkg.vendor),
+  //   externals: Object.keys(pkg.externals)
+  // },
   entry: {
     app: PATHS.app,
-    vendor: Object.keys(pkg.dependencies)
+    vendor: pkg.vendor
   },
+  externals: [nodeExternals({whitelist: pkg.vendor})],
   plugins: [
     new CleanPlugin([PATHS.build]),
     new webpack.optimize.CommonsChunkPlugin({
@@ -130,7 +137,14 @@ var build = {
     }),
     new ExtractTextPlugin('[name].[chunkhash].css'),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.AggressiveMergingPlugin()
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.join('Frontend','prod.ejs'),
+      title: siteTitle,
+      appMountId: 'app',
+      inject: false,
+      mobile: true
+    })
   ],
   output: {
     chunkFilename: '[chunkhash].js',
@@ -152,16 +166,24 @@ var build = {
     }
 };
 
-function arrayConcat(objValue, srcValue) {
-  if(_.isArray(objValue)){
-    return objValue.concat(srcValue);
-  }
-}
+// function arrayConcat(objValue, srcValue) {
+//   if(_.isArray(objValue)){
+//     return objValue.concat(srcValue);
+//   }
+// }
+//
+// if(TARGET === 'build'){
+//   module.exports = _.mergeWith({},common,build,arrayConcat);
+// }
+//
+// if(TARGET === 'dev'){
+//   module.exports = _.mergeWith({},common,dev,arrayConcat);
+// }
 
 if(TARGET === 'build'){
-  module.exports = _.mergeWith({},common,build,arrayConcat);
+  module.exports = merge(common,build);
 }
 
 if(TARGET === 'dev'){
-  module.exports = _.mergeWith({},common,dev,arrayConcat);
+  module.exports = merge(common,dev);
 }
