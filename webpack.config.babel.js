@@ -16,7 +16,7 @@ import _ from "lodash";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 // import 'whatwg-fetch';
 
-const pkg = require('./package.json');
+const pkg = require('./frontend.json');
 
 
 var TARGET = process.env.npm_lifecycle_event;
