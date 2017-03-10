@@ -34,6 +34,7 @@ app.use(passport.session());
 //API middleware
 app.use(require('./lib/Auth'));
 app.use(require('./lib/Admin'));
+app.use(require('./lib/Event'));
 app.use(require('./lib/User'));
 app.use(require('./lib/Table'));
 app.use(require('./lib/Public'));

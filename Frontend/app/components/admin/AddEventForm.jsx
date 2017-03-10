@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { setUsers } from '../../redux/actions';
 import moment from 'moment';
-import InputMoment from 'input-moment';
-import "../../style/input-moment.css";
+import DateTimeEditor from './event/DateTimeEditor';
 
 
 class AddEventForm extends React.Component {
@@ -17,13 +16,14 @@ class AddEventForm extends React.Component {
       event :{
         title: "",
         subtitle: "",
-        type: "",
+        type: "tournament",
         description: "",
         localimg: "",
         extlink: "",
         start: new Date(),
         rounds: []
       },
+      players: [],
       submitDisabled : false,
       showDateTime: false
     };
@@ -46,13 +46,13 @@ class AddEventForm extends React.Component {
   handleSave(e){
     e.preventDefault();
     this.setState({submitDisabled: true});
-    this.handleFetch('POST','/api/admin/user', e.target).
+    this.handleFetch('POST','/api/admin/event', {event: this.state.event}).
       then(
         (res) => {
           if(res.status === 200){
-            this.handleFetch('GET','/api/admin/users',null,setUsers);
-            this.props.closeEditor();
+            return browserHistory.push('/events');
           }
+          return this.setState({submitDisabled: false});
         }
       );
   }
@@ -63,28 +63,28 @@ class AddEventForm extends React.Component {
 
     const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
 
-    const datetime = (
-      <Modal
-        show={this.state.showDateTime}
-        onHide={() => this.setState({showDateTime: false})}>
-        <Modal.Header closeButton>
-          <Modal.Title>{formattedDateTime}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <InputMoment
-            moment={moment(this.state.event.start)}
-            onChange={
-              (m) => this.setState(update(
-                this.state,
-                {
-                  event: { start : {$set:m.toDate()}}
-                }
-              ))
-            }
-            onSave={() => this.setState({showDateTime: false})}/>
-        </Modal.Body>
-      </Modal>
-    );
+    // const datetime = (
+    //   <Modal
+    //     show={this.state.showDateTime}
+    //     onHide={() => this.setState({showDateTime: false})}>
+    //     <Modal.Header closeButton>
+    //       <Modal.Title>{formattedDateTime}</Modal.Title>
+    //     </Modal.Header>
+    //     <Modal.Body>
+    //       <InputMoment
+    //         moment={moment(this.state.event.start)}
+    //         onChange={
+    //           (m) => this.setState(update(
+    //             this.state,
+    //             {
+    //               event: { start : {$set:m.toDate()}}
+    //             }
+    //           ))
+    //         }
+    //         onSave={() => this.setState({showDateTime: false})}/>
+    //     </Modal.Body>
+    //   </Modal>
+    // );
 
     const form = (
       <Form horizontal onSubmit={this.handleSave}>
@@ -108,7 +108,7 @@ class AddEventForm extends React.Component {
             <ControlLabel>Description</ControlLabel>
           </Col>
           <Col sm={12}>
-            <FormControl name="Description" componentClass="textarea" placeholder="Place a short description here..." />
+            <FormControl name="description" componentClass="textarea" onChange={this.handleChange} placeholder="Place a short description here..." />
           </Col>
         </FormGroup>
 
@@ -128,7 +128,6 @@ class AddEventForm extends React.Component {
           <Col md={4}>
 
             <Button
-              // bsStyle="primary"
               ref={(node) => {this.startTimeButton = node;}}
               onClick={() => {this.setState({showDateTime: true});}}>{formattedDateTime}
             </Button>
@@ -137,28 +136,44 @@ class AddEventForm extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col sm={12}>
-            <Button bsStyle="success" block bsSize='large'>Create Event!</Button>
+            <Button
+              bsStyle="success"
+              block
+              bsSize='large'
+              type="submit"
+              disabled={this.state.submitDisabled}>Create Event!</Button>
           </Col>
         </FormGroup>
 
       </Form>
     );
 
+    const dateTimeEditor = (
+      <DateTimeEditor
+        show={this.state.showDateTime}
+        hide={() => this.setState({showDateTime: false})}
+        save={(date) => this.setState(update(
+          this.state,
+          {
+            showDateTime: {$set: false}, 
+            event : {start : {$set:date}}
+          }
+        ))}/>
+    );
+
     return (
       <div>
-        {datetime}
         <Grid>
           <Col sm={8} smOffset={2}>
             <Well>
               <h2>Create New Event</h2>
               <hr />
-
+              {dateTimeEditor}
               {form}
             </Well>
           </Col>
         </Grid>
       </div>
-
     );
   }
 }
