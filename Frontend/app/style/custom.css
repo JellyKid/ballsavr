@@ -1,4 +1,19 @@
+html {
+  height: 100%;
+}
+
 body {
   background-color: rgb(142, 142, 142);
+  background-image: url('../assets/vice_bg.png');
+  background-size: contain;
   padding-top: 70px;
+
+}
+
+h1 {
+  color: white;
+}
+
+h1 small {
+  color: rgb(228, 228, 228);
 }

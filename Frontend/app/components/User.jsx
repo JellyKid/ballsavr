@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Navigation from './user/Navigation';
 import MessageBox from './user/MessageBox';
 import { Link } from 'react-router';
-import { Alert, Grid, Col } from 'react-bootstrap';
+import { Alert, Grid, Col, Image } from 'react-bootstrap';
 import { clearMessage } from '../redux/actions';
+import logoImage from '../assets/logo.png';
 
 class User extends React.Component {
   constructor(props) {
@@ -30,6 +31,14 @@ class User extends React.Component {
       </Grid>
     ) : "";
 
+    const logo = this.props.children ? null : (
+      <Grid>
+        <Col sm={12}>
+          <Image src={logoImage} responsive />
+        </Col>
+      </Grid>
+    );
+
     return (
       <div>
         <Navigation admin={this.props.user.admin} initials={this.props.user.initials}/>
@@ -38,6 +47,7 @@ class User extends React.Component {
             <MessageBox />
           </Col>
         </Grid>
+        {logo}
         {this.props.children}
       </div>
     );
