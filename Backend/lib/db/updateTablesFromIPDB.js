@@ -1,8 +1,9 @@
+const path = require('path');
 const router = require('express').Router();
 
-const checkAuth = require('../auth/checkAuth');
-const getCurrentUser = require('../db/getCurrentUser');
-const isAdmin = require('../auth/isAdmin');
+const checkAuth = require(path.normalize('../auth/checkAuth'));
+const getCurrentUser = require(path.normalize('../db/getCurrentUser'));
+const isAdmin = require(path.normalize('../auth/isAdmin'));
 
 const fetch = require('node-fetch');
 const jsdom = require('jsdom');

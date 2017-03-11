@@ -1,4 +1,5 @@
-const Event = require('../../db/models/event');
+const path = require('path');
+const Event = require(path.normalize('../../db/models/event'));
 
 function addEvent(req, res, next) {
   let event = new Event({

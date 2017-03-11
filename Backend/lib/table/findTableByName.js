@@ -1,4 +1,5 @@
-const Table = require('../../db/models/table');
+const path = require('path');
+const Table = require(path.normalize('../../db/models/table'));
 
 function findTableByName(req, res, next) {
   if(req.params.query){

@@ -1,8 +1,9 @@
+const path = require('path');
 const router = require('express').Router();
-const getUserByToken = require('../db/getUserByToken');
+const getUserByToken = require(path.normalize('../db/getUserByToken'));
 const parseForm = require('multer')().none(); //multipart body-parser
-const hashPassword = require('../auth/hash');
-const updateUser = require('../db/updateUser');
+const hashPassword = require(path.normalize('../auth/hash'));
+const updateUser = require(path.normalize('../db/updateUser'));
 
 function createUpdates(req, res, next) {
   res.locals.updates = {
@@ -22,7 +23,7 @@ function createUpdates(req, res, next) {
 
 router.use(
   parseForm,
-  getUserByToken,  
+  getUserByToken,
   hashPassword,
   createUpdates,
   updateUser

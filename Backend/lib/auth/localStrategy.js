@@ -1,8 +1,9 @@
+const path = require('path');
 const passport = require('passport');
 const strategy = require('passport-local').Strategy;
 
-const User = require('../../db/models/user');
-const crypto = require('./crypto');
+const User = require(path.normalize('../../db/models/user'));
+const crypto = require(path.normalize('./crypto'));
 
 passport.use(new strategy(
   function(userid, password, done) {

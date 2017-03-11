@@ -1,4 +1,5 @@
-const User = require('../../db/models/user');
+const path = require('path');
+const User = require(path.normalize('../../db/models/user'));
 
 function deleteUser(req, res, next) {
   return User.findOneAndRemove(

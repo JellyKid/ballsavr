@@ -1,4 +1,5 @@
-const User = require('../../db/models/user');
+const path = require('path');
+const User = require(path.normalize('../../db/models/user'));
 
 function addUser(req, res, next) {
   //See if there is already a user with that email. Send 409 if found.
@@ -13,7 +14,7 @@ function addUser(req, res, next) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      admin: req.body.admin      
+      admin: req.body.admin
     });
 
     //save user object to database

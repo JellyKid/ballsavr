@@ -1,4 +1,5 @@
-const User = require('../../db/models/user');
+const path = require('path');
+const User = require(path.normalize('../../db/models/user'));
 
 function updateUser(req, res, next) {
   if(!res.locals.user._id || !res.locals.updates){

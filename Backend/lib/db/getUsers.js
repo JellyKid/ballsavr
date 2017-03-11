@@ -1,4 +1,5 @@
-const User = require('../../db/models/User');
+const path = require('path');
+const User = require(path.normalize('../../db/models/User'));
 
 function getUsers(req,res,next) {
   return User.
