@@ -121,7 +121,7 @@ var build = {
     app: PATHS.app,
     vendor: pkg.vendor
   },
-  externals: [nodeExternals({whitelist: pkg.vendor})],
+  // externals: [nodeExternals({whitelist: pkg.vendor})],
   plugins: [
     new CleanPlugin([PATHS.build]),
     new webpack.optimize.CommonsChunkPlugin({
