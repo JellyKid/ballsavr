@@ -159,8 +159,9 @@ var build = {
           include: PATHS.app
         },
         {
-          test: /\.png$/,
-          loaders: ['file-loader']
+          test: /\.(jpe?g|png|gif|svg)$/,
+          loaders: ['file-loader'],
+          include: PATHS.app
         }
       ]
     }
