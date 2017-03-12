@@ -39,6 +39,11 @@ app.use(require('./lib/User'));
 app.use(require('./lib/Table'));
 app.use(require('./lib/Public'));
 
-app.listen(PORT, HOST);
+app.listen(
+  PORT,
+  HOST,
+  127,
+  () => console.log(`Server listening on ${HOST}:${PORT}`)
+);
 
 module.exports = app;
