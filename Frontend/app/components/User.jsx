@@ -42,13 +42,15 @@ class User extends React.Component {
     return (
       <div>
         <Navigation admin={this.props.user.admin} initials={this.props.user.initials}/>
-        <Grid>
-          <Col sm={8} smOffset={2}>
-            <MessageBox />
-          </Col>
-        </Grid>
-        {logo}
-        {this.props.children}
+        <div className="app-window">
+          <Grid>
+            <Col sm={8} smOffset={2}>
+              <MessageBox />
+            </Col>
+          </Grid>
+          {logo}
+          {this.props.children}
+        </div>
       </div>
     );
 

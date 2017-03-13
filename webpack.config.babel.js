@@ -23,7 +23,8 @@ var TARGET = process.env.npm_lifecycle_event;
 
 const PATHS = {
   app: path.join(__dirname,'Frontend','app'),
-  build: path.join(__dirname, 'Frontend','build')
+  build: path.join(__dirname, 'Frontend','build'),
+  nomangle: path.join(__dirname,'Frontend','app','assets','nomangle')
 };
 
 var common = {
@@ -45,6 +46,22 @@ var common = {
         test: /\.json$/,
         loaders: ['json-loader'],
         include: PATHS.app
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+        include: PATHS.app
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/,
+        loaders: ['file-loader'],
+        include: PATHS.app,
+        exclude: PATHS.nomangle
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/,
+        loaders: ['file-loader?name=[name].[ext]'],
+        include: PATHS.nomangle
       }
     ]
 
@@ -76,20 +93,6 @@ var dev = {
       }
     }
   },
-  module: {
-    loaders: [
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-        include: PATHS.app
-      },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/,
-        loaders: ['file-loader'],
-        include: PATHS.app
-      }
-    ]
-  },
   output: {
     publicPath: "/"
   },
@@ -103,7 +106,8 @@ var dev = {
       title: siteTitle,
       appMountId: 'app',
       inject: false,
-      mobile: true
+      mobile: true,
+      appIcon: 'app_icon.png'      
     })
   ]
 };
@@ -143,21 +147,7 @@ var build = {
     chunkFilename: '[chunkhash].js',
     filename: '[name].[chunkhash].js',
     path: PATHS.build
-  },
-  module: {
-      loaders: [
-        {
-          test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', 'css'),
-          include: PATHS.app
-        },
-        {
-          test: /\.(jpe?g|png|gif|svg)$/,
-          loaders: ['file-loader'],
-          include: PATHS.app
-        }
-      ]
-    }
+  }
 };
 
 

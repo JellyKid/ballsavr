@@ -7,9 +7,11 @@ import store from './redux/store';
 
 import './style/bs.css';
 import './style/custom.css';
+import './assets/nomangle/app_icon.png';
 
 // import Admin from './components/Admin.jsx';
 import Routes from './Routes';
+
 
 const app = (
   <Provider store={store}>

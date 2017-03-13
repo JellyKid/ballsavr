@@ -139,7 +139,6 @@ class EditCollection extends React.Component {
             {backButton}
             <hr />
             {updateButton}
-
           </Col>
         </Col>
       </Grid>

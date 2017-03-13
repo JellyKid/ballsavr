@@ -11,6 +11,11 @@
   <% if (htmlWebpackPlugin.files.favicon) { %>
   <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
   <% } %>
+  <% if (htmlWebpackPlugin.options.appIcon) { %>
+  <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.appIcon%>" />
+  <% } %>
+
+
   <% if (htmlWebpackPlugin.options.mobile) { %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
   <meta name="apple-mobile-web-app-capable" content="yes">

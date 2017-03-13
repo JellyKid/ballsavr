@@ -6,8 +6,7 @@ body {
   background-color: rgb(142, 142, 142);
   background-image: url('../assets/vice_bg.png');
   background-size: contain;
-  padding-top: 70px;
-
+  background-attachment: fixed;
 }
 
 h1 {
@@ -16,4 +15,15 @@ h1 {
 
 h1 small {
   color: rgb(228, 228, 228);
+}
+
+.app-window{
+  padding-top: 70px;
+  padding-bottom: 15px;
+}
+
+.top-logo{
+  width: 36px;
+  height: 36px;
+  margin: -7px;
 }
