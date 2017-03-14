@@ -10,16 +10,7 @@ const schema = new mongoose.Schema(
     extlink: String,
     enabled: {type: Boolean, default: true},
     start: Date,
-    end: Date,
-    rounds : [
-      {
-        name: String,
-        order: Number,
-        start: Date,
-        end: Date,
-        tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}]
-      }
-    ]
+    end: Date    
   },
   {
     timestamps: {
