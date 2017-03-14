@@ -30,8 +30,7 @@ class SearchAndAddForm extends React.Component {
     );
   }
 
-  handleClick(id){
-    console.log(id);
+  handleClick(id){    
     this.handlePost(
       '/api/table/admin/enable',
       id,
