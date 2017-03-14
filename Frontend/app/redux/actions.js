@@ -68,3 +68,11 @@ export function setUsers(users) {
     payload: users
   };
 }
+
+export const SET_EVENTS = 'SET_EVENTS';
+export function setEvents(events) {
+  return {
+    type: SET_EVENTS,
+    payload: events
+  };
+}

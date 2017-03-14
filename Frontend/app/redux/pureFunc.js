@@ -83,3 +83,12 @@ export function setCurrentTables(state, tables) {
     }
   );
 }
+
+export function setEvents(state, events) {  
+  return update(
+    state,
+    {
+      events: { $set: events}
+    }
+  );
+}

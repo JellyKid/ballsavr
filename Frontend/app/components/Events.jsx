@@ -3,22 +3,32 @@ import { Grid, Col, ButtonToolbar, Button, PageHeader, ListGroup, ListGroupItem 
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import handleFetch from '../helpers/handleFetch';
+import { setEvents } from '../redux/actions';
+import moment from 'moment';
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      event: null
     };
+    this.handleFetch = handleFetch.bind(this);
+  }
+
+  componentWillMount(){
+    this.handleFetch('GET', '/api/events',null, setEvents);
   }
 
   render(){
 
-    const events = this.state.events.map(
+    const events = this.props.events.map(
       (event) => (
-        <ListGroupItem key={event._id}>
+        <ListGroupItem
+          className="mBottom"
+          onClick={() => this.setState({event: event})}
+          key={event._id}>
           <h4>{event.title} <small>{event.subtitle}</small></h4>
-          <p>{event.round} - {new Date(event.start)}</p>
+          <p>{moment(event.start).format('MMM Do YYYY, h:mm a')}</p>
         </ListGroupItem>
       )
     );
@@ -29,6 +39,7 @@ class Events extends React.Component {
 
     const addEventButton = (
       <Button
+        className="mBottom"
         bsSize="large"
         bsStyle="primary"
         onClick={() => browserHistory.push('/events/add')}
@@ -39,18 +50,18 @@ class Events extends React.Component {
       <Grid>
         <Col sm={8} smOffset={2}>
           <PageHeader>Events</PageHeader>
-          <Col sm={12}>
-            <ButtonToolbar>
-              {addEventButton}
-            </ButtonToolbar>
-          </Col>
+          {addEventButton}
           {eventGroup}
         </Col>
       </Grid>
     );
-
   }
-
 }
 
-export default connect()(Events);
+function mapStateToProps(state){
+  return {
+    events: state.events
+  };
+}
+
+export default connect(mapStateToProps)(Events);
