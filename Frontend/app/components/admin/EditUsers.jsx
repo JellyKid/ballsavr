@@ -113,19 +113,12 @@ class EditUsers extends React.Component {
 }
 
 function byName(a, b) {
-  let nameA = a.lastName.toUpperCase();
-  let nameB = b.lastName.toUpperCase();
-  //test lastname
+  let nameA = a.lastName.toUpperCase() + a.firstName.toUpperCase();
+  let nameB = b.lastName.toUpperCase() + b.firstName.toUpperCase();
+
   if (nameA < nameB){return -1;}
   if (nameA > nameB){return 1;}
 
-  //test firstname
-  nameA = a.firstName.toUpperCase();
-  nameB = b.firstName.toUpperCase();
-  if (nameA < nameB){return -1;}
-  if (nameA > nameB){return 1;}
-
-  //both match
   return 0;
 }
 
