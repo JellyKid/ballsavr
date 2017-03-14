@@ -40,9 +40,7 @@ export default function handleFetch(method, url, data, action) {
       if(json.error){
         throw new Error(json.error);
       }
-      if(this && json.message){
-        this.props.dispatch(addSuccessMsg(json.message));
-      }
+      
       if(this && json.payload){
         return this.props.dispatch(action(json.payload));
       }
