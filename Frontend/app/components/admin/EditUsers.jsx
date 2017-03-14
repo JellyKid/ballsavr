@@ -39,7 +39,22 @@ class EditUsers extends React.Component {
     }
   }
 
+  getStyle(user){
+    if(!user.meta.activated){
+      return "danger";
+    }
+    if(!user.enabled){
+      return "warning";
+    }
+    if(user.admin){
+      return "success";
+    }
+    return null;
+  }
+
+
   render(){
+
     const users = this.props.users
       .slice(
         this.state.currentPage * this.state.maxUsersShown,
@@ -51,7 +66,7 @@ class EditUsers extends React.Component {
           <ListGroupItem
             header={`${user.lastName}, ${user.firstName}`}
             key={user._id}
-            bsStyle={user.enabled ? null : "danger"}
+            bsStyle={this.getStyle(user)}
             onClick={() => this.setState({user: user})}>
             {user.initials} - {user.email}
           </ListGroupItem>
