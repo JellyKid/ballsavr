@@ -33,7 +33,7 @@ class AddUser extends React.Component {
       ).then(
         (res) => {
           if(res.status === 200){
-            return browserHistory.push('/');
+            return browserHistory.goBack();
           }
           if(res.error){
             this.props.dispatch(addErrorMsg(res.error));
