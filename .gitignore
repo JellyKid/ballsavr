@@ -1,6 +1,7 @@
 node_modules
 build
 Frontend/app/assets/*
-!Frontend/app/assets/.gitkeep
+!Frontend/app/assets/logo.png
+!Frontend/app/assets/top_logo.png
 update.sh
 .env

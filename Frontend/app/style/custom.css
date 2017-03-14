@@ -4,7 +4,7 @@ html {
 
 body {
   background-color: rgb(142, 142, 142);
-  background-image: url('../assets/vice_bg.png');
+  /*background-image: url('../assets/vice_bg.png');*/
   background-size: contain;
   background-attachment: fixed;
 }

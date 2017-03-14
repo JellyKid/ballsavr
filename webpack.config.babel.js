@@ -107,7 +107,7 @@ var dev = {
       appMountId: 'app',
       inject: false,
       mobile: true,
-      appIcon: 'app_icon.png'      
+      appIcon: 'app_icon.png'
     })
   ]
 };
@@ -140,7 +140,8 @@ var build = {
       title: siteTitle,
       appMountId: 'app',
       inject: false,
-      mobile: true
+      mobile: true,
+      appIcon: 'app_icon.png'
     })
   ],
   output: {
