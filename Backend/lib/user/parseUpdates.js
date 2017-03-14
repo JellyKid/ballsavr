@@ -17,7 +17,8 @@ function parseUpdates(req, res, next) {
         lastName: req.body.lastName,
         email: req.body.email,
         initials: req.body.initials,
-        admin : req.body.admin
+        admin : req.body.admin,
+        enabled: req.body.enabled
       }
     };
   } else if (req.user === req.body._id){
