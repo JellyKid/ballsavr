@@ -51,6 +51,7 @@ class EditUsers extends React.Component {
           <ListGroupItem
             header={`${user.lastName}, ${user.firstName}`}
             key={user._id}
+            bsStyle={user.enabled ? null : "danger"}
             onClick={() => this.setState({user: user})}>
             {user.initials} - {user.email}
           </ListGroupItem>

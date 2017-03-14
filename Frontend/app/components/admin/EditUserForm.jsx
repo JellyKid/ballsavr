@@ -34,8 +34,8 @@ class EditUserForm extends React.Component {
 
   handleDelete(){
     this.setState({submitDisabled: true, showWarn: false});
-    this.handleFetch('DELETE',`/api/admin/user/${this.props.user._id}`).
-      then(
+    this.handleFetch('DELETE',`/api/admin/user/${this.props.user._id}`)
+      .then(
         (res) => {
           if(res.status === 200){
             this.handleFetch('GET','/api/admin/users',null,setUsers);
@@ -48,8 +48,8 @@ class EditUserForm extends React.Component {
   handleSave(e){
     e.preventDefault();
     this.setState({submitDisabled: true});
-    this.handleFetch('POST','/api/admin/user', e.target).
-      then(
+    this.handleFetch('POST','/api/admin/user', e.target)
+      .then(
         (res) => {
           if(res.status === 200){
             this.handleFetch('GET','/api/admin/users',null,setUsers);
