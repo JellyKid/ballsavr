@@ -15,12 +15,10 @@ import Events from './components/Events';
 import AddEventForm from './components/admin/AddEventForm';
 
 //ajax calls
-import checkAuth from './helpers/checkAuth';
-import handleGet from './helpers/handleGet';
 import handleFetch from './helpers/handleFetch';
 
 //redux actions
-import { setUser, addInfoMsg } from './redux/actions';
+import { setUser } from './redux/actions';
 
 function checkAuthentication(nextState, replace, done) {
   handleFetch('GET','/api/currentuser').then(
