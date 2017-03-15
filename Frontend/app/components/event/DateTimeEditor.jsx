@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import InputMoment from 'input-moment';
-import "../../../style/input-moment.css";
+import "../../style/input-moment.css";
 import { Modal } from 'react-bootstrap';
 
 class DateTimeEditor extends React.Component {
@@ -24,9 +24,7 @@ class DateTimeEditor extends React.Component {
         <Modal.Body>
           <InputMoment
             moment={this.state.time}
-            onChange={
-              (m) => this.setState({time: m})
-            }
+            onChange={(m) => this.setState({time: m})}
             onSave={() => this.props.save(this.state.time.toDate())}/>
         </Modal.Body>
       </Modal>

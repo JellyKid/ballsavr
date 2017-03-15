@@ -12,7 +12,7 @@ import EditCollection from './components/admin/EditCollection';
 import EditUsers from './components/admin/EditUsers';
 import Setup from './components/Setup';
 import Events from './components/Events';
-import AddEventForm from './components/admin/AddEventForm';
+import EditEvent from './components/event/EditEvent';
 
 //ajax calls
 import handleFetch from './helpers/handleFetch';
@@ -49,7 +49,7 @@ function hookDispatch(dispatch){
       <Route path="users" component={EditUsers} />
       <Route path="invite" component={Invite} />
       <Route path="events" component={Events} />
-      <Route path="events/add" component={AddEventForm} />
+      <Route path="events/add" component={EditEvent} />
     </Route>,
     <Route path="/setup" component={Setup} />,
     <Route path="/login" component={Login} />,

@@ -1,29 +1,27 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Button, Col, Well, Grid, Modal } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Checkbox,
+        ButtonToolbar, Button, Col, Well, Grid, Modal, Glyphicon,
+        ListGroup, ListGroupItem } from 'react-bootstrap';
 import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { setUsers } from '../../redux/actions';
 import moment from 'moment';
-import DateTimeEditor from './event/DateTimeEditor';
+import DateTimeEditor from './DateTimeEditor';
+import EditRound from './EditRound';
+import { blankEvent, blankRound } from './templates';
 
 
-class AddEventForm extends React.Component {
+class EditEvent extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      event :{
-        title: this.props.title,
-        subtitle: this.props.subtitle,
-        type: "tournament",
-        description: "",
-        localimg: "",
-        extlink: "",
-        start: new Date(),
-        rounds: []
-      },
-      players: [],
+      event : this.props.event || blankEvent,
+      rounds : this.props.rounds || [],
+      currentRound : this.props.currentRound || null,
+      currentRoundIndex : null,
+      players: this.props.players || [],
       submitDisabled : false,
       showDateTime: false
     };
@@ -50,7 +48,7 @@ class AddEventForm extends React.Component {
       then(
         (res) => {
           if(res.status === 200){
-            return browserHistory.push('/events');
+            return browserHistory.goBack();
           }
           return this.setState({submitDisabled: false});
         }
@@ -61,6 +59,21 @@ class AddEventForm extends React.Component {
   render(){
 
     const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
+
+    const rounds = this.state.rounds.map((round, i) => {
+      return (
+        <ListGroupItem
+          key={i}
+          onClick={()=>this.setState({
+            currentRound: round,
+            currentRoundIndex: i
+          })}>
+          {round.title}
+        </ListGroupItem>
+      );
+    });
+
+    const roundList = rounds ? <ListGroup>{rounds}</ListGroup> : null;
 
     const form = (
       <Form horizontal onSubmit={this.handleSave}>
@@ -110,14 +123,30 @@ class AddEventForm extends React.Component {
 
           </Col>
         </FormGroup>
+        <hr />
+        <FormGroup>
+          <Col sm={8} smOffset={2}>
+            <ControlLabel>Rounds</ControlLabel>
+          </Col>
+          <Col sm={12}>
+            {roundList}
+            <Button block bsSize="lg" onClick={() => this.setState({currentRound: blankRound})}>
+              <Glyphicon glyph="plus" /> Add Round
+            </Button>
+          </Col>
+        </FormGroup>
+        <hr />
         <FormGroup>
           <Col sm={12}>
-            <Button
-              bsStyle="success"
-              block
-              bsSize='large'
-              type="submit"
-              disabled={this.state.submitDisabled}>Create Event!</Button>
+            <ButtonToolbar>
+              <Button
+                bsStyle="success"
+                type="submit"
+                disabled={this.state.submitDisabled}>Save</Button>
+              <Button
+                onClick={() => browserHistory.goBack()}
+                >Cancel</Button>
+            </ButtonToolbar>
           </Col>
         </FormGroup>
       </Form>
@@ -136,21 +165,65 @@ class AddEventForm extends React.Component {
         ))}/>
     );
 
-    return (
-      <div>
+    function roundSave(round, index) {
+      if(index){
+        this.setState(update(
+          this.state,
+          {
+            rounds: {$splice: [round]},
+            currentRound: {$set: null}
+          }
+        ));
+      } else {
+        this.setState(update(
+          this.state,
+          {
+            rounds: {$push: [round]},
+            currentRound: {$set: null}
+          }
+        ));
+      }
+    }
+
+
+
+    var view;
+    if(this.state.currentRound){
+      let roundIndex = this.state.currentRoundIndex || this.state.rounds.length;
+      view = (
+        <EditRound
+          round={this.state.currentRound}
+          title={this.state.currentRound.title || `Round ${roundIndex + 1}`}
+          handleSave={(round) => {
+            this.setState(update(
+              this.state,
+              {
+                rounds: {$splice: [[roundIndex, 1, round]]},
+                currentRoundIndex: {$set: null},
+                currentRound: {$set: null}
+              }
+            ));
+          }}
+          handleCancel={() => this.setState({currentRound: null, currentRoundIndex: null})}
+        />
+      );
+    } else {
+      view = (
         <Grid>
           <Col sm={8} smOffset={2}>
             <Well>
-              <h2>Create New Event</h2>
+              <h2>Edit Event</h2>
               <hr />
               {dateTimeEditor}
               {form}
             </Well>
           </Col>
         </Grid>
-      </div>
-    );
+      );
+    }
+
+    return view;
   }
 }
 
-export default connect()(AddEventForm);
+export default connect()(EditEvent);
