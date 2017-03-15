@@ -17,26 +17,26 @@ import AddEventForm from './components/admin/AddEventForm';
 //ajax calls
 import checkAuth from './helpers/checkAuth';
 import handleGet from './helpers/handleGet';
+import handleFetch from './helpers/handleFetch';
 
 //redux actions
 import { setUser, addInfoMsg } from './redux/actions';
 
 function checkAuthentication(nextState, replace, done) {
-  handleGet('/api/currentuser').then(
+  handleFetch('GET','/api/currentuser').then(
     (res) => {
       if(res.status === 202){
         replace('/setup');
-        return done();
+      }
+      if(res.status === 401){
+        replace('/login');
       }
       if(res.user){
         this.dispatch(setUser(res.user));
-        return done();
       }
-      replace('/login');
       return done();
     }
-  );
-
+  ).catch((err) => {console.log("Routes.jsx",err);});
 }
 
 function hookDispatch(dispatch){

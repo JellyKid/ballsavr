@@ -14,8 +14,8 @@ class AddEventForm extends React.Component {
     super(props);
     this.state = {
       event :{
-        title: "",
-        subtitle: "",
+        title: this.props.title,
+        subtitle: this.props.subtitle,
         type: "tournament",
         description: "",
         localimg: "",
@@ -60,31 +60,7 @@ class AddEventForm extends React.Component {
 
   render(){
 
-
     const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
-
-    // const datetime = (
-    //   <Modal
-    //     show={this.state.showDateTime}
-    //     onHide={() => this.setState({showDateTime: false})}>
-    //     <Modal.Header closeButton>
-    //       <Modal.Title>{formattedDateTime}</Modal.Title>
-    //     </Modal.Header>
-    //     <Modal.Body>
-    //       <InputMoment
-    //         moment={moment(this.state.event.start)}
-    //         onChange={
-    //           (m) => this.setState(update(
-    //             this.state,
-    //             {
-    //               event: { start : {$set:m.toDate()}}
-    //             }
-    //           ))
-    //         }
-    //         onSave={() => this.setState({showDateTime: false})}/>
-    //     </Modal.Body>
-    //   </Modal>
-    // );
 
     const form = (
       <Form horizontal onSubmit={this.handleSave}>

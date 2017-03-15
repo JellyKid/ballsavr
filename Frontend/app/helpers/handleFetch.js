@@ -27,7 +27,6 @@ export default function handleFetch(method, url, data, action) {
   ).then(
     (res) => {
       if(res.status === 401){ //if unauthorized return to login screen
-        window.location.replace('/login');
         throw new Error(res.statusText);
       }
       if(res.status !== 200){
@@ -48,10 +47,18 @@ export default function handleFetch(method, url, data, action) {
     }
   ).catch(
     (err) => {
-      if(this){
-        this.props.dispatch(addErrorMsg(`Error in GET response from ${url}, check logs for more info`));
+      if(err.message === "Unauthorized"){
+        console.log("Unauthorized: redirecting to login screen");
+        return {
+          status: 401,
+          message: err.message
+        };
+      } else {
+        if(this){
+          this.props.dispatch(addErrorMsg(`Error in GET response from ${url}, check logs for more info`));
+        }
+        return console.error(`Error in GET response from ${url}`,err);
       }
-      return console.error(`Error in GET response from ${url}`,err);
     }
   );
 }
