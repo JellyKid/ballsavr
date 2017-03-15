@@ -39,7 +39,6 @@ export default function handleFetch(method, url, data, action) {
       if(json.error){
         throw new Error(json.error);
       }
-      console.log(json);
       if(this && json.payload){
         return this.props.dispatch(action(json.payload));
       }
