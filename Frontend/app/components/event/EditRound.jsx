@@ -5,6 +5,8 @@ import { browserHistory } from 'react-router';
 import { setUsers } from '../../redux/actions';
 import moment from 'moment';
 import DateTimeEditor from './DateTimeEditor';
+import handleFetch from '../../helpers/handleFetch';
+import EventTableTypeahead from './EventTableTypeahead';
 
 class EditRound extends React.Component {
   constructor(props){
@@ -15,11 +17,26 @@ class EditRound extends React.Component {
 
     this.state = {
       round : round,
+      availableTables: [],
+      availableUsers: [],
+      selectedTables: [],
+      users: [],
       submitDisabled : false,
       showDateTime: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount(){
+    handleFetch('GET', '/api/table/current')
+      .then((res) => res.payload)
+      .then((tables) => handleFetch('GET', '/api/admin/users')
+        .then((res) => this.setState({
+          availableTables: tables,
+          availableUsers: res.payload
+        }))
+      );
   }
 
   handleChange(e){
@@ -58,7 +75,11 @@ class EditRound extends React.Component {
             <ControlLabel>Tables</ControlLabel>
           </Col>
           <Col sm={12}>
-            <FormControl name="description" componentClass="textarea" onChange={this.handleChange} placeholder="Place a short description here..." />
+            <EventTableTypeahead
+              tables={this.state.availableTables}
+              selected={this.state.selectedTables}
+              handleChange={(tables) => this.setState({selectedTables: tables})}
+            />
           </Col>
         </FormGroup>
 
