@@ -8,6 +8,7 @@ import DateTimeEditor from './DateTimeEditor';
 import handleFetch from '../../helpers/handleFetch';
 import EventTableTypeahead from './EventTableTypeahead';
 
+
 class EditRound extends React.Component {
   constructor(props){
     super(props);
@@ -36,7 +37,7 @@ class EditRound extends React.Component {
           availableTables: tables,
           availableUsers: res.payload
         }))
-      );
+      ).catch((err) => console.error(err));
   }
 
   handleChange(e){
@@ -77,8 +78,11 @@ class EditRound extends React.Component {
           <Col sm={12}>
             <EventTableTypeahead
               tables={this.state.availableTables}
-              selected={this.state.selectedTables}
-              handleChange={(tables) => this.setState({selectedTables: tables})}
+              selected={this.state.round.tables}
+              handleChange={(tables) => this.setState(update(
+                this.state,
+                {round: {tables: {$set: tables}}}
+              ))}
             />
           </Col>
         </FormGroup>
