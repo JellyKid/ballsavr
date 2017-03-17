@@ -2,10 +2,11 @@
   "vendor": [
     "immutability-helper",
     "input-moment",
-    "react",    
+    "react",
     "react-bootstrap",
     "react-bootstrap-typeahead",
     "react-dom",
+    "react-fastclick"
     "react-redux",
     "react-router",
     "redux"
