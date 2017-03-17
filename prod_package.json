@@ -6,7 +6,7 @@
     "react-bootstrap",
     "react-bootstrap-typeahead",
     "react-dom",
-    "react-fastclick"
+    "react-fastclick",
     "react-redux",
     "react-router",
     "redux"
