@@ -6,7 +6,7 @@ import handleGet from '../../helpers/handleGet';
 import handlePost from '../../helpers/handlePost';
 import { setCurrentTables } from '../../redux/actions';
 
-class SearchAndAddForm extends React.Component {
+class AddTableTypeahead extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ class SearchAndAddForm extends React.Component {
     );
   }
 
-  handleClick(id){    
+  handleClick(id){
     this.handlePost(
       '/api/table/admin/enable',
       id,
@@ -70,4 +70,4 @@ class SearchAndAddForm extends React.Component {
   }
 }
 
-export default connect()(SearchAndAddForm);
+export default connect()(AddTableTypeahead);

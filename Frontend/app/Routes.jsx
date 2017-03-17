@@ -8,7 +8,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import User from './components/User';
 import Tables from './components/Tables';
-import EditCollection from './components/admin/EditCollection';
+import EditTables from './components/tables/EditTables';
 import EditUsers from './components/admin/EditUsers';
 import Setup from './components/Setup';
 import Events from './components/Events';
@@ -44,7 +44,7 @@ function hookDispatch(dispatch){
 
   return ([
     <Route path="/" component={User} onEnter={this.checkAuthentication}>
-      <Route path="tables/edit" component={EditCollection} />
+      <Route path="tables/edit" component={EditTables} />
       <Route path="tables" component={Tables} />
       <Route path="users" component={EditUsers} />
       <Route path="invite" component={Invite} />
