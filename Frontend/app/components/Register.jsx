@@ -3,6 +3,8 @@ import { Form, FormGroup, FormControl, ControlLabel, Checkbox, ButtonToolbar, Bu
 import { handleChange, handleCheck } from '../helpers/handlers';
 import handlePost from '../helpers/handlePost';
 import handleGet from '../helpers/handleGet';
+import handleFetch from '../helpers/handleFetch';
+import { setSiteInfo } from '../redux/actions';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -29,15 +31,15 @@ class Register extends React.Component {
     this.handleChange = handleChange.bind(this);
     this.handlePassChange = this.handlePassChange.bind(this);
     this.handleGet = handleGet.bind(this);
+    this.handleFetch = handleFetch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordComplexCheck = this.passwordComplexCheck.bind(this);
     this.handleInitialsChange = this.handleInitialsChange.bind(this);
   }
   componentDidMount(){
-    this.handleGet(
-      `/api/token?token=${this.props.params.token}`
-    ).then(
+    this.handleFetch('GET',`/api/token?token=${this.props.params.token}`)
+    .then(
       (user) => {
         this.setState(update(
           this.state,
@@ -49,6 +51,7 @@ class Register extends React.Component {
         ));
       }
     );
+    this.handleFetch('GET', '/api/info', null, setSiteInfo);
   }
 
   handleSubmit(e){
@@ -206,4 +209,10 @@ class Register extends React.Component {
   }
 }
 
-export default connect()(Register);
+function mapStateToProps(state){
+  return {
+    orgName: state.site.org_name
+  };
+}
+
+export default connect(mapStateToProps)(Register);

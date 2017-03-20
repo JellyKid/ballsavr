@@ -76,3 +76,11 @@ export function setEvents(events) {
     payload: events
   };
 }
+
+export const SET_SITE_INFO = 'SET_SITE_INFO';
+export function setSiteInfo(info) {
+  return {
+    type: SET_SITE_INFO,
+    payload: info
+  };
+}

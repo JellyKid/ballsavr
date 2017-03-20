@@ -1,0 +1,6 @@
+<h1>Welcome <%= user.firstName%>, to <%= site.org_name%>!</h1>
+
+<p>
+  Please go to the following link and complete your registration.
+  <a href="<%= site.url%>/register/<%= user.meta.verificationToken%>" target="_blank"><%= site.url%>/register/<%= user.meta.verificationToken%></a>
+</p>

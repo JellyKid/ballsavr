@@ -71,4 +71,15 @@ router.post(
   })
 );
 
+router.get(
+  '/info',
+  (req, res) => {
+    const site = require('habitat').load().get('SITE');
+    return res.status(200).send({
+      status: 200,
+      payload: site
+    });
+  }
+);
+
 module.exports = router;

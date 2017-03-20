@@ -3,11 +3,15 @@ export const INITIAL_STATE = {
   admin : false,
   user: {},
   users: [],
-  events: [],  
+  events: [],
   currentTables: [],
   message: "",
   messageBox: {
     visible: [],
     log: []
+  },
+  site: {
+    org_name: "",
+    url: ""
   }
 };

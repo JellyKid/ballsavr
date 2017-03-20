@@ -38,6 +38,7 @@ app.use(require('./lib/Event'));
 app.use(require('./lib/User'));
 app.use(require('./lib/Table'));
 app.use(require('./lib/Public'));
+app.use(require('./lib/Test'));
 
 app.listen(
   PORT,
