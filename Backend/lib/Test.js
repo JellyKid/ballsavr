@@ -13,7 +13,7 @@ var user = {
         "_id" : "58d00a3392668327c81af60d",
         "firstName" : "John",
         "lastName" : "Public",
-        "email" : "jp@public.com",
+        "email" : "seaoftea@gmail.com",
         "meta" : {
                 "activated" : false,
                 "authType" : "local",
@@ -48,7 +48,7 @@ router.get(
     );
     const stream = message.createReadStream();
 
-    const sendmail = spawn('sendmail', ['-bt']);
+    const sendmail = spawn('sendmail', ['-t']);
 
     sendmail.stdout.on('data', (data) => {
       console.log(`sendmail: ${data}`);
@@ -62,7 +62,7 @@ router.get(
       console.log(`sendmail process exited with code ${code}`);
     });
 
-    message.pipe(sendmail.stdin);
+    stream.pipe(sendmail.stdin);
 
     return res.status(200).send(html);
   }
