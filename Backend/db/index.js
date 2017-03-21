@@ -1,6 +1,6 @@
 const path = require('path');
 
-const envFile = path.join(__dirname, '../.env');
+const envFile = path.join(__dirname, '../../.env');
 const env = require(path.normalize('../helper/getEnv'))('DB',envFile);
 const mongoose = require('mongoose');
 
