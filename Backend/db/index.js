@@ -1,5 +1,7 @@
 const path = require('path');
-const env = require(path.normalize('../helper/getEnv'))('DB');
+
+const envFile = path.join(__dirname, '../.env');
+const env = require(path.normalize('../helper/getEnv'))('DB',envFile);
 const mongoose = require('mongoose');
 
 const server = env.get('HOST') || 'localhost';

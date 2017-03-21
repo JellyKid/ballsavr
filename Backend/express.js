@@ -9,7 +9,9 @@ const expressSession = require('express-session');
 const db = require('./db');
 
 //Get stored environmental variables
-const env = require('./helper/getEnv')('API');
+const join = require('path').join;
+const envFile = join(__dirname, '../.env');
+const env = require('./helper/getEnv')('API',envFile);
 
 const PORT = process.argv[2] || env.get('PORT') || 80;
 const HOST = process.argv[3] || env.get('HOST') || '127.0.0.1';

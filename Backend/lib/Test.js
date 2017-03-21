@@ -2,10 +2,12 @@ const router = require('express').Router();
 const ejs = require('ejs');
 const read = require('fs').readFileSync;
 const join = require('path').join;
-const path = join(__dirname, '../invitation.ejs');
+const template = join(__dirname, '../invitation.ejs');
 
-const site = require('habitat').load().get('SITE');
-const mail = require('habitat').load().get('MAIL');
+const env = join(__dirname, '../../.env');
+const site = require('habitat').load(env).get('SITE');
+const mail = require('habitat').load(env).get('MAIL');
+
 const mailcomposer = require('mailcomposer');
 const spawn = require('child_process').spawn;
 
@@ -37,7 +39,7 @@ router.get(
   '/test',
   (req, res) => {
     res.locals.user = user; //GET RID OF THIS AFTER YOU MAKE EVERYTHING WORK!!!
-    var html = ejs.compile(read(path, 'utf8'), {filename: path})({user: res.locals.user, site: site});
+    var html = ejs.compile(read(template, 'utf8'), {filename: template})({user: res.locals.user, site: site});
     const message = mailcomposer(
       {
         from: mail.from,
