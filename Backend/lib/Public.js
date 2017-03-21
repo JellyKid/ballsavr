@@ -11,6 +11,10 @@ const hashPassword = require('./auth/hash');
 const updateUser = require('./db/updateUser');
 const jsonParser = require('body-parser').json();
 
+const join = require('path').join;
+const env = join(__dirname, '../../.env');
+const site = require('habitat').load(env).get('SITE');
+
 function formatFirstName(firstName) {
   return firstName.toLowerCase()
           .replace(
@@ -74,7 +78,6 @@ router.post(
 router.get(
   '/info',
   (req, res) => {
-    const site = require('habitat').load().get('SITE');
     return res.status(200).send({
       status: 200,
       payload: site
