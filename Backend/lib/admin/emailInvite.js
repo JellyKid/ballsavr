@@ -61,12 +61,13 @@ function emailInvite(req, res, next) {
         return resolve();
       }
       return reject(`sendmail process exited with code ${code}`);
-    })
-    .then(() => next())
-    .catch((err) => next(err));
+    });
+
 
     stream.pipe(sendmail.stdin);
-  });
+  })
+  .then(() => next())
+  .catch((err) => next(err));
 
 }
 
