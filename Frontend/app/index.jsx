@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import initReactFastclick from 'react-fastclick';
-initReactFastclick();
+// import initReactFastclick from 'react-fastclick';
+// initReactFastclick();
 
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
