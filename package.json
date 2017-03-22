@@ -38,7 +38,7 @@
     "npm-install-webpack-plugin": "^3.0.0",
     "react": "^15.0.1",
     "react-bootstrap": "^0.30.7",
-    "react-bootstrap-typeahead": "^1.2.0",
+    "react-bootstrap-typeahead": "github:jellykid/react-bootstrap-typeahead",
     "react-dom": "^15.0.1",
     "react-fastclick": "^3.0.1",
     "react-redux": "^4.4.5",
