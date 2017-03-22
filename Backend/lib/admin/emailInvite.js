@@ -36,7 +36,7 @@ function emailInvite(req, res, next) {
     {
       from: mail.from,
       to: res.locals.user.email,
-      subject: "Tricity Pinball Registration!",
+      subject: `${site.org_name} Registration`,
       html: html
     }
   );
