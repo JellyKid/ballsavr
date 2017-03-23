@@ -7,10 +7,10 @@ const schema = new mongoose.Schema(
     next: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'event'},
     tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],
-    groups: [
+    players: [
       {
-        name: String,
-        players: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}]
+        user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+        group: String
       }
     ],
     running: {type: Boolean, default: false},

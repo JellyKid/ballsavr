@@ -25,7 +25,7 @@ class EventTableTypeahead extends React.Component {
       bsSize="large"
       labelKey='name'
       options={this.props.tables}
-      placeholder="Add a table..."
+      placeholder="Search active tables..."
       maxHeight={500}
       maxResults={5}
       minLength={1}

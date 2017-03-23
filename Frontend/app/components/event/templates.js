@@ -15,6 +15,6 @@ export const blankRound = {
   prev: null,
   next: null,
   tables: [],
-  groups: [],
+  players: [],
   start: new Date()
 };

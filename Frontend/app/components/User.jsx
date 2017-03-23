@@ -33,7 +33,7 @@ class User extends React.Component {
 
     const logo = this.props.children ? null : (
       <Grid>
-        <Col sm={12}>
+        <Col sm={12} lg={8} lgOffset={2}>
           <Image src={logoImage} responsive />
         </Col>
       </Grid>

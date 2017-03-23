@@ -189,7 +189,8 @@ class EditEvent extends React.Component {
 
     var view;
     if(this.state.currentRound){
-      let roundIndex = this.state.currentRoundIndex || this.state.rounds.length;
+      let roundIndex = this.state.currentRoundIndex === 0 ? 0
+          : this.state.currentRoundIndex || this.state.rounds.length;
       view = (
         <EditRound
           round={this.state.currentRound}
