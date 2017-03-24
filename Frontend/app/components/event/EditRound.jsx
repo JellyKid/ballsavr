@@ -14,12 +14,9 @@ import AddPlayerModel from './AddPlayerModel';
 class EditRound extends React.Component {
   constructor(props){
     super(props);
-    let round = this.props.title ?
-      {...this.props.round, title: this.props.title}
-      : this.props.round;
-
+    
     this.state = {
-      round : round,
+      round : this.props.round,
       availableTables: [],
       availableUsers: [],
       submitDisabled : false,
@@ -74,10 +71,10 @@ class EditRound extends React.Component {
 
         <FormGroup>
           <Col md={2}>
-            <ControlLabel>Title</ControlLabel>
+            <ControlLabel>Name</ControlLabel>
           </Col>
           <Col md={10}>
-            <FormControl type="text" name="title" value={this.state.round.title} onChange={this.handleChange}/>
+            <FormControl type="text" name="name" value={this.state.round.name} onChange={this.handleChange}/>
           </Col>
         </FormGroup>
 

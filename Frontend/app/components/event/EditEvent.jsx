@@ -21,7 +21,6 @@ class EditEvent extends React.Component {
       rounds : this.props.rounds || [],
       currentRound : this.props.currentRound || null,
       currentRoundIndex : null,
-      players: this.props.players || [],
       submitDisabled : false,
       showDateTime: false
     };
@@ -44,8 +43,12 @@ class EditEvent extends React.Component {
   handleSave(e){
     e.preventDefault();
     this.setState({submitDisabled: true});
-    this.handleFetch('POST','/api/admin/event', {event: this.state.event}).
-      then(
+    this.handleFetch('POST','/api/admin/event',
+      {
+        event: this.state.event,
+        rounds: this.state.rounds
+      }
+      ).then(
         (res) => {
           if(res.status === 200){
             return browserHistory.goBack();
@@ -60,6 +63,9 @@ class EditEvent extends React.Component {
 
     const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
 
+    const roundIndex = this.state.currentRoundIndex === 0 ? 0
+        : this.state.currentRoundIndex || this.state.rounds.length;
+
     const rounds = this.state.rounds.map((round, i) => {
       return (
         <ListGroupItem
@@ -68,7 +74,7 @@ class EditEvent extends React.Component {
             currentRound: round,
             currentRoundIndex: i
           })}>
-          {round.title}
+          {round.name}
         </ListGroupItem>
       );
     });
@@ -133,7 +139,12 @@ class EditEvent extends React.Component {
           </Col>
           <Col sm={12}>
             {roundList}
-            <Button block bsSize="lg" onClick={() => this.setState({currentRound: blankRound})}>
+            <Button block bsSize="lg"
+              onClick={() => this.setState(
+                {
+                  currentRound: Object.assign({}, blankRound, {start: new Date(), name: `Round ${roundIndex + 1}`})
+                }
+              )}>
               <Glyphicon glyph="plus" /> Add Round
             </Button>
           </Col>
@@ -192,12 +203,11 @@ class EditEvent extends React.Component {
 
     var view;
     if(this.state.currentRound){
-      let roundIndex = this.state.currentRoundIndex === 0 ? 0
-          : this.state.currentRoundIndex || this.state.rounds.length;
+
       view = (
         <EditRound
           round={this.state.currentRound}
-          title={this.state.currentRound.title || `Round ${roundIndex + 1}`}
+          // title={this.state.currentRound.title || `Round ${roundIndex + 1}`}
           handleSave={(round) => {
             this.setState(update(
               this.state,

@@ -1,5 +1,4 @@
 export const blankEvent = {
-  _id: null,
   title: "",
   subtitle: "",
   type: "tournament",
@@ -10,11 +9,7 @@ export const blankEvent = {
 };
 
 export const blankRound = {
-  _id: null,
   name: "",
-  prev: null,
-  next: null,
   tables: [],
-  players: [],
-  start: new Date()
+  players: []
 };

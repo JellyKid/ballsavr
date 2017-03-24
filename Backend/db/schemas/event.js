@@ -10,7 +10,7 @@ const schema = new mongoose.Schema(
     extlink: String,
     enabled: {type: Boolean, default: true},
     start: Date,
-    end: Date    
+    active: {type: Boolean, default: true}
   },
   {
     timestamps: {
