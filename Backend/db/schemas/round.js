@@ -6,7 +6,7 @@ const schema = new mongoose.Schema(
     prev: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
     next: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'event'},
-    tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],
+    tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],    
     players: [
       {
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
