@@ -22,7 +22,6 @@ class EditRound extends React.Component {
       round : round,
       availableTables: [],
       availableUsers: [],
-      selectedTables: [],
       submitDisabled : false,
       showDateTime: false,
       showAddPlayer: false
@@ -154,14 +153,19 @@ class EditRound extends React.Component {
         ))}/>
     );
 
+    const filterById = (user) => { //filter users already selected in round so there are no duplicates
+      return !this.state.round.players.find(
+        (player) => player.user._id === user._id
+      );
+    };
 
-
+    const playeroptions = this.state.availableUsers.filter(filterById);
 
     const addplayer = (
       <AddPlayerModel
         visible={this.state.showAddPlayer}
         hideMe={() => this.setState({showAddPlayer: false})}
-        playerOptions={this.state.availableUsers}
+        playerOptions={playeroptions}
         groupOptions={groupNames.length > 0 ? groupNames : null}
         addPlayer={(player, group) => this.setState(update(
           this.state,
