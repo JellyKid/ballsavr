@@ -16,23 +16,35 @@ class AddPlayerModel extends React.Component {
   }
 
   handleAdd() {
+    this.playerRef.getInstance().clear();
+    this.groupRef.getInstance().clear();
     if(this.state.selectedPlayer.length === 0 || this.state.selectedGroup.length === 0){
       return this.props.hideMe();
     }
-    return this.props.addPlayer(this.state.selectedPlayer[0], this.state.selectedGroup[0].label.toUpperCase());
+
+    return this.props.addPlayer(this.state.selectedPlayer[0], this.state.selectedGroup[0]);
   }
 
   handlePlayerChange(player) {
+    let disabled = player.length === 0 ? true
+      : this.state.selectedGroup.length === 0 ? true
+      : false;
     this.setState({
       selectedPlayer: player,
-      addDisabled: this.state.selectedGroup.length === 0
+      addDisabled: disabled
     });
   }
 
   handleGroupChange(group) {
+    //have to do this goofy stuff because a new group returns an array of objects
+    //I'm converting the array of objects to the array of strings
+    let selectedGroup = group.length > 0 && group[0].label ? [group[0].label.toUpperCase()] : group;
+    let disabled = group.length === 0 ? true
+      : this.state.selectedPlayer.length === 0 ? true
+      : false;
     this.setState({
-      selectedGroup: group,
-      addDisabled: this.state.selectedPlayer.length === 0
+      selectedGroup: selectedGroup,
+      addDisabled: disabled
     });
   }
 
@@ -40,6 +52,7 @@ class AddPlayerModel extends React.Component {
 
     const playerInput = (
       <Typeahead
+        ref={(component) => this.playerRef = component}
         autoFocus
         clearButton
         labelKey={(player) => `${player.firstName} ${player.lastName}`}
@@ -55,6 +68,7 @@ class AddPlayerModel extends React.Component {
 
     const groupInput = (
       <Typeahead
+        ref={(component) => this.groupRef = component}
         allowNew
         newSelectionPrefix="New Group:"
         clearButton
