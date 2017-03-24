@@ -97,7 +97,10 @@ class EditEvent extends React.Component {
             <ControlLabel>Description</ControlLabel>
           </Col>
           <Col sm={12}>
-            <FormControl name="description" componentClass="textarea" onChange={this.handleChange} placeholder="Place a short description here..." />
+            <FormControl name="description"
+              componentClass="textarea" value={this.state.event.description} onChange={this.handleChange}
+              placeholder="Place a short description here..."
+            />
           </Col>
         </FormGroup>
 
