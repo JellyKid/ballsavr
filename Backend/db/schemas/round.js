@@ -2,11 +2,9 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema(
   {
-    name: String,
-    prev: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
-    next: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
+    name: String,    
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'event'},
-    tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],    
+    tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],
     players: [
       {
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
