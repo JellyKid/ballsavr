@@ -6,9 +6,10 @@ const schema = new mongoose.Schema(
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'event'},
     round: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
     table: {type: mongoose.Schema.Types.ObjectId, ref: 'table'},
-    group: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],
-    points: Number,
-    score: Number
+    group: String,
+    points: {type: Number, default: 0},
+    score: {type: Number, default: 0},
+    confirmed: {type: Boolean, default: false}
   },
   {
     timestamps: {

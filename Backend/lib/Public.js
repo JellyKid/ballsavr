@@ -85,4 +85,10 @@ router.get(
   }
 );
 
+// router.get(
+//   '/test/:event',
+//   require('./events/getRoundsByEventID'),
+//   (req, res) => res.status(200).send(res.locals.rounds)
+// );
+
 module.exports = router;

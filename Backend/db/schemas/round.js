@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema(
   {
-    name: String,    
+    name: String,
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'event'},
     tables: [{type: mongoose.Schema.Types.ObjectId, ref: 'table'}],
     players: [

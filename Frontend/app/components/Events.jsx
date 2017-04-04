@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import handleFetch from '../helpers/handleFetch';
 import { setEvents } from '../redux/actions';
 import moment from 'moment';
+import EditEvent from './event/EditEvent';
 
 class Events extends React.Component {
   constructor(props) {
@@ -13,19 +14,46 @@ class Events extends React.Component {
       event: null
     };
     this.handleFetch = handleFetch.bind(this);
+    this.done = this.done.bind(this);
   }
 
   componentWillMount(){
     this.handleFetch('GET', '/api/events',null, setEvents);
   }
 
+
+  done(refresh){
+    if(refresh === true){
+      this.handleFetch('GET', '/api/events',null, setEvents);
+    }
+    this.setState(
+      {event: null},
+      () => {
+        browserHistory.push('/events');
+      }
+    );
+  }
+
   render(){
+
+    if(this.props.params.eventid){
+      return (
+        <EditEvent
+          event={this.state.event}
+          done={this.done}
+        />
+      );
+    }
 
     const events = this.props.events.map(
       (event) => (
         <ListGroupItem
           className="mBottom"
-          onClick={() => this.setState({event: event})}
+          onClick={() => this.setState(
+            {event: event},
+            // () => browserHistory.push(`/events/${event._id}`)
+            () => browserHistory.push(`/events/edit`)
+          )}
           key={event._id}>
           <h4>{event.title} <small>{event.subtitle}</small></h4>
           <p>{moment(event.start).format('MMM Do YYYY, h:mm a')}</p>
@@ -42,7 +70,7 @@ class Events extends React.Component {
         className="mBottom"
         bsSize="large"
         bsStyle="primary"
-        onClick={() => browserHistory.push('/events/add')}
+        onClick={() => browserHistory.push('/events/new')}
         block>Add Event</Button>
     );
 

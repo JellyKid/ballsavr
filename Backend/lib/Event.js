@@ -4,6 +4,7 @@ const jsonParser = require('body-parser').json();
 const saveEvent = require('./events/saveEvent');
 const getEvents = require('./events/getEvents');
 const saveRounds = require('./events/saveRounds');
+const getRoundsByEventID = require('./events/getRoundsByEventID');
 
 router.all(
   '/event/*',
@@ -14,11 +15,10 @@ router.post(
   '/admin/event',
   jsonParser,
   saveEvent,
-  saveRounds, //TODO make scores  
+  saveRounds,
   (req, res) => {
     return res.status(200).send({
-      status: 200,
-      message: `Event ${res.locals.event.title} created!`
+      status: 200
     });
   }
 );
@@ -32,6 +32,15 @@ router.get(
       payload: res.locals.events
     });
   }
+);
+
+router.get(
+  '/roundsbyevent/:event',
+  getRoundsByEventID,
+  (req, res) => res.status(200).send({
+    status: 200,
+    payload: res.locals.rounds
+  })
 );
 
 

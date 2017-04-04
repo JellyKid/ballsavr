@@ -5,7 +5,6 @@ import { Form, FormGroup, FormControl, ControlLabel, Checkbox,
 import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { setUsers } from '../../redux/actions';
 import moment from 'moment';
 import DateTimeEditor from './DateTimeEditor';
@@ -22,6 +21,7 @@ class EditEvent extends React.Component {
       currentRound : this.props.currentRound || null,
       currentRoundIndex : null,
       submitDisabled : false,
+      addDisabled: false,
       showDateTime: false
     };
 
@@ -29,6 +29,23 @@ class EditEvent extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
+
+  componentWillMount(){
+    if(this.state.event._id){
+      this.setState(
+        {addDisabled: true},
+        () => {
+          handleFetch('GET', `/api/roundsbyevent/${this.state.event._id}`)
+            .then((res) => this.setState({
+              addDisabled: false,
+              rounds: res.payload
+            }))
+            .catch((err) => console.error(err));
+        }
+      );
+    }
+  }
+
 
   handleChange(e){
     return this.setState(update(
@@ -51,7 +68,7 @@ class EditEvent extends React.Component {
       ).then(
         (res) => {
           if(res.status === 200){
-            return browserHistory.goBack();
+            return this.props.done(true);
           }
           return this.setState({submitDisabled: false});
         }
@@ -158,8 +175,8 @@ class EditEvent extends React.Component {
                 type="submit"
                 disabled={this.state.submitDisabled}>Save</Button>
               <Button
-                onClick={() => browserHistory.goBack()}
-                >Cancel</Button>
+                onClick={this.props.done}
+              >Cancel</Button>
             </ButtonToolbar>
           </Col>
         </FormGroup>

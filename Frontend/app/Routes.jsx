@@ -48,8 +48,9 @@ function hookDispatch(dispatch){
       <Route path="tables" component={Tables} />
       <Route path="users" component={EditUsers} />
       <Route path="invite" component={Invite} />
-      <Route path="events" component={Events} />
-      <Route path="events/add" component={EditEvent} />
+      <Route path="events" component={Events}>
+        <Route path=":eventid"/>
+      </Route>
     </Route>,
     <Route path="/setup" component={Setup} />,
     <Route path="/login" component={Login} />,

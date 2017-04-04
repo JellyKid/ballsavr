@@ -9,11 +9,15 @@ function updateRounds(req, res, next) {
         let r = new Round(
           Object.assign({}, round, {event: res.locals.event})
         );
+        r.isNew = round._id ? false : true;
         return r.save(
           (err, doc) => {
             if(err) {return reject(err);}
             if(!doc) {return reject(Error(`Document missing on saving round`));}
-            return resolve(doc);
+            return resolve({
+              doc: doc,
+              players: round.players
+            });
           }
         );
       }
