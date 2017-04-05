@@ -35,3 +35,37 @@ h1 small {
 .vice {
   background-image: url('../assets/vice_bg.png');
 }
+
+.justify-content-between {
+    -webkit-box-pack: justify!important;
+    -webkit-justify-content: space-between!important;
+    -ms-flex-pack: justify!important;
+    justify-content: space-between!important;
+}
+
+.token {
+  background-color: #7ad61f;
+  color: #fff;
+  border: 0;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0 3px 3px 0;
+  padding: 4px 7px;
+  position: relative;
+  font-size: large;
+  padding-right: 21px;
+}
+
+.close-button {
+  bottom: 0;
+  padding: 3px 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.no-border {
+  border: none!important;
+}

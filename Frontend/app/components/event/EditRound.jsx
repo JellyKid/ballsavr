@@ -14,7 +14,7 @@ import AddPlayerModel from './AddPlayerModel';
 class EditRound extends React.Component {
   constructor(props){
     super(props);
-    
+
     this.state = {
       round : this.props.round,
       availableTables: [],
@@ -25,6 +25,7 @@ class EditRound extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removePlayer = this.removePlayer.bind(this);
   }
 
   componentWillMount(){
@@ -50,6 +51,21 @@ class EditRound extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.handleSave(this.state.round);
+  }
+
+  removePlayer(id) {
+
+    let players = this.state.round.players.filter(
+      (player) => player.user._id !== id
+    );
+    this.setState(update(
+      this.state,
+      {
+        round:{
+          players : {$set: players}
+        }
+      }
+    ));
   }
 
 
@@ -99,7 +115,7 @@ class EditRound extends React.Component {
             <ControlLabel>Players</ControlLabel>
           </Col>
           <Col sm={12}>
-            <PlayerList players={this.state.round.players} groupNames={groupNames}/>
+            <PlayerList players={this.state.round.players} groupNames={groupNames} removePlayer={this.removePlayer}/>
             <Button block bsSize="lg" onClick={() => this.setState({showAddPlayer: true})}>
               <Glyphicon glyph="plus" /> Add Player
             </Button>
@@ -124,11 +140,15 @@ class EditRound extends React.Component {
           <Col sm={12}>
             <ButtonToolbar>
               <Button
-                bsStyle="success"
                 type="submit"
-                disabled={this.state.submitDisabled}>Save</Button>
+                bsStyle="primary"
+                block
+                bsSize="large"
+                disabled={this.state.submitDisabled}>OK</Button>
               <Button
                 onClick={() => this.props.handleCancel()}
+                block
+                bsSize="large"
               >Cancel</Button>
             </ButtonToolbar>
 
@@ -187,7 +207,7 @@ class EditRound extends React.Component {
         <Grid>
           <Col sm={8} smOffset={2}>
             <Well>
-              <h2>Edit Round</h2>
+              <h2>Edit {this.state.round.name}</h2>
               <hr />
               {dateTimeEditor}
               {form}
