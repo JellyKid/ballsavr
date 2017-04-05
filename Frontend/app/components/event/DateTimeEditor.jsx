@@ -17,7 +17,8 @@ class DateTimeEditor extends React.Component {
     return (
       <Modal
         show={this.props.show}
-        onHide={this.props.hide}>
+        onHide={this.props.hide}
+        backdrop={false}>
         <Modal.Header closeButton>
           <Modal.Title>{formatted}</Modal.Title>
         </Modal.Header>

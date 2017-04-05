@@ -83,7 +83,7 @@ class AddPlayerModel extends React.Component {
     );
 
     const popup = (
-      <Modal show={this.props.visible} onHide={this.props.hideMe}>
+      <Modal show={this.props.visible} backdrop={false}>
         <Modal.Body>
           <ControlLabel>Player</ControlLabel>
           {playerInput}
