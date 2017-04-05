@@ -8,6 +8,7 @@ const server = env.get('HOST') || 'localhost';
 const database = env.get('database') || 'TCP';
 
 mongoose.Promise = global.Promise;
+// mongoose.set('debug', true);
 mongoose.connect('mongodb://' + server + '/' + database);
 
 const db = mongoose.connection;

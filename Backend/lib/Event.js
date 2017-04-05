@@ -5,6 +5,8 @@ const saveEvent = require('./events/saveEvent');
 const getEvents = require('./events/getEvents');
 const saveRounds = require('./events/saveRounds');
 const getRoundsByEventID = require('./events/getRoundsByEventID');
+const removeEventByID = require('./events/removeEventByID');
+const removeRoundsByEventID = require('./events/removeRoundsByEventID');
 
 router.all(
   '/event/*',
@@ -41,6 +43,16 @@ router.get(
     status: 200,
     payload: res.locals.rounds
   })
+);
+
+router.delete(
+  '/event/:event',
+  removeEventByID,
+  removeRoundsByEventID,
+  (req, res) => {
+    console.log(req.params);
+    return res.status(200).send({status:200});
+  }
 );
 
 

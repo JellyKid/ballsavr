@@ -6,6 +6,7 @@ function getRoundsByEventID(req, res, next) {
     .find({event: req.params.event})
     .populate({path: 'players.user', select: 'firstName lastName'})
     .populate({path: 'tables', select: 'name'})
+    .lean()
     .exec(
       (err, rounds) => {
         if(err){return next(err);}

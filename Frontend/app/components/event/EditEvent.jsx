@@ -10,6 +10,7 @@ import moment from 'moment';
 import DateTimeEditor from './DateTimeEditor';
 import EditRound from './EditRound';
 import { blankEvent, blankRound } from './templates';
+import DeleteEventModel from './DeleteEventModel';
 
 
 class EditEvent extends React.Component {
@@ -22,7 +23,8 @@ class EditEvent extends React.Component {
       currentRoundIndex : null,
       submitDisabled : false,
       addDisabled: false,
-      showDateTime: false
+      showDateTime: false,
+      showDeleteConfirm: false
     };
 
     this.handleFetch = handleFetch.bind(this);
@@ -77,6 +79,15 @@ class EditEvent extends React.Component {
 
 
   render(){
+
+    const deletebutton = this.state.event._id ? (
+      <Button
+        onClick={() => this.setState({showDeleteConfirm: true})}
+        bsStyle="danger"
+        disabled={this.state.submitDisabled}>
+        Delete
+      </Button>
+    ) : null;
 
     const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
 
@@ -157,6 +168,7 @@ class EditEvent extends React.Component {
           <Col sm={12}>
             {roundList}
             <Button block bsSize="lg"
+              disabled={this.state.addDisabled}
               onClick={() => this.setState(
                 {
                   currentRound: Object.assign({}, blankRound, {start: new Date(), name: `Round ${roundIndex + 1}`})
@@ -173,10 +185,14 @@ class EditEvent extends React.Component {
               <Button
                 bsStyle="success"
                 type="submit"
-                disabled={this.state.submitDisabled}>Save</Button>
+                disabled={this.state.submitDisabled}>
+                Save
+              </Button>
+              {deletebutton}
               <Button
-                onClick={this.props.done}
-              >Cancel</Button>
+                onClick={this.props.done}>
+                Cancel
+              </Button>
             </ButtonToolbar>
           </Col>
         </FormGroup>
@@ -241,6 +257,11 @@ class EditEvent extends React.Component {
     } else {
       view = (
         <Grid>
+          <DeleteEventModel
+            event_id={this.state.event._id}
+            visible={this.state.showDeleteConfirm}
+            hideMe={() => this.setState({showDeleteConfirm: false})}
+            done={this.props.done}/>
           <Col sm={8} smOffset={2}>
             <Well>
               <h2>Edit Event</h2>
