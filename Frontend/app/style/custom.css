@@ -4,6 +4,7 @@ html {
 
 body {
   background-color: rgb(142, 142, 142);
+  background-image: url('../assets/bg.png');
   background-size: contain;
   background-attachment: fixed;
   touch-action: manipulation;
@@ -30,17 +31,6 @@ h1 small {
 
 .mBottom {
   margin-bottom: 15px;
-}
-
-.vice {
-  background-image: url('../assets/vice_bg.png');
-}
-
-.justify-content-between {
-    -webkit-box-pack: justify!important;
-    -webkit-justify-content: space-between!important;
-    -ms-flex-pack: justify!important;
-    justify-content: space-between!important;
 }
 
 .token {
