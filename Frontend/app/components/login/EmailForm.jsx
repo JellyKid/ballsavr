@@ -17,7 +17,6 @@ class EmailForm extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    console.log(e.target);
     if(this.state.submitDisabled == false){
       this.setState({submitDisabled: true});
       this.handlePost(
@@ -62,12 +61,6 @@ class EmailForm extends React.Component {
             <FormControl type="password" placeholder="Password" name="password"/>
           </Col>
         </FormGroup>
-
-        {/* <FormGroup>
-          <Col smOffset={2} sm={10}>
-          <Checkbox name="remember">Remember me</Checkbox>
-          </Col>
-        </FormGroup> */}
 
         <FormGroup>
           <Col smOffset={2} sm={10}>
