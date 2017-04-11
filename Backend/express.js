@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 
 //DB connection
-const db = require('./db');
+const store = require('./db');
 
 //Get stored environmental variables
 const join = require('path').join;
@@ -24,11 +24,12 @@ app.use(cookieParser());
 // app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession({
   secret: secret,
-  resave: false,
+  resave: false, //may have to set this to true for mongo sessions
   saveUninitialized: false,
   cookie: {
     maxAge: 604800000 //One week in milliseconds
-  }
+  },
+  store: store //mongodb store
 }));
 app.use(passport.initialize());
 app.use(passport.session());
