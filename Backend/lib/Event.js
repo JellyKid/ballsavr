@@ -7,6 +7,8 @@ const saveRounds = require('./events/saveRounds');
 const getRoundsByEventID = require('./events/getRoundsByEventID');
 const removeEventByID = require('./events/removeEventByID');
 const removeRoundsByEventID = require('./events/removeRoundsByEventID');
+const upcomingEvents = require('./events/upcomingEvents');
+const upcomingRounds = require('./events/upcomingRounds');
 
 router.all(
   '/event/*',
@@ -55,7 +57,17 @@ router.delete(
   }
 );
 
-
+router.get(
+  '/rounds/current',
+  upcomingEvents,
+  upcomingRounds,
+  (req,res) => res.status(200).send(
+    {
+      status:200,
+      payload: res.locals.rounds
+    }
+  )
+);
 
 
 module.exports = router;

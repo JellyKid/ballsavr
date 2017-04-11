@@ -51,7 +51,6 @@ class Events extends React.Component {
           className="mBottom"
           onClick={() => this.setState(
             {event: event},
-            // () => browserHistory.push(`/events/${event._id}`)
             () => browserHistory.push(`/events/edit`)
           )}
           key={event._id}>

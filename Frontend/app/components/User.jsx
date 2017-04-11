@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import { Alert, Grid, Col, Image } from 'react-bootstrap';
 import { clearMessage } from '../redux/actions';
 import logoImage from '../assets/logo.png';
+import UpcomingEvents from './user/UpcomingEvents';
 
 class User extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class User extends React.Component {
       </Grid>
     ) : "";
 
-    const logo = this.props.children ? null : (
+    const logo = (
       <Grid>
         <Col sm={12} lg={8} lgOffset={2}>
           <Image src={logoImage} responsive />
@@ -39,17 +40,26 @@ class User extends React.Component {
       </Grid>
     );
 
+    let view = this.props.children;
+    if(!view){
+      view = (
+        <div>
+          {logo}
+          <UpcomingEvents />
+        </div>
+      );
+    }
+
     return (
       <div>
         <Navigation admin={this.props.user.admin} initials={this.props.user.initials}/>
         <div className="app-window">
-          {logo}
           <Grid>
             <Col sm={8} smOffset={2}>
               <MessageBox />
             </Col>
           </Grid>
-          {this.props.children}
+          {view}
         </div>
       </div>
     );
