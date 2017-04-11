@@ -8,8 +8,7 @@ const schema = new mongoose.Schema(
     description: String,
     localimg: String,
     extlink: String,
-    enabled: {type: Boolean, default: true},
-    start: Date,
+    enabled: {type: Boolean, default: true},    
     active: {type: Boolean, default: true}
   },
   {
