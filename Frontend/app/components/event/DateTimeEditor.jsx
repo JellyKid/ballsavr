@@ -26,7 +26,10 @@ class DateTimeEditor extends React.Component {
           <InputMoment
             moment={this.state.time}
             onChange={(m) => this.setState({time: m})}
-            onSave={() => this.props.save(this.state.time.toDate())}/>
+            onSave={() => this.props.save(this.state.time.toDate())}
+            prevMonthIcon="glyphicon glyphicon-arrow-left"
+            nextMonthIcon="glyphicon glyphicon-arrow-right"
+          />
         </Modal.Body>
       </Modal>
     );
