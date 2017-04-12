@@ -18,7 +18,7 @@ class EditEvent extends React.Component {
     super(props);
     this.state = {
       event : this.props.event || blankEvent,
-      rounds : this.props.rounds || [],
+      rounds : [],
       currentRound : this.props.currentRound || null,
       currentRoundIndex : null,
       submitDisabled : false,
@@ -33,18 +33,8 @@ class EditEvent extends React.Component {
   }
 
   componentWillMount(){
-    if(this.state.event._id){
-      this.setState(
-        {addDisabled: true},
-        () => {
-          handleFetch('GET', `/api/roundsbyevent/${this.state.event._id}`)
-            .then((res) => this.setState({
-              addDisabled: false,
-              rounds: res.payload
-            }))
-            .catch((err) => console.error(err));
-        }
-      );
+    if(this.state.event._id){    
+      this.setState({rounds: this.state.event.rounds});
     }
   }
 
