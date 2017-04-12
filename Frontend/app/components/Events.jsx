@@ -54,7 +54,7 @@ class Events extends React.Component {
             () => browserHistory.push(`/events/edit`)
           )}
           key={event._id}>
-          <h3>{event.title} <small>{event.subtitle}</small> <Label>{event.rounds.length} Rounds</Label></h3>
+          <h3>{event.title} <Label>{event.rounds.length} Rounds</Label></h3>
           <Badge>{`${event.progress}%`}</Badge><ProgressBar striped bsStyle="success" now={event.progress} />
         </ListGroupItem>
       )
