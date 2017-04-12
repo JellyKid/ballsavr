@@ -21,7 +21,9 @@ class UpcomingEvents extends React.Component {
   }
 
   render(){
-    let rounds = this.state.rounds.map(
+    let rounds = this.state.rounds
+    .sort((a,b) => a.start <= b.start ? -1 : 1) //sort by date
+    .map(
       (round) => <Panel
         key={round._id}>
         <h3>{round.event.title} <Label>{round.name}</Label></h3>
