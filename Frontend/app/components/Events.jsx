@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Col, ButtonToolbar, Button, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Grid, Col, ButtonToolbar, Button, PageHeader, ListGroup, ListGroupItem, Label, Badge, ProgressBar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import handleFetch from '../helpers/handleFetch';
@@ -14,7 +14,7 @@ class Events extends React.Component {
       event: null
     };
     this.handleFetch = handleFetch.bind(this);
-    this.done = this.done.bind(this);
+    this.done = this.done.bind(this);    
   }
 
   componentWillMount(){
@@ -54,8 +54,8 @@ class Events extends React.Component {
             () => browserHistory.push(`/events/edit`)
           )}
           key={event._id}>
-          <h4>{event.title} <small>{event.subtitle}</small></h4>
-          <p>{moment(event.start).format('MMM Do YYYY, h:mm a')}</p>
+          <h4>{event.title} <small>{event.subtitle}</small> - <Label>{event.rounds.length} Rounds</Label></h4>
+          <Badge>{`${event.progress}%`}</Badge><ProgressBar striped bsStyle="success" now={event.progress} />
         </ListGroupItem>
       )
     );
