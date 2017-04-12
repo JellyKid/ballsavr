@@ -161,6 +161,7 @@ class EditRound extends React.Component {
       <DateTimeEditor
         show={this.state.showDateTime}
         hide={() => this.setState({showDateTime: false})}
+        time={this.state.round.start}
         save={(date) => this.setState(update(
           this.state,
           {
