@@ -31,7 +31,7 @@ class EventTableTypeahead extends React.Component {
       minLength={1}
       multiple
       renderMenuItemChildren={this.renderChildren}
-      selected={this.props.selected}
+      selected={this.props.selectedTables}
       onChange={this.props.handleChange}
       emptyLabel='No tables found. Try adding tables to your collection first.'
            />;

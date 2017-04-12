@@ -82,6 +82,14 @@ class EditRound extends React.Component {
 
     const formattedDateTime = moment(this.state.round.start).format("MMM Do YYYY, h:mmA");
 
+    const filterTablesById = (t) => { //filter users already selected in round so there are no duplicates
+      return !this.state.round.tables.find(
+        (table) => table._id === t._id
+      );
+    };
+
+    const tableOptions = this.state.availableTables.filter(filterTablesById);
+
     const form = (
       <Form horizontal onSubmit={this.handleSubmit}>
 
@@ -100,8 +108,8 @@ class EditRound extends React.Component {
           </Col>
           <Col sm={12}>
             <EventTableTypeahead
-              tables={this.state.availableTables}
-              selected={this.state.round.tables}
+              tables={tableOptions}
+              selectedTables={this.state.round.tables}
               handleChange={(tables) => this.setState(update(
                 this.state,
                 {round: {tables: {$set: tables}}}
@@ -171,13 +179,15 @@ class EditRound extends React.Component {
         ))}/>
     );
 
-    const filterById = (user) => { //filter users already selected in round so there are no duplicates
+    const filterPlayersById = (user) => { //filter users already selected in round so there are no duplicates
       return !this.state.round.players.find(
         (player) => player.user._id === user._id
       );
     };
 
-    const playeroptions = this.state.availableUsers.filter(filterById);
+    const playeroptions = this.state.availableUsers.filter(filterPlayersById);
+
+
 
     const addplayer = (
       <AddPlayerModel
