@@ -14,7 +14,7 @@ class Events extends React.Component {
       event: null
     };
     this.handleFetch = handleFetch.bind(this);
-    this.done = this.done.bind(this);    
+    this.done = this.done.bind(this);
   }
 
   componentWillMount(){
@@ -54,7 +54,7 @@ class Events extends React.Component {
             () => browserHistory.push(`/events/edit`)
           )}
           key={event._id}>
-          <h4>{event.title} <small>{event.subtitle}</small> - <Label>{event.rounds.length} Rounds</Label></h4>
+          <h3>{event.title} <small>{event.subtitle}</small> <Label>{event.rounds.length} Rounds</Label></h3>
           <Badge>{`${event.progress}%`}</Badge><ProgressBar striped bsStyle="success" now={event.progress} />
         </ListGroupItem>
       )
