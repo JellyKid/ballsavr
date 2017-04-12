@@ -27,7 +27,7 @@ class UpcomingEvents extends React.Component {
       (round) => <Panel
         key={round._id}>
         <h3>{round.event.title} <Label>{round.name}</Label></h3>
-        <h4>{moment(round.start).format('MMM Do YYYY, h:mm a')}</h4>
+        <h4>{moment(round.start).format("MMM Do 'YY, h:mm a")}</h4>
       </Panel>
     );
 
