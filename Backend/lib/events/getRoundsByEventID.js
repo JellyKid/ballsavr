@@ -1,16 +1,31 @@
 const Round = require('../../db/models/round');
+const Event = require('../../db/models/event');
 
 function getRoundsByEventID(req, res, next) {
   if(req.params.event){
-    return Round
-    .find({event: req.params.event})
-    .populate({path: 'players.user', select: 'firstName lastName'})
-    .populate({path: 'tables', select: 'name'})
+    return Event
+    .findById(req.params.event)
+    .populate({
+      path: 'rounds',
+      model: 'round',
+      populate: [
+        {
+          path: 'players.user',
+          model: 'user',
+          select: 'firstName lastName'
+        },
+        {
+          path: 'tables',
+          model: 'table',
+          select: 'name'
+        }
+      ]
+    })
     .lean()
     .exec(
-      (err, rounds) => {
+      (err, event) => {
         if(err){return next(err);}
-        res.locals.rounds = rounds || [];
+        res.locals.rounds = event.rounds || [];
         return next();
       }
     );
