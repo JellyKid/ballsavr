@@ -9,6 +9,7 @@ const removeEventByID = require('./events/removeEventByID');
 const removeRoundsByEventID = require('./events/removeRoundsByEventID');
 const upcomingEvents = require('./events/upcomingEvents');
 const upcomingRounds = require('./events/upcomingRounds');
+const updateEventWithRounds = require('./events/updateEventWithRounds');
 
 router.all(
   '/event/*',
@@ -20,6 +21,7 @@ router.post(
   jsonParser,
   saveEvent,
   saveRounds,
+  updateEventWithRounds,
   (req, res) => {
     return res.status(200).send({
       status: 200
