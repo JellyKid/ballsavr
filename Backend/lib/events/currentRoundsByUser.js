@@ -1,14 +1,15 @@
 const Round = require('../../db/models/round');
 
-function upcomingRounds(req, res, next) {
-  if(res.locals.events && req.user){
-    return Round.find({event: {$in : res.locals.events}})
+function currentRoundsByUser(req, res, next) {
+  if(req.user){
+    return Round.find({start: { $gt: new Date()}})
     .elemMatch('players',{user: req.user})
     .populate('event')
+    .lean()
     .exec(
       (err, rounds) => {
         if(err){return next(err);}
-        res.locals.rounds = rounds || [];        
+        res.locals.rounds = rounds || [];
         return next();
       }
     );
@@ -16,4 +17,4 @@ function upcomingRounds(req, res, next) {
   return next();
 }
 
-module.exports = upcomingRounds;
+module.exports = currentRoundsByUser;

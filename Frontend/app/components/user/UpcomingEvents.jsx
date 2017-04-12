@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, PageHeader, Grid, Col } from 'react-bootstrap';
+import { Panel, PageHeader, Grid, Col, Label } from 'react-bootstrap';
 import moment from 'moment';
 import handleFetch from '../../helpers/handleFetch';
 
@@ -24,7 +24,7 @@ class UpcomingEvents extends React.Component {
     let rounds = this.state.rounds.map(
       (round) => <Panel
         key={round._id}>
-        <h3>{round.event.title} - {round.name}</h3>
+        <h3>{round.event.title} <Label>{round.name}</Label></h3>
         <h4>{moment(round.start).format('MMM Do YY, h:mm a')}</h4>
       </Panel>
     );
