@@ -14,10 +14,7 @@ function updateRounds(req, res, next) {
           (err, doc) => {
             if(err) {return reject(err);}
             if(!doc) {return reject(Error(`Document missing on saving round`));}
-            return resolve({
-              doc: doc,
-              players: round.players
-            });
+            return resolve(doc);
           }
         );
       }
