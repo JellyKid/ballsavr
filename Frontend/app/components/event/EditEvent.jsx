@@ -1,13 +1,13 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox,
         ButtonToolbar, Button, Col, Well, Grid, Modal, Glyphicon,
-        ListGroup, ListGroupItem } from 'react-bootstrap';
+        ListGroup, ListGroupItem, Badge } from 'react-bootstrap';
 import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import { setUsers } from '../../redux/actions';
 import moment from 'moment';
-import DateTimeEditor from './DateTimeEditor';
+
 import EditRound from './EditRound';
 import { blankEvent, blankRound } from './templates';
 import DeleteEventModel from './DeleteEventModel';
@@ -89,7 +89,7 @@ class EditEvent extends React.Component {
       </Button>
     ) : null;
 
-    const formattedDateTime = moment(this.state.event.start).format("MMM Do YYYY, h:mmA");
+
 
     const roundIndex = this.state.currentRoundIndex === 0 ? 0
         : this.state.currentRoundIndex || this.state.rounds.length;
@@ -102,7 +102,8 @@ class EditEvent extends React.Component {
             currentRound: round,
             currentRoundIndex: i
           })}>
-          {round.name}
+          <h4>{round.name} <small>{moment(round.start).format('MMM Do YY, h:mm a')}</small></h4>
+          <p><Badge>{round.players.length}</Badge> players  <Badge>{round.tables.length}</Badge> tables</p>
         </ListGroupItem>
       );
     });
@@ -148,17 +149,6 @@ class EditEvent extends React.Component {
               <option value="leagues">Leagues</option>
             </FormControl>
           </Col>
-          <Col md={2}>
-            <ControlLabel>Start Time</ControlLabel>
-          </Col>
-          <Col md={4}>
-
-            <Button
-              ref={(node) => {this.startTimeButton = node;}}
-              onClick={() => {this.setState({showDateTime: true});}}>{formattedDateTime}
-            </Button>
-
-          </Col>
         </FormGroup>
         <hr />
         <FormGroup>
@@ -199,18 +189,6 @@ class EditEvent extends React.Component {
       </Form>
     );
 
-    const dateTimeEditor = (
-      <DateTimeEditor
-        show={this.state.showDateTime}
-        hide={() => this.setState({showDateTime: false})}
-        save={(date) => this.setState(update(
-          this.state,
-          {
-            showDateTime: {$set: false},
-            event : {start : {$set:date}}
-          }
-        ))}/>
-    );
 
     function roundSave(round, index) {
       if(index){
@@ -266,7 +244,6 @@ class EditEvent extends React.Component {
             <Well>
               <h2>Edit Event</h2>
               <hr />
-              {dateTimeEditor}
               {form}
             </Well>
           </Col>
