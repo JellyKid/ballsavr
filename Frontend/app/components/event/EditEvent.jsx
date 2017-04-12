@@ -33,7 +33,7 @@ class EditEvent extends React.Component {
   }
 
   componentWillMount(){
-    if(this.state.event._id){    
+    if(this.state.event._id){
       this.setState({rounds: this.state.event.rounds});
     }
   }
@@ -84,7 +84,9 @@ class EditEvent extends React.Component {
     const roundIndex = this.state.currentRoundIndex === 0 ? 0
         : this.state.currentRoundIndex || this.state.rounds.length;
 
-    const rounds = this.state.rounds.map((round, i) => {
+    const rounds = this.state.rounds
+    .sort((a,b) => a.start <= b.start ? -1 : 1) //sort by date
+    .map((round, i) => {
       return (
         <ListGroupItem
           key={i}
