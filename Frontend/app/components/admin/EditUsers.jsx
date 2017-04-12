@@ -54,11 +54,10 @@ class EditUsers extends React.Component {
 
 
   render(){
-
     const users = this.props.users
       .slice(
         this.state.currentPage * this.state.maxUsersShown,
-        this.state.currentPage + this.state.maxUsersShown
+        this.state.currentPage * this.state.maxUsersShown + this.state.maxUsersShown
       )
       .map(
       (user) => {
@@ -74,15 +73,21 @@ class EditUsers extends React.Component {
       }
     );
 
+    const pagerItems = [];
+    if(this.state.currentPage != 0){
+      pagerItems.push(<Pager.Item key="edituserspreviouspager" previous onSelect={this.handlePrevious}>&larr; Previous</Pager.Item>);
+    }
+    if(this.state.currentPage != Math.floor((this.props.users.length - 1) / this.state.maxUsersShown)){
+      pagerItems.push(<Pager.Item key="editusersnextpager" next onSelect={this.handleNext}>Next &rarr;</Pager.Item>);
+    }
+
+
     const userList = (
       <div>
         <ListGroup className="mBottom">
           {users}
         </ListGroup>
-        <Pager>
-          <Pager.Item previous onSelect={this.handlePrevious}>&larr; Previous</Pager.Item>
-          <Pager.Item next onSelect={this.handleNext}>Next &rarr;</Pager.Item>
-        </Pager>
+        <Pager>{pagerItems}</Pager>
       </div>
     );
 
