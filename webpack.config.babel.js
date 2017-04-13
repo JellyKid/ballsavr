@@ -15,7 +15,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import merge from 'webpack-merge';
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import nodeExternals from 'webpack-node-externals';
-import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
+import ForceCaseSensitivityPlugin from 'case-sensitive-paths-webpack-plugin';
 
 const pkg = require('./prod_package.json');
 
