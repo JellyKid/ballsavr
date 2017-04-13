@@ -32,7 +32,7 @@ class EditEvent extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     if(this.state.event._id){
       this.setState({rounds: this.state.event.rounds});
     }

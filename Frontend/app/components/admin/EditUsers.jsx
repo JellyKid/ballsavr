@@ -20,7 +20,7 @@ class EditUsers extends React.Component {
     this.handlePrevious = this.handlePrevious.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.handleGet(
       '/api/admin/users',
       setUsers

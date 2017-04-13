@@ -17,7 +17,7 @@ class Events extends React.Component {
     this.done = this.done.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.handleFetch('GET', '/api/events',null, setEvents);
   }
 

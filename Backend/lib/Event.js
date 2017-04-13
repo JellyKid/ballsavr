@@ -11,6 +11,7 @@ const currentRoundsByUser = require('./events/currentRoundsByUser');
 const updateEventWithRounds = require('./events/updateEventWithRounds');
 const saveTotals = require('./events/saveTotals');
 const deleteUnmatchedTotals = require('./events/deleteUnmatchedTotals');
+const getRoundByID = require('./events/getRoundByID');
 
 router.all(
   '/event/*',
@@ -68,6 +69,17 @@ router.get(
     {
       status:200,
       payload: res.locals.rounds
+    }
+  )
+);
+
+router.get(
+  '/round/:id',
+  getRoundByID,
+  (req,res) => res.status(200).send(
+    {
+      status:200,
+      payload: res.locals.round
     }
   )
 );

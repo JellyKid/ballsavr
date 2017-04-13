@@ -23,7 +23,7 @@ class EditTables extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.handleFetch('GET','/api/table/current',null, setCurrentTables);
   }
 

@@ -28,7 +28,7 @@ class EditRound extends React.Component {
     this.removePlayer = this.removePlayer.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     handleFetch('GET', '/api/table/current')
       .then((res) => res.payload)
       .then((tables) => handleFetch('GET', '/api/admin/users')

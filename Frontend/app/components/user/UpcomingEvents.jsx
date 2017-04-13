@@ -2,6 +2,7 @@ import React from 'react';
 import { Panel, PageHeader, Grid, Col, Label } from 'react-bootstrap';
 import moment from 'moment';
 import handleFetch from '../../helpers/handleFetch';
+import {browserHistory} from 'react-router';
 
 class UpcomingEvents extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class UpcomingEvents extends React.Component {
     };
   }
 
-  componentWillMount(){
+  componentDidMount(){
     handleFetch('GET','/api/rounds/current')
       .then(
         (res) => this.setState({rounds: res.payload || []})
@@ -25,6 +26,7 @@ class UpcomingEvents extends React.Component {
     .sort((a,b) => a.start <= b.start ? -1 : 1) //sort by date
     .map(
       (round) => <Panel
+        onClick={() => browserHistory.push(`/round/${round._id}`)}
         key={round._id}>
         <h3>{round.event.title} <Label>{round.name}</Label></h3>
         <h4>{moment(round.start).format("MMM Do 'YY, h:mm a")}</h4>

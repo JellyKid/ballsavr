@@ -14,7 +14,7 @@ class Tables extends React.Component {
     this.handleGet = handleGet.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.handleGet(
       '/api/table/current',
       setCurrentTables
