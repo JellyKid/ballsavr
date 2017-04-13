@@ -26,6 +26,7 @@
     "css-loader": "^0.23.1",
     "ejs": "^2.5.6",
     "extract-text-webpack-plugin": "^1.0.1",
+    "force-case-sensitivity-webpack-plugin": "^0.2.1",
     "html-webpack-plugin": "^2.16.0",
     "html-webpack-template": "^4.0.0",
     "immutability-helper": "^2.1.2",
