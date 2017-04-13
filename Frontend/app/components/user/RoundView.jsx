@@ -39,7 +39,9 @@ class RoundView extends React.Component {
   render(){
     let rank = 1;
     let lastValue = 0;
-    const statRows = this.state.totals.map(
+    const statRows = this.state.totals
+    .sort((a,b) => a.value < b.value)
+    .map(
       (total) => {
         let row = (
           <tr key={total._id} >
