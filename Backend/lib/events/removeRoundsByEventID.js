@@ -1,4 +1,4 @@
-const Round = require('../../db/models/round');
+const Round = require('../../db/models/Round');
 
 function removeRoundsByEventID(req, res, next) {
   if(req.params.event){

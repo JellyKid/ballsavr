@@ -1,4 +1,4 @@
-const Event = require('../../db/models/event');
+const Event = require('../../db/models/Event');
 
 function getEvents(req, res, next) {
   res.locals.events = [];

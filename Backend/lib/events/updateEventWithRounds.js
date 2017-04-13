@@ -1,5 +1,5 @@
 const path = require('path');
-const Event = require(path.normalize('../../db/models/event'));
+const Event = require(path.normalize('../../db/models/Event'));
 
 function updateEventWithRounds(req, res, next) {
   if(res.locals.event && res.locals.rounds){  

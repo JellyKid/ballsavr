@@ -1,5 +1,5 @@
 const path = require('path');
-const Table = require(path.normalize('../../db/models/table'));
+const Table = require(path.normalize('../../db/models/Table'));
 
 function findByIdAndUpdate(req, res, next) {
   if(res.locals.ids && res.locals.updates){

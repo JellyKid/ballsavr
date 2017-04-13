@@ -1,5 +1,5 @@
 const path = require('path');
-const Event = require(path.normalize('../../db/models/event'));
+const Event = require(path.normalize('../../db/models/Event'));
 
 function updateEvent(req, res, next) {
   const event = new Event(req.body.event);

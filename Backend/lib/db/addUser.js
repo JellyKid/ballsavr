@@ -1,5 +1,5 @@
 const path = require('path');
-const User = require(path.normalize('../../db/models/user'));
+const User = require(path.normalize('../../db/models/User'));
 
 function addUser(req, res, next) {
   //See if there is already a user with that email. Send 409 if found.

@@ -7,7 +7,7 @@ const isAdmin = require(path.normalize('../auth/isAdmin'));
 
 const fetch = require('node-fetch');
 const jsdom = require('jsdom');
-const Table = require('../../db/models/table');
+const Table = require('../../db/models/Table');
 
 const rowsEnum = { //enum of rows content
   name: 0,

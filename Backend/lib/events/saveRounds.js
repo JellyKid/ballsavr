@@ -1,5 +1,5 @@
 const path = require('path');
-const Round = require(path.normalize('../../db/models/round'));
+const Round = require(path.normalize('../../db/models/Round'));
 
 function updateRounds(req, res, next) {
 

@@ -1,5 +1,5 @@
 const path = require('path');
-const User = require(path.normalize('../../db/models/user'));
+const User = require(path.normalize('../../db/models/User'));
 
 function getUserByToken(req, res, next) {
   let token = req.query.token || req.body.token;

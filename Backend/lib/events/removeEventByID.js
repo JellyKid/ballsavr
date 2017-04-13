@@ -1,4 +1,4 @@
-const Event = require('../../db/models/event');
+const Event = require('../../db/models/Event');
 
 function removeEventByID(req, res, next) {
   if(req.params.event){

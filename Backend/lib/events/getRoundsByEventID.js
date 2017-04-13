@@ -1,5 +1,5 @@
-const Round = require('../../db/models/round');
-const Event = require('../../db/models/event');
+const Round = require('../../db/models/Round');
+const Event = require('../../db/models/Event');
 
 function getRoundsByEventID(req, res, next) {
   if(req.params.event){

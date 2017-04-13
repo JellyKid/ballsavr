@@ -1,5 +1,5 @@
 const path = require('path');
-const Table = require(path.normalize('../../db/models/table'));
+const Table = require(path.normalize('../../db/models/Table'));
 
 function getCurrentTables(req,res,next) {
   return Table.where('enabled',true).exec(
