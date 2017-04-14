@@ -1,6 +1,6 @@
 import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
-import { Grid, Col, PageHeader, Table } from 'react-bootstrap';
+import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon } from 'react-bootstrap';
 import browserHistory from 'react-router';
 import { connect } from 'react-redux';
 
@@ -12,11 +12,13 @@ class RoundView extends React.Component {
         event: {
           title: 'Loading...'
         },
-        name: "Please wait"
+        name: "Please wait",
+        tables: [],
+        players: []
       },
       scores: [],
       totals: []
-    };        
+    };
   }
 
   componentDidMount(){
@@ -48,6 +50,7 @@ class RoundView extends React.Component {
           <tr key={total._id} >
             <td>{rank}</td>
             <td>{`${total.player.firstName} ${total.player.lastName.charAt(0)}`}</td>
+            <td>{total.player.initials}</td>
             <td>{total.value}</td>
           </tr>
         );
@@ -63,6 +66,7 @@ class RoundView extends React.Component {
           <tr>
             <th>#</th>
             <th>Player</th>
+            <th>Initials</th>
             <th>Score</th>
           </tr>
         </thead>
@@ -70,13 +74,40 @@ class RoundView extends React.Component {
       </Table>
     );
 
+    const tables = this.state.round.tables.map(
+      (table) => (
+        <ListGroupItem key={table._id}>
+          <div className="justify-content-between d-flex">
+            <h4>{table.name}</h4>
+            <Button><Glyphicon glyph="plus" /></Button>
+          </div>
+        </ListGroupItem>
+      )
+    );
+    
+    let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
+    let groupName = player ? player.group : "";
+    const group = this.state.round.players.reduce((p, c) => {
+      if(c.group === player.group){
+        p.push(
+          <div key={c._id} className="token">{`${c.user.firstName} ${c.user.lastName.charAt(0)}`}</div>
+        );
+      }
+      return p;
+    }, []);
+
     return (
       <Grid>
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>
           <h2>Standings</h2>
-          <hr/>
           {stats}
+          <hr/>
+          <h2>{`Group ${groupName}`}</h2>
+          <div>{group}</div>
+          <hr/>
+          <h2>{this.props.player.initials} Tables</h2>
+          <ListGroup>{tables}</ListGroup>
         </Col>
       </Grid>
     );
@@ -85,7 +116,8 @@ class RoundView extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    round: state.rounds.find((round) => round._id === ownProps.params.roundID)
+    round: state.rounds.find((round) => round._id === ownProps.params.roundID),
+    player: state.user
   };
 }
 
