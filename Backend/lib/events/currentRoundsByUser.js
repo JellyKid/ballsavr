@@ -6,7 +6,8 @@ function currentRoundsByUser(req, res, next) {
     .elemMatch('players',{user: req.user})
     .populate([
       {path: 'event', select: 'title description'},
-      {path: 'tables', select: 'name'}
+      {path: 'tables', select: 'name'},
+      {path: 'players.user', select: 'firstName lastName initials'}
     ])
     .lean()
     .exec(
