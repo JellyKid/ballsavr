@@ -4,7 +4,10 @@ function currentRoundsByUser(req, res, next) {
   if(req.user){
     return Round.find({start: { $gt: new Date()}})
     .elemMatch('players',{user: req.user})
-    .populate('event')
+    .populate(
+      {path: 'event', select: 'title description'},
+      {path: 'tables', select: 'name'}
+    )
     .lean()
     .exec(
       (err, rounds) => {
