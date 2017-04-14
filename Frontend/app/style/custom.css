@@ -59,3 +59,23 @@ h1 small {
 .no-border {
   border: none!important;
 }
+
+.justify-content-between {
+    -webkit-box-pack: justify!important;
+    -webkit-justify-content: space-between!important;
+    -ms-flex-pack: justify!important;
+    justify-content: space-between!important;
+}
+
+.d-flex {
+    display: -webkit-box!important;
+    display: -webkit-flex!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+
+.justify-content-around {
+    -webkit-justify-content: space-around!important;
+    -ms-flex-pack: distribute!important;
+    justify-content: space-around!important;
+}
