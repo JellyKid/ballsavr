@@ -84,11 +84,11 @@ class RoundView extends React.Component {
         </ListGroupItem>
       )
     );
-    
+
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
-    let groupName = player ? player.group : "";
+    let groupName = (player) ? player.group : "";
     const group = this.state.round.players.reduce((p, c) => {
-      if(c.group === player.group){
+      if(c.group === groupName){
         p.push(
           <div key={c._id} className="token">{`${c.user.firstName} ${c.user.lastName.charAt(0)}`}</div>
         );
