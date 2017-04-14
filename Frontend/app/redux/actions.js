@@ -84,3 +84,11 @@ export function setSiteInfo(info) {
     payload: info
   };
 }
+
+export const SET_CURRENT_ROUNDS = 'SET_CURRENT_ROUNDS';
+export function setCurrentRounds(rounds) {
+  return {
+    type: SET_CURRENT_ROUNDS,
+    payload: rounds
+  };
+}

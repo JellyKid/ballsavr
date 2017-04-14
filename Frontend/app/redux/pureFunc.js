@@ -101,3 +101,12 @@ export function setSiteInfo(state, info) {
     }
   );
 }
+
+export function setCurrentRounds(state, rounds) {
+  return update(
+    state,
+    {
+      rounds: {$set: rounds}
+    }
+  );
+}

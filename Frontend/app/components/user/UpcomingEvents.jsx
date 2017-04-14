@@ -3,26 +3,28 @@ import { Panel, PageHeader, Grid, Col, Label } from 'react-bootstrap';
 import moment from 'moment';
 import handleFetch from '../../helpers/handleFetch';
 import {browserHistory} from 'react-router';
+import { connect } from 'react-redux';
+import { setCurrentRounds } from '../../redux/actions';
 
 class UpcomingEvents extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      rounds: []
-    };
+    // this.state = {
+    //   rounds: []
+    // };
   }
 
   componentDidMount(){
     handleFetch('GET','/api/rounds/current')
       .then(
-        (res) => this.setState({rounds: res.payload || []})
+        (res) => this.props.dispatch(setCurrentRounds(res.payload))
       ).catch(
         (err) => console.log(err)
       );
   }
 
   render(){
-    let rounds = this.state.rounds
+    let rounds = this.props.rounds
     .sort((a,b) => a.start <= b.start ? -1 : 1) //sort by date
     .map(
       (round) => <Panel
@@ -48,4 +50,10 @@ class UpcomingEvents extends React.Component {
   }
 }
 
-export default UpcomingEvents;
+function mapStateToProps(state) {
+  return {
+    rounds: state.rounds
+  };
+}
+
+export default connect(mapStateToProps)(UpcomingEvents);

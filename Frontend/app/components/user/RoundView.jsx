@@ -2,10 +2,12 @@ import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
 import { Grid, Col, PageHeader, Table } from 'react-bootstrap';
 import browserHistory from 'react-router';
+import { connect } from 'react-redux';
 
 class RoundView extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       totals: [],
       round: this.props.round || {
@@ -82,4 +84,10 @@ class RoundView extends React.Component {
   }
 }
 
-export default RoundView;
+function mapStateToProps(state, ownProps) {
+  return {
+    round: state.rounds.find((round) => round._id === ownProps.params.roundID)
+  };
+}
+
+export default connect(mapStateToProps)(RoundView);

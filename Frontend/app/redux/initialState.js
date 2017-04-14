@@ -4,6 +4,7 @@ export const INITIAL_STATE = {
   user: {},
   users: [],
   events: [],
+  rounds: [],
   currentTables: [],
   message: "",
   messageBox: {
