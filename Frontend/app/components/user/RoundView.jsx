@@ -7,35 +7,34 @@ import { connect } from 'react-redux';
 class RoundView extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
-      totals: [],
       round: this.props.round || {
         event: {
           title: 'Loading...'
         },
         name: "Please wait"
-      }
-    };
-    this.getRoundInfo = this.getRoundInfo.bind(this);
+      },
+      scores: [],
+      totals: []
+    };        
   }
 
   componentDidMount(){
+    let fetches = [
+      handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
+      handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
+    ];
     if(!this.props.round){
-      handleFetch('GET', `/api/round/${this.props.params.roundID}`)
-      .then((results) => this.setState(
-        {round: results.payload},
-        this.getRoundInfo
-      ));
-    } else {
-      this.getRoundInfo();
+      fetches.push(handleFetch('GET', `/api/round/${this.props.params.roundID}`));
     }
-  }
-
-  getRoundInfo(){
-    handleFetch('GET',`/api/totals?round=${this.props.params.roundID}`)
-    .then( (results) => this.setState({totals: results.payload}) )
-    .catch((err) => console.log(err));
+    return Promise.all(fetches)
+    .then(
+      (res) => this.setState({
+        totals: res[0].payload,
+        scores: res[1].payload,
+        round: this.props.round || res[2].payload
+      })
+    );
   }
 
   render(){
