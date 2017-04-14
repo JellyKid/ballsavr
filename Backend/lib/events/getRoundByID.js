@@ -7,7 +7,10 @@ function getRoundByID(req, res, next) {
 
   return Round
   .findById(req.params.id)
-  .populate({path: 'event', select: 'title description'})
+  .populate([
+    {path: 'event', select: 'title description'},
+    {path: 'tables', select: 'name'}
+  ])
   .lean()
   .exec(
     (err, round) => {
