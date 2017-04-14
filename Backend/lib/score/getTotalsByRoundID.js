@@ -6,7 +6,7 @@ function getTotalsByRoundID(req, res, next) {
   }
   return Total
   .find({round: req.query.round})
-  .populate({path: 'player', select: 'firstName lastName'})
+  .populate({path: 'player', select: 'firstName lastName initials'})
   .lean()
   .exec(
     (err, totals) => {

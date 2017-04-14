@@ -9,7 +9,8 @@ function getRoundByID(req, res, next) {
   .findById(req.params.id)
   .populate([
     {path: 'event', select: 'title description'},
-    {path: 'tables', select: 'name'}
+    {path: 'tables', select: 'name'},
+    {path: 'players.user', select: 'firstName lastName initials'}
   ])
   .lean()
   .exec(
