@@ -64,6 +64,7 @@ class SubmitScoreModal extends React.Component {
             displayType={"input"}
             thousandSeparator={true}
             onChange={this.handleChange}
+            pattern="[0-9]*"
           />
         </FormGroup>
       </form>
