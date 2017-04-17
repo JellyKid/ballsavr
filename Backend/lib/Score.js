@@ -2,6 +2,8 @@ const router = require('express').Router();
 const checkAuth = require('./auth/checkAuth');
 const getTotalsByRoundID = require('./score/getTotalsByRoundID');
 const getScoresFromRound = require('./score/getScoresFromRound');
+const submitScore = require('./score/submitScore');
+const jsonParser = require('body-parser').json();
 
 router.all(
   '/score/*',
@@ -24,6 +26,13 @@ router.get(
     status: 200,
     payload: res.locals.scores
   })
+);
+
+router.post(
+  '/score',
+  jsonParser,
+  submitScore,
+  (req, res) => res.status(200).send({status: 200})
 );
 
 module.exports = router;

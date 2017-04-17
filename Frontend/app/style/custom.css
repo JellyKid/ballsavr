@@ -79,3 +79,26 @@ h1 small {
     -ms-flex-pack: distribute!important;
     justify-content: space-around!important;
 }
+
+.group-player-token {
+  background-color: #c21fd6;
+  /*background-image: url('../assets/bg.png');*/
+  color: #fff;
+  border: 0;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0 3px 3px 0;
+  padding: 4px 7px;
+  position: relative;
+  font-size: large;
+}
+
+.score-input{
+  font-size: x-large;
+  text-align: right;
+}
+
+.score-modal-body{
+  justify-content: center;
+}

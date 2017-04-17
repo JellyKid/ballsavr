@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "body-parser": "^1.17.0",
+    "cleave.js": "^0.7.15",
     "connect-mongodb-session": "^1.3.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
@@ -71,6 +72,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rand-token": "^0.3.0",
+    "react-number-format": "^1.1.2",
     "scrypt": "^6.0.3"
   }
 }
