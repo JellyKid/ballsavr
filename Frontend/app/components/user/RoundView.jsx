@@ -31,6 +31,7 @@ class RoundView extends React.Component {
       'rankings',
       (rankings) => {this.setState({totals: rankings});}
     );
+    this.refreshScores = this.refreshScores.bind(this);
   }
 
   componentDidMount(){
@@ -54,9 +55,15 @@ class RoundView extends React.Component {
           round: this.props.round || res[2].payload
         });
       }
-    );
+    ).catch((err) => {console.log(err);});
   }
 
+  refreshScores(){
+    handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
+    .then(
+      (res) => this.setState({scores: res.payload})
+    ).catch((err) => {console.log(err);});
+  }
 
   componentWillUnmount(){
     socket.close();
@@ -148,6 +155,7 @@ class RoundView extends React.Component {
           visible={this.state.submitData ? true : false}
           data={this.state.submitData}
           hideMe={() => this.setState({submitData:null})}
+          finishSubmit={() => this.setState({submitData: null},this.refreshScores)}
         />
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>

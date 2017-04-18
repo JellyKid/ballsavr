@@ -39,14 +39,14 @@ class SubmitScoreModal extends React.Component {
     .then(
       () => {
         this.setState({score: "", submitDisabled: false});
-        this.props.hideMe();
+        this.props.finishSubmit();
       }
     )
     .catch(
       (err) => {
         console.log(err);
         this.setState({score: "", submitDisabled: false});
-        this.props.hideMe();
+        this.props.finishSubmit();
       }
     );
   }
