@@ -72,6 +72,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rand-token": "^0.3.0",
-    "scrypt": "^6.0.3"
+    "scrypt": "^6.0.3",
+    "socket.io": "^1.7.3"
   }
 }

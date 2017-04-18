@@ -18,6 +18,8 @@ const HOST = process.argv[3] || env.get('HOST') || '127.0.0.1';
 const secret = env.get('secret') || 'change the secret here or in .env file';
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('./socket')(server);
 
 //common middleware
 app.use(cookieParser());
@@ -43,7 +45,7 @@ app.use(require('./lib/Table'));
 app.use(require('./lib/Public'));
 app.use(require('./lib/Score'));
 
-app.listen(
+server.listen(
   PORT,
   HOST,
   127,

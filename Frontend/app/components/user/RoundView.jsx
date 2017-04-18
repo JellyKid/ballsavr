@@ -5,6 +5,10 @@ import browserHistory from 'react-router';
 import { connect } from 'react-redux';
 import SubmitScoreModal from './SubmitScoreModal';
 import NumberFormat from 'react-number-format';
+const socket = require('socket.io-client')('/round',{
+  path: '/api/socket.io',
+  autoConnect: false
+});
 
 class RoundView extends React.Component {
   constructor(props) {
@@ -23,9 +27,17 @@ class RoundView extends React.Component {
       // submitModel: null,
       submitData: null
     };
+    socket.on(
+      'rankings',
+      (rankings) => {this.setState({totals: rankings});}
+    );
   }
 
   componentDidMount(){
+    socket.open();
+    socket.emit('join round', this.props.params.roundID);
+    // socket.on('hello', () => {console.log('Socket hit');});
+    // socket.emit('get rankings');
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
       handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
@@ -36,7 +48,6 @@ class RoundView extends React.Component {
     return Promise.all(fetches)
     .then(
       (res) => {
-        console.log(res);
         this.setState({
           totals: res[0].payload,
           scores: res[1].payload,
@@ -44,6 +55,11 @@ class RoundView extends React.Component {
         });
       }
     );
+  }
+
+
+  componentWillUnmount(){
+    socket.close();
   }
 
   render(){
