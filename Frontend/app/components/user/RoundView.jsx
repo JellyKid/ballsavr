@@ -113,7 +113,7 @@ class RoundView extends React.Component {
 
         let buttonContent = match ?
           <NumberFormat
-            value={match.score}
+            value={match.value}
             displayType={"text"}
             thousandSeparator={true}
           /> :

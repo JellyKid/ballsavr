@@ -32,7 +32,7 @@ class SubmitScoreModal extends React.Component {
       player: this.props.data.player.user._id,
       round: this.props.data.round._id,
       table: this.props.data.table._id,
-      score: this.state.score
+      value: this.state.score
     };
     this.setState({submitDisabled: true});
     handleFetch('POST','/api/score', submitData)

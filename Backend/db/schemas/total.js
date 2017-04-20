@@ -4,6 +4,7 @@ const schema = new mongoose.Schema(
   {
     player: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     round: {type: mongoose.Schema.Types.ObjectId, ref: 'round'},
+    group: String,
     value: {type: Number, default: 0}
   },
   {

@@ -2,7 +2,7 @@ const Score = require('../../db/models/Score');
 
 module.exports = function (req, res, next) {
 
-  if(!req.body.score || !req.body.round || !req.body.table){
+  if(!req.body.value || !req.body.round || !req.body.table){
     return next(new Error("Missing score, round or table"));
   }
 
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
       round: req.body.round,
       player: req.user,
       table: req.body.table,
-      score: req.body.score,
+      value: req.body.value,
       group: req.body.group || null,
       confirmed: false
     },
