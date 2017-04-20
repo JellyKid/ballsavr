@@ -14,12 +14,6 @@ function getRankings(id) {
 }
 
 const main = (namespace, socket, round ) => {
-  console.log(`Connected to ${round} in ${namespace.name}`);
-
-  socket.on('disconnect', (close) => {
-    console.log(`Disconnected from ${namespace.name} socket`);
-  });
-
   socket.on('get rankings', () => {
     getRankings(round)
     .then(
