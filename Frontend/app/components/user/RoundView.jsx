@@ -27,16 +27,19 @@ class RoundView extends React.Component {
       // submitModel: null,
       submitData: null
     };
-    socket.on(
-      'rankings',
-      (rankings) => {this.setState({totals: rankings});}
-    );
+
     this.refreshScores = this.refreshScores.bind(this);
+    this.updateTotalsFromSocket = this.updateTotalsFromSocket.bind(this);
   }
 
   componentDidMount(){
     socket.open();
     socket.emit('join round', this.props.params.roundID);
+    socket.on(
+      'rankings',
+      // (rankings) => {this.setState({totals: rankings});}
+      (rankings) => this.updateTotalsFromSocket(rankings)
+    );
     // socket.on('hello', () => {console.log('Socket hit');});
     // socket.emit('get rankings');
     let fetches = [
@@ -56,6 +59,10 @@ class RoundView extends React.Component {
         });
       }
     ).catch((err) => {console.log(err);});
+  }
+
+  updateTotalsFromSocket(totals){
+    this.setState({totals: totals});
   }
 
   refreshScores(){
@@ -131,9 +138,12 @@ class RoundView extends React.Component {
           </Button>
         );
 
+        let points = match ? match.points : 0;
+
         return (
           <tr key={table._id} >
             <td>{table.name}</td>
+            <td>{points}</td>
             <td>{submitButton}</td>
           </tr>
         );}
@@ -171,6 +181,7 @@ class RoundView extends React.Component {
             <thead>
               <tr>
                 <th>Table</th>
+                <th>Points</th>
                 <th>Score</th>
               </tr>
             </thead>

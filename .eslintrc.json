@@ -28,6 +28,7 @@
     },
     "globals": {
       "React": false,
-      "ReactDOM": false
+      "ReactDOM": false,
+      "emit": false
     }
 }

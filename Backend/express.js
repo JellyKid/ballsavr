@@ -20,6 +20,8 @@ const secret = env.get('secret') || 'change the secret here or in .env file';
 const app = express();
 const server = require('http').Server(app);
 const io = require('./socket')(server);
+// const redis = require('socket.io-redis');
+// io.adapter(redis({host:HOST, port: 6379}));
 
 //common middleware
 app.use(cookieParser());
@@ -52,4 +54,5 @@ server.listen(
   () => console.log(`Server listening on ${HOST}:${PORT}`)
 );
 
-module.exports = app;
+
+module.exports = io;

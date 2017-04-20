@@ -1,4 +1,5 @@
 const Score = require('../../db/models/Score');
+const tallyTotals = require('./tallyTotals');
 
 module.exports = function (req, res, next) {
 
@@ -27,7 +28,7 @@ module.exports = function (req, res, next) {
     },
     (err, doc) => {
       if(err){return next(err);}
-      console.log(doc);
+      if(doc)(tallyTotals(doc));
       return next();
     }
   );
