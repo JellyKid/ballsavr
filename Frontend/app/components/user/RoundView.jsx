@@ -73,12 +73,13 @@ class RoundView extends React.Component {
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
 
-    let rank = 1;
+    let rank = 0;
     let lastValue = 0;
     const statRows = this.state.totals
     .sort((a,b) => b.value - a.value)
     .map(
       (total) => {
+        if(total.value != lastValue){rank++;}
         let row = (
           <tr key={total._id} >
             <td>{rank}</td>
@@ -87,7 +88,6 @@ class RoundView extends React.Component {
             <td>{total.value}</td>
           </tr>
         );
-        if(total.value != lastValue){rank++;}
         lastValue = total.value;
         return row;
       }
