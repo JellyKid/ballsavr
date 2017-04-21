@@ -29,7 +29,6 @@ class RoundView extends React.Component {
     };
 
     this.refreshScores = this.refreshScores.bind(this);
-    this.updateTotalsFromSocket = this.updateTotalsFromSocket.bind(this);
   }
 
   componentDidMount(){
@@ -37,11 +36,9 @@ class RoundView extends React.Component {
     socket.emit('join round', this.props.params.roundID);
     socket.on(
       'rankings',
-      // (rankings) => {this.setState({totals: rankings});}
-      (rankings) => this.updateTotalsFromSocket(rankings)
+      (rankings) => this.setState({totals: rankings})
     );
-    // socket.on('hello', () => {console.log('Socket hit');});
-    // socket.emit('get rankings');
+
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
       handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
@@ -59,10 +56,6 @@ class RoundView extends React.Component {
         });
       }
     ).catch((err) => {console.log(err);});
-  }
-
-  updateTotalsFromSocket(totals){
-    this.setState({totals: totals});
   }
 
   refreshScores(){
@@ -83,7 +76,7 @@ class RoundView extends React.Component {
     let rank = 1;
     let lastValue = 0;
     const statRows = this.state.totals
-    .sort((a,b) => a.value < b.value)
+    .sort((a,b) => b.value - a.value)
     .map(
       (total) => {
         let row = (
