@@ -36,7 +36,7 @@ class RoundView extends React.Component {
     socket.emit('join round', this.props.params.roundID);
     socket.on(
       'rankings',
-      (rankings) => this.setState({totals: rankings})
+      (rankings) => this.setState({totals: rankings}, this.refreshScores)
     );
 
     let fetches = [
