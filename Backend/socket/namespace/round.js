@@ -17,7 +17,7 @@ const main = (namespace, socket, round ) => {
   socket.on('get rankings', () => {
     getRankings(round)
     .then(
-      (rankings) => {socket.emit('rankings', rankings);}
+      (rankings) => {socket.emit('rankings', {totals: rankings});}
     )
     .catch(
       (err) => {console.log(err);}

@@ -1,4 +1,5 @@
 const Total = require('../../db/models/Total');
+const Score = require('../../db/models/Score');
 
 module.exports = (round) => {
   const io = require('../../express');
@@ -6,12 +7,23 @@ module.exports = (round) => {
   .find({round: round})
   .populate({path: 'player', select: 'firstName lastName initials'})
   .lean()
-  .exec(
-    (err, totals) => {
-      if(err) throw err;      
-      if(totals){
-        io.of('/round').in(round).emit('rankings', totals);
-      }
+  .then(
+    (totals) => {
+      Score
+      .find({round: round})
+      .lean()
+      .exec(
+        (err, scores) => {
+          if(err) throw err;
+          io.of('/round').in(round).emit(
+            'rankings',
+            {
+              totals: totals,
+              scores: scores
+            }
+          );
+        }
+      );
     }
   );
 };

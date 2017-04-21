@@ -24,7 +24,6 @@ class RoundView extends React.Component {
       },
       scores: [],
       totals: [],
-      // submitModel: null,
       submitData: null
     };
 
@@ -36,12 +35,15 @@ class RoundView extends React.Component {
     socket.emit('join round', this.props.params.roundID);
     socket.on(
       'rankings',
-      (rankings) => this.setState({totals: rankings}, this.refreshScores)
+      (payload) => this.setState({
+        totals: payload.totals,
+        scores: payload.scores
+      })
     );
 
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
-      handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
+      handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick=true`)
     ];
     if(!this.props.round){
       fetches.push(handleFetch('GET', `/api/round/${this.props.params.roundID}`));
@@ -59,7 +61,7 @@ class RoundView extends React.Component {
   }
 
   refreshScores(){
-    handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick`)
+    handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick=true`)
     .then(
       (res) => this.setState({scores: res.payload})
     ).catch((err) => {console.log(err);});
@@ -109,7 +111,9 @@ class RoundView extends React.Component {
 
     const tables = this.state.round.tables.map(
       (table) => {
-        let match = this.state.scores.find((score) => score.table._id == table._id);
+        let match = this.state.scores.find(
+          (score) => score.table == table._id && score.player == this.props.player._id
+        );
 
         let buttonContent = match ?
           <NumberFormat
@@ -165,8 +169,7 @@ class RoundView extends React.Component {
           <h2>Rankings</h2>
           {stats}
           <hr/>
-          {/* <h2>{`Group ${groupName}`}</h2> */}
-          <h2>Your Group</h2>
+          <h2>{`Your Group - ${groupName}`}</h2>
           <div>{group}</div>
           <hr/>
           <h2>{this.props.player.initials} Scores</h2>
