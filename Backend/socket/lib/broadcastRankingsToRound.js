@@ -8,8 +8,7 @@ module.exports = (round) => {
   .lean()
   .exec(
     (err, totals) => {
-      if(err) throw err;
-      // console.log(`totals ${totals}`);
+      if(err) throw err;      
       if(totals){
         io.of('/round').in(round).emit('rankings', totals);
       }
