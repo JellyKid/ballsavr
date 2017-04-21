@@ -5,9 +5,10 @@ function getScoresFromRound(req, res, next) {
     return next();
   }
   let player = req.query.user || req.user;
-  let paths = [{path: 'player', select: 'firstName lastName'}];
+  let paths = [];  
   if(!req.query.quick){
     paths.push(
+      {path: 'player', select: 'firstName lastName'},
       {path: 'round', select: 'name'},
       {path: 'table', select: 'name'}
     );
