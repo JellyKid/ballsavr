@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Col, PageHeader, Button, Well} from 'react-bootstrap';
 
 import EmailForm from './login/EmailForm';
+import { browserHistory } from 'react-router';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Login extends React.Component {
   render(){
     const loginChoice = (
           <div>
-            <Button bsStyle="primary" bsSize="large" block disabled={true}>Facebook</Button>
+            <a href='/api/login/facebook'><Button bsStyle="primary" bsSize="large" block >Facebook</Button></a>
             <Button bsSize="large" block onClick={() => {this.setState({email: true});}}>
               E-Mail
             </Button>

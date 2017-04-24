@@ -7,14 +7,21 @@ const schema = new mongoose.Schema(
     email: String,
     initials: {type: String, default: 'AAA'},
     hash: {type: String, select: false},
-    facebook: String,
+    facebook: {
+      id: String,
+      accessToken: String,
+      profileUrl: String,
+      photos: [{value: String}]
+    },
     admin: {type: Boolean, default: false},
     enabled: {type: Boolean, default: false},
     meta: {
       authType: {type: String, default: 'local'},
       activated: {type: Boolean, default: false},
       invitationSent: Date,
-      verificationToken: {type: String, select: false}
+      verificationToken: {type: String, select: false},
+      updatedAt: Date,
+      createdAt: Date
     }
   },
   {
