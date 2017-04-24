@@ -14,27 +14,31 @@ export default class UserFilterButtons extends React.Component {
     return (
       <ButtonGroup>
         <Button>Show </Button>
-        <DropdownButton title={this.props.currentFilter}>
+        <DropdownButton id='user-filter-dropdown' title={this.props.currentFilter}>
           <MenuItem
             eventKey='all'
+            id='user-filter-by-all'
             onSelect={(key,e) => this.handleSelect('All', key, true, e)}
             disabled={this.props.currentFilter === 'All'}>
             All
           </MenuItem>
           <MenuItem
             eventKey='admin'
+            id='user-filter-by-admin'
             onSelect={(key,e) => this.handleSelect('Admin', key, true, e)}
             disabled={this.props.currentFilter === 'Admin'}>
             Admin
           </MenuItem>
           <MenuItem
             eventKey='disabled'
+            id='user-filter-by-disabled'
             onSelect={(key,e) => this.handleSelect('Disabled', 'enabled', false, e)}
             disabled={this.props.currentFilter === 'Disabled'}>
             Disabled
           </MenuItem>
           <MenuItem
             eventKey='not.activated'
+            id='user-filter-by-not-activated'
             onSelect={(key,e) => this.handleSelect('Not-activated', 'meta.activate', false, e)}
             disabled={this.props.currentFilter === 'Not-activated'}>
             Not-activated
