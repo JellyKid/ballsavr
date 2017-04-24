@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import EditUserForm from './EditUserForm';
 import FindUserTypeahead from './FindUserTypeahead';
+import UserFilterButtons from './UserFilterButtons';
 
 class EditUsers extends React.Component {
   constructor(props) {
@@ -13,11 +14,18 @@ class EditUsers extends React.Component {
     this.state = {
       user : null,
       maxUsersShown : 5,
-      currentPage : 0
+      currentPage : 0,
+      filter: {
+        name: 'All',
+        path: '',
+        bool: true
+      }
     };
     this.handleGet = handleGet.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
+    this.setFilter = this.setFilter.bind(this);
+    this.filterUsers = this.filterUsers.bind(this);
   }
 
   componentDidMount(){
@@ -25,6 +33,25 @@ class EditUsers extends React.Component {
       '/api/admin/users',
       setUsers
     );
+  }
+
+  setFilter(name, path, bool){
+    this.setState({
+      filter: {
+        name: name,
+        path: path,
+        bool: bool
+      }
+    });
+  }
+
+  filterUsers(user){
+    if(this.state.filter.name === 'All'){
+      return user;
+    }
+    if(user[this.state.filter.path] === this.state.filter.bool){
+      return user;
+    }
   }
 
   handlePrevious(){
@@ -55,6 +82,7 @@ class EditUsers extends React.Component {
 
   render(){
     const users = this.props.users
+      .filter(this.filterUsers)
       .slice(
         this.state.currentPage * this.state.maxUsersShown,
         this.state.currentPage * this.state.maxUsersShown + this.state.maxUsersShown
@@ -112,6 +140,7 @@ class EditUsers extends React.Component {
         {inviteUserButton}
         <hr />
         <div className="mBottom">{finduser}</div>
+        <UserFilterButtons currentFilter={this.state.filter.name} setFilter={this.setFilter} />
         {userList}
       </div>
     );
