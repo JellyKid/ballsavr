@@ -27,7 +27,7 @@ function checkAuthentication(nextState, replace, done) {
       if(res.status === 202){
         replace('/setup');
       }
-      if(res.status === 401){
+      if(res.status != 200){
         replace('/login');
       }
       if(res.user){

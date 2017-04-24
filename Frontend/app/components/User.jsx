@@ -7,6 +7,7 @@ import { Alert, Grid, Col, Image } from 'react-bootstrap';
 import { clearMessage } from '../redux/actions';
 import logoImage from '../assets/logo.png';
 import UpcomingEvents from './user/UpcomingEvents';
+import Disabled from './Disabled';
 
 class User extends React.Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class User extends React.Component {
     this.props.dispatch(clearMessage(index));
   }
   render(){
+    if(!this.props.user.enabled || !this.props.user.meta.activated){
+      return <Disabled />;
+    }
+
     const messages = this.props.messages.map(
       (message, index) => (
         <Alert bsStyle={message.style} onDismiss={() => this.dismissAlert(index)} key={index}>
@@ -40,7 +45,9 @@ class User extends React.Component {
       </Grid>
     );
 
+
     let view = this.props.children;
+
     if(!view){
       view = (
         <div>
