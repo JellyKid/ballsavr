@@ -40,6 +40,10 @@ passport.use(new strategy(
             accessToken: accessToken,
             profileUrl: profile.profileUrl,
             photos: profile.photos
+          },
+          meta: {
+            activated: true,
+            authType: 'facebook'
           }
         });
         user.save(
