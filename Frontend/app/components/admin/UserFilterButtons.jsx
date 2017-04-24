@@ -39,7 +39,7 @@ export default class UserFilterButtons extends React.Component {
           <MenuItem
             eventKey='not.activated'
             id='user-filter-by-not-activated'
-            onSelect={(key,e) => this.handleSelect('Not-activated', 'meta.activate', false, e)}
+            onSelect={(key,e) => this.handleSelect('Not-activated', 'meta.activated', false, e)}
             disabled={this.props.currentFilter === 'Not-activated'}>
             Not-activated
           </MenuItem>

@@ -7,6 +7,7 @@ import { browserHistory } from 'react-router';
 import EditUserForm from './EditUserForm';
 import FindUserTypeahead from './FindUserTypeahead';
 import UserFilterButtons from './UserFilterButtons';
+import objectPath from 'object-path';
 
 class EditUsers extends React.Component {
   constructor(props) {
@@ -49,7 +50,8 @@ class EditUsers extends React.Component {
     if(this.state.filter.name === 'All'){
       return user;
     }
-    if(user[this.state.filter.path] === this.state.filter.bool){
+    console.log(user);
+    if(objectPath.get(user, this.state.filter.path) === this.state.filter.bool){
       return user;
     }
   }
