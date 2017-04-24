@@ -56,7 +56,11 @@ export default function handleFetch(method, url, data, action) {
         if(this){
           this.props.dispatch(addErrorMsg(`Error in GET response from ${url}, check logs for more info`));
         }
-        return console.error(`Error in GET response from ${url}`,err);
+        console.error(`Error in GET response from ${url}`,err);
+        return {
+          status: 500,
+          message: err
+        };
       }
     }
   );
