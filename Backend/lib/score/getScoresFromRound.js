@@ -4,8 +4,12 @@ function getScoresFromRound(req, res, next) {
   if(!req.query.id){
     return next();
   }
-  let player = req.query.user || req.user;
-  let paths = [];  
+
+  let query = req.query.user ?
+  {round: req.query.id, player: req.query.user} :
+  {round: req.query.id};  
+
+  let paths = [];
   if(!req.query.quick){
     paths.push(
       {path: 'player', select: 'firstName lastName'},
@@ -14,7 +18,7 @@ function getScoresFromRound(req, res, next) {
     );
   }
   return Score
-  .find({round: req.query.id, player: player})
+  .find(query)
   .populate(paths)
   .lean()
   .exec(
