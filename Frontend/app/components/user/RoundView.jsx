@@ -43,7 +43,7 @@ class RoundView extends React.Component {
 
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
-      handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick=true`)
+      handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}`)
     ];
     if(!this.props.round){
       fetches.push(handleFetch('GET', `/api/round/${this.props.params.roundID}`));
@@ -61,7 +61,7 @@ class RoundView extends React.Component {
   }
 
   refreshScores(){
-    handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}&quick=true`)
+    handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}`)
     .then(
       (res) => this.setState({scores: res.payload})
     ).catch((err) => {console.log(err);});
@@ -112,7 +112,7 @@ class RoundView extends React.Component {
     const tables = this.state.round.tables.map(
       (table) => {
         let match = this.state.scores.find(
-          (score) => score.table == table._id && score.player == this.props.player._id
+          (score) => score.table._id == table._id && score.player._id == this.props.player._id
         );
 
         let buttonContent = match ?
@@ -162,7 +162,7 @@ class RoundView extends React.Component {
           visible={this.state.submitData ? true : false}
           data={this.state.submitData}
           hideMe={() => this.setState({submitData:null})}
-          finishSubmit={() => this.setState({submitData: null},this.refreshScores)}
+          finishSubmit={() => this.setState({submitData: null})}
         />
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>

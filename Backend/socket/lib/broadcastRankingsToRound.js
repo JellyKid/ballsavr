@@ -11,6 +11,10 @@ module.exports = (round) => {
     (totals) => {
       Score
       .find({round: round})
+      .populate([
+        {path: 'player', select: 'firstName lastName'},        
+        {path: 'table', select: 'name'}
+      ])
       .lean()
       .exec(
         (err, scores) => {
