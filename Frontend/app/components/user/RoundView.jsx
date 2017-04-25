@@ -130,7 +130,7 @@ class RoundView extends React.Component {
               player: player,
               round: this.state.round
             }})}
-            bsSize="xsmall">
+            bsSize="small">
             {buttonContent}
           </Button>
         );
