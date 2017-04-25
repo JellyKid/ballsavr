@@ -49,8 +49,7 @@ class EditUsers extends React.Component {
   filterUsers(user){
     if(this.state.filter.name === 'All'){
       return user;
-    }
-    console.log(user);
+    }    
     if(objectPath.get(user, this.state.filter.path) === this.state.filter.bool){
       return user;
     }
