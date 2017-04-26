@@ -22,7 +22,7 @@ passport.use(new strategy(
              (err, verified) => {
                if(err) {return done(err);}
                if(verified){
-                 return done(null, user.id);
+                 return done(null, user);
                }
                return done(null, false);
              }
@@ -35,8 +35,8 @@ passport.use(new strategy(
   }
 ));
 
-passport.serializeUser((id, done) => {
-  done(null, id);
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
 passport.deserializeUser((serialized, done) => {

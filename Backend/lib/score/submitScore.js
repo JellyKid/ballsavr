@@ -1,11 +1,11 @@
 const Score = require('../../db/models/Score');
-const tallyTotals = require('./tallyTotals');
 
 module.exports = function (req, res, next) {
 
   if(!req.body.value || !req.body.round || !req.body.table){
     return next(new Error("Missing score, round or table"));
   }
+
 
   return Score.findOneAndUpdate(
     {
@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
       table: req.body.table,
       value: req.body.value,
       group: req.body.group || null,
-      confirmed: false
+      confirmed: req.user.admin ? true : false
     },
     {
       upsert: true,
@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
     },
     (err, doc) => {
       if(err){return next(err);}
-      if(doc)(tallyTotals(doc));
+      if(doc)(res.locals.score = doc);
       return next();
     }
   );

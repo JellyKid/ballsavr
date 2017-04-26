@@ -51,8 +51,15 @@ function tallyAndSaveTotals(round) {
   );
 }
 
-module.exports = (score) => {
+module.exports = (req, res, next) => {
+  if(!res.locals.score){return next();}
+  if(!res.locals.score.confirmed){
+    broadcastRankingsToRound(res.locals.score.round);
+    return next();
+  }
+  let score = res.locals.score;
   let round = score.round;
+  //this is async on purpose
   Score
   .find({
     group: score.group,
@@ -71,4 +78,5 @@ module.exports = (score) => {
   .catch(
     (err) => console.log(err)
   );
+  return next();
 };

@@ -4,6 +4,8 @@ const getTotalsByRoundID = require('./score/getTotalsByRoundID');
 const getScoresFromRound = require('./score/getScoresFromRound');
 const submitScore = require('./score/submitScore');
 const jsonParser = require('body-parser').json();
+const confirmScore = require('./score/confirmScore');
+const tallyAndPush = require('./score/tallyAndPush');
 
 router.all(
   '/score/*',
@@ -32,7 +34,15 @@ router.post(
   '/score',
   jsonParser,
   submitScore,
+  tallyAndPush,
   (req, res) => res.status(200).send({status: 200})
+);
+
+router.get(
+  '/score/confirm/:id',
+  confirmScore,
+  tallyAndPush,
+  (req, res) => res.status(200).send({status:200})
 );
 
 module.exports = router;

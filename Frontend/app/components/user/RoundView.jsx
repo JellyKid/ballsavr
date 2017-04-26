@@ -5,6 +5,7 @@ import browserHistory from 'react-router';
 import { connect } from 'react-redux';
 import SubmitScoreModal from './SubmitScoreModal';
 import NumberFormat from 'react-number-format';
+import ConfirmScores from '../admin/ConfirmScores';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -156,6 +157,9 @@ class RoundView extends React.Component {
       return p;
     }, []);
 
+    const confirm = this.props.player.admin ?
+    <ConfirmScores scores={this.state.scores} player={this.props.player}/> : null;
+
     return (
       <Grid>
         <SubmitScoreModal
@@ -184,6 +188,7 @@ class RoundView extends React.Component {
             <tbody>{tables}</tbody>
           </Table>
         </Col>
+        {confirm}
       </Grid>
     );
   }
