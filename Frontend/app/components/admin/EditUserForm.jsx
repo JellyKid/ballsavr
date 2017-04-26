@@ -151,7 +151,7 @@ class EditUserForm extends React.Component {
         <FormGroup>
           <Col sm={12}>
             <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Admin</Checkbox>
-            <Checkbox name="enabled" checked={this.state.form.enabled} onChange={this.handleCheck}>Enabled</Checkbox>
+            <Checkbox name="enabled" checked={this.state.form.enabled} onChange={this.handleCheck}>Enabled / Approved</Checkbox>
             <Checkbox name="scoreKeeper" checked={this.state.form.scoreKeeper} onChange={this.handleCheck}>Score Keeper</Checkbox>
             <h4>
               Updated : {
