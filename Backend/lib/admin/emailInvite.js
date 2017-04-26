@@ -26,8 +26,7 @@ function emailInvite(req, res, next) {
 
   var html = ejs.compile(read(template, 'utf8'), {filename: template})({user: res.locals.user, site: site, token: token});
 
-  if(/localhost/i.test(site.url)){ //for testing purposes, if site url is localhost don't sendmail, log HTML
-    console.log(html);
+  if(/localhost/i.test(site.url)){ //for testing purposes, if site url is localhost don't sendmail, log HTML    
     return next();
   }
 

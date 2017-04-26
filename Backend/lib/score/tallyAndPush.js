@@ -30,8 +30,7 @@ function tallyAndSaveTotals(round) {
     }
   )
   .then(
-    (results) => {
-      results.forEach((res) => {console.log(res);});
+    (results) => {      
       const promises = results.map(
         (res) => Total.findOneAndUpdate(
           {

@@ -16,10 +16,7 @@ passport.use(new strategy(
     profileFields: ['profileUrl', 'displayName', 'name', 'picture'],
     enableProof: true
   },
-  (accessToken, refreshToken, profile, done) => {
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(profile);
+  (accessToken, refreshToken, profile, done) => {    
     return User.findOneAndUpdate(
       {
         'facebook.id' : profile.id

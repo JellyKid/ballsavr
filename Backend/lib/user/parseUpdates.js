@@ -5,8 +5,7 @@ function parseUpdates(req, res, next) {
   if(!req.body){
     console.error("No body in post!");
     return next(new Error("No body in post!"));
-  }
-  console.log(req.body);
+  }  
   res.locals.user = req.body;
 
 
