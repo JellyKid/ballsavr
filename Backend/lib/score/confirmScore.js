@@ -1,7 +1,6 @@
 const Score = require('../../db/models/Score');
 
-module.exports = (req, res, next) => {
-  console.log(req.params);
+module.exports = (req, res, next) => {  
   if(!req.params.id || !req.user || (!req.user.scoreKeeper && !req.user.admin) ){
     return next(new Error("Missing param.id or user is not scorekeeper/admin"));
   }
@@ -21,7 +20,7 @@ module.exports = (req, res, next) => {
       return score.save({new: true});
     }
   )
-  .then((score) => {    
+  .then((score) => {
     res.locals.score = score;
     return next();
   })
