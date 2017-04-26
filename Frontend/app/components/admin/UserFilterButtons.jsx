@@ -34,7 +34,7 @@ export default class UserFilterButtons extends React.Component {
             id='user-filter-by-disabled'
             onSelect={(key,e) => this.handleSelect('Disabled', 'enabled', false, e)}
             disabled={this.props.currentFilter === 'Disabled'}>
-            Disabled
+            Disabled / Unapproved
           </MenuItem>
           <MenuItem
             eventKey='not.activated'
@@ -42,6 +42,13 @@ export default class UserFilterButtons extends React.Component {
             onSelect={(key,e) => this.handleSelect('Not Activated', 'meta.activated', false, e)}
             disabled={this.props.currentFilter === 'Not Activated'}>
             Not Activated
+          </MenuItem>
+          <MenuItem
+            eventKey='scoreKeeper'
+            id='user-filter-by-scoreKeeper'
+            onSelect={(key,e) => this.handleSelect('Score Keeper', 'scoreKeeper', true, e)}
+            disabled={this.props.currentFilter === 'Score Keeper'}>
+            Score Keeper
           </MenuItem>
         </DropdownButton>
       </ButtonGroup>
