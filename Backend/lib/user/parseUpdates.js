@@ -5,7 +5,7 @@ function parseUpdates(req, res, next) {
   if(!req.body){
     console.error("No body in post!");
     return next(new Error("No body in post!"));
-  }  
+  }
   res.locals.user = req.body;
 
 
@@ -17,7 +17,8 @@ function parseUpdates(req, res, next) {
         email: req.body.email,
         initials: req.body.initials,
         admin : req.body.admin,
-        enabled: req.body.enabled
+        enabled: req.body.enabled,
+        scoreKeeper: req.body.scoreKeeper
       }
     };
   } else if (req.user === req.body._id){
