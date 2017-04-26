@@ -18,7 +18,8 @@ class EditUserForm extends React.Component {
         initials : this.props.user.initials,
         score: this.props.user.score,
         admin : this.props.user.admin,
-        enabled: this.props.user.enabled
+        enabled: this.props.user.enabled,
+        scoreKeeper: this.props.user.scoreKeeper
       },
       lastModified: this.props.user.meta.updatedAt,
       submitDisabled : false,
@@ -151,6 +152,7 @@ class EditUserForm extends React.Component {
           <Col sm={12}>
             <Checkbox name="admin" checked={this.state.form.admin} onChange={this.handleCheck}>Admin</Checkbox>
             <Checkbox name="enabled" checked={this.state.form.enabled} onChange={this.handleCheck}>Enabled</Checkbox>
+            <Checkbox name="scoreKeeper" checked={this.state.form.scoreKeeper} onChange={this.handleCheck}>Score Keeper</Checkbox>
             <h4>
               Updated : {
                 new Date(this.state.lastModified).toLocaleString(
