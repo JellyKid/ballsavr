@@ -31,6 +31,7 @@ function tallyAndSaveTotals(round) {
   )
   .then(
     (results) => {
+      results.forEach((res) => {console.log(res);});
       const promises = results.map(
         (res) => Total.findOneAndUpdate(
           {
@@ -64,7 +65,8 @@ module.exports = (req, res, next) => {
   .find({
     group: score.group,
     round: score.round,
-    table: score.table
+    table: score.table,
+    confirmed: true
   })
   .then(
     (scores) => tallyAndSavePoints(scores, pa)
