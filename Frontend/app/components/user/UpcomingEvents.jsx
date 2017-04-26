@@ -8,10 +8,7 @@ import { setCurrentRounds } from '../../redux/actions';
 
 class UpcomingEvents extends React.Component {
   constructor(props) {
-    super(props);
-    // this.state = {
-    //   rounds: []
-    // };
+    super(props);  
   }
 
   componentDidMount(){
