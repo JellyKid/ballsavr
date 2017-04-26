@@ -15,6 +15,7 @@ const schema = new mongoose.Schema(
     },
     admin: {type: Boolean, default: false},
     enabled: {type: Boolean, default: false},
+    scoreKeeper: {type: Boolean, default: false},
     meta: {
       authType: {type: String, default: 'local'},
       activated: {type: Boolean, default: false},
