@@ -7,9 +7,14 @@ function parseUpdates(req, res, next) {
     return next(new Error("No body in post!"));
   }
   res.locals.user = req.body;
+  // console.log("user id", req.user._id);
+  // console.log("body id", req.body._id);
+  // console.log("match", req.user._id == req.body._id);
+  // console.log("user id type", typeof req.user._id);
+  // console.log("body id type", typeof req.body._id);
+  // console.log(req.user);
 
-
-  if(res.locals.currentUser.admin){
+  if(req.user.admin){
     res.locals.updates = {
       $set: {
         firstName: req.body.firstName, //Here are the fields that the admin can update themselves
@@ -21,7 +26,8 @@ function parseUpdates(req, res, next) {
         scoreKeeper: req.body.scoreKeeper
       }
     };
-  } else if (req.user === req.body._id){
+  } else if (req.user._id == req.body._id){//FOR SOME REASON user._id is an object and body._id is a string, WTF..... type casting here.... WTF?!?!?!?
+
     res.locals.updates = {
       $set: {
         firstName: req.body.firstName, //Here are the fields that the user can update themselves
@@ -31,6 +37,7 @@ function parseUpdates(req, res, next) {
       }
     };
   }
+
 
   return next();
 }

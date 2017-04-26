@@ -10,6 +10,10 @@ const getUserByToken = require('./db/getUserByToken');
 
 const register = require('./user/register');
 
+const jsonParser = require('body-parser').json();
+const updateUser = require('./db/updateUser');
+const parseUpdates = require('./user/parseUpdates');
+
 function formatFirstName(firstName) {
   return firstName.toLowerCase()
           .replace(
@@ -34,5 +38,14 @@ router.get(
   })
 );
 
+router.post(
+  '/user/profile',
+  jsonParser,
+  parseUpdates,
+  updateUser,
+  (req, res) => res.status(200).send({
+    status: 200
+  })
+);
 
 module.exports = router;

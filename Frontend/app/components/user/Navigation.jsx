@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, Glyphicon, Image } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import topLogo from '../../assets/top_logo.png';
+import { Link } from 'react-router';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Navigation extends React.Component {
             </a>
           </Navbar.Brand>
           <Navbar.Brand>
-            Welcome {this.props.initials}
+            <Link to='/profile'>Welcome {this.props.initials}</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

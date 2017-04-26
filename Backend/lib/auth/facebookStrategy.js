@@ -16,7 +16,7 @@ passport.use(new strategy(
     profileFields: ['profileUrl', 'displayName', 'name', 'picture'],
     enableProof: true
   },
-  (accessToken, refreshToken, profile, done) => {    
+  (accessToken, refreshToken, profile, done) => {
     return User.findOneAndUpdate(
       {
         'facebook.id' : profile.id
@@ -27,7 +27,7 @@ passport.use(new strategy(
     )
     .then(
       (found) => {
-        if(found){return done(null, found._id);}
+        if(found){return done(null, found);}
         let user = new User({
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
@@ -46,7 +46,7 @@ passport.use(new strategy(
         user.save(
           (err, doc) => {
             if(err){throw err;}
-            return done(null, doc._id);
+            return done(null, doc);
           }
         );
       }

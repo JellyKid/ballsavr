@@ -14,6 +14,7 @@ import Setup from './components/Setup';
 import Events from './components/Events';
 import EditEvent from './components/event/EditEvent';
 import RoundView from './components/user/RoundView';
+import EditProfile from './components/user/EditProfile';
 
 //ajax calls
 import handleFetch from './helpers/handleFetch';
@@ -53,6 +54,7 @@ function hookDispatch(dispatch){
         <Route path=":eventid"/>
       </Route>
       <Route path="round/:roundID" component={RoundView} />
+      <Route path="profile" component={EditProfile} />
     </Route>,
     <Route path="/setup" component={Setup} />,
     <Route path="/login" component={Login} />,
