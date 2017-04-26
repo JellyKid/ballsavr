@@ -24,7 +24,8 @@ module.exports = function (req, res, next) {
     {
       upsert: true,
       runValidators: true,
-      new: true
+      new: true,
+      setDefaultsOnInsert: true
     },
     (err, doc) => {
       if(err){return next(err);}
