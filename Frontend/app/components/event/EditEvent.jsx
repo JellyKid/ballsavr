@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Checkbox,
         ButtonToolbar, Button, Col, Well, Grid, Modal, Glyphicon,
-        ListGroup, ListGroupItem, Badge } from 'react-bootstrap';
+        ListGroup, ListGroupItem, Badge, ProgressBar } from 'react-bootstrap';
 import handleFetch from '../../helpers/handleFetch';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
@@ -91,6 +91,7 @@ class EditEvent extends React.Component {
           })}>
           <h4>{round.name} <small>{moment(round.start).format('MMM Do YY, h:mm a')}</small></h4>
           <p><Badge>{round.players.length}</Badge> players  <Badge>{round.tables.length}</Badge> tables</p>
+          <Badge>{`${round.progress}%`}</Badge><ProgressBar striped bsStyle="success" now={round.progress} />
         </ListGroupItem>
       );
     }).sort((a,b) => {
