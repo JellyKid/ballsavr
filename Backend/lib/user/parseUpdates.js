@@ -6,13 +6,7 @@ function parseUpdates(req, res, next) {
     console.error("No body in post!");
     return next(new Error("No body in post!"));
   }
-  res.locals.user = req.body;
-  // console.log("user id", req.user._id);
-  // console.log("body id", req.body._id);
-  // console.log("match", req.user._id == req.body._id);
-  // console.log("user id type", typeof req.user._id);
-  // console.log("body id type", typeof req.body._id);
-  // console.log(req.user);
+  res.locals.user = req.body;  
 
   if(req.user.admin){
     res.locals.updates = {
