@@ -79,17 +79,12 @@ class EditEvent extends React.Component {
       </Button>
     ) : null;
 
-
-
-    const roundIndex = this.state.currentRoundIndex === 0 ? 0
-        : this.state.currentRoundIndex || this.state.rounds.length;
-
     const rounds = this.state.rounds
-    .sort((a,b) => a.start <= b.start ? -1 : 1) //sort by date
     .map((round, i) => {
       return (
         <ListGroupItem
           key={i}
+          data-date={new Date(round.start)} //adding this stupid prop to sort after mapping
           onClick={()=>this.setState({
             currentRound: round,
             currentRoundIndex: i
@@ -98,6 +93,8 @@ class EditEvent extends React.Component {
           <p><Badge>{round.players.length}</Badge> players  <Badge>{round.tables.length}</Badge> tables</p>
         </ListGroupItem>
       );
+    }).sort((a,b) => {
+      return a.props['data-date'] <= b.props['data-date'] ? -1 : 1;
     });
 
     const roundList = rounds ? <ListGroup>{rounds}</ListGroup> : null;
@@ -153,7 +150,7 @@ class EditEvent extends React.Component {
               disabled={this.state.addDisabled}
               onClick={() => this.setState(
                 {
-                  currentRound: Object.assign({}, blankRound, {start: new Date(), name: `Round ${roundIndex + 1}`})
+                  currentRound: Object.assign({}, blankRound, {start: new Date(), name: `Round ${this.state.rounds.length + 1}`})
                 }
               )}>
               <Glyphicon glyph="plus" /> Add Round
@@ -206,22 +203,31 @@ class EditEvent extends React.Component {
 
     var view;
     if(this.state.currentRound){
+      //0 returns as false so we have to test for that first
+      let index = this.state.currentRoundIndex === 0 ? 0 : this.state.currentRoundIndex || this.state.rounds.length;
 
       view = (
         <EditRound
           round={this.state.currentRound}
-          // title={this.state.currentRound.title || `Round ${roundIndex + 1}`}
           handleSave={(round) => {
             this.setState(update(
               this.state,
               {
-                rounds: {$splice: [[roundIndex, 1, round]]},
+                rounds: {$splice: [[index, 1, round]]},
                 currentRoundIndex: {$set: null},
                 currentRound: {$set: null}
               }
             ));
           }}
           handleCancel={() => this.setState({currentRound: null, currentRoundIndex: null})}
+          handleDelete={() => this.setState(update(
+            this.state,
+            {
+              currentRound: {$set: null},
+              rounds: {$splice: [[index, 1]]},
+              currentRoundIndex: {$set: null}
+            }
+          ))}
         />
       );
     } else {
