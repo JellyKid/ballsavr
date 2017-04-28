@@ -6,6 +6,7 @@ const submitScore = require('./score/submitScore');
 const jsonParser = require('body-parser').json();
 const confirmScore = require('./score/confirmScore');
 const tallyAndPush = require('./score/tallyAndPush');
+const tallyProgress = require('./events/tallyProgress');
 
 router.all(
   '/score/*',
@@ -34,6 +35,7 @@ router.post(
   '/score',
   jsonParser,
   submitScore,
+  tallyProgress,
   tallyAndPush,
   (req, res) => res.status(200).send({status: 200})
 );
