@@ -152,14 +152,23 @@ class EditRound extends React.Component {
                 bsStyle="primary"
                 block
                 bsSize="large"
-                disabled={this.state.submitDisabled}>OK</Button>
+                disabled={this.state.submitDisabled}>
+                OK
+              </Button>
               <Button
-                onClick={() => this.props.handleCancel()}
+                onClick={this.props.handleCancel}
                 block
-                bsSize="large"
-              >Cancel</Button>
+                bsSize="large">
+                Cancel
+              </Button>
+              <Button
+                block
+                onClick={this.props.handleDelete}
+                bsStyle="danger"
+                bsSize="large">
+                Delete
+              </Button>
             </ButtonToolbar>
-
           </Col>
         </FormGroup>
       </Form>
