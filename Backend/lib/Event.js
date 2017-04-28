@@ -12,6 +12,7 @@ const updateEventWithRounds = require('./events/updateEventWithRounds');
 const saveTotals = require('./events/saveTotals');
 const deleteUnmatchedTotals = require('./events/deleteUnmatchedTotals');
 const getRoundByID = require('./events/getRoundByID');
+const deleteUnmatchedRounds = require('./events/deleteUnmatchedRounds');
 
 router.all(
   '/event/*',
@@ -23,6 +24,7 @@ router.post(
   jsonParser,
   saveEvent,
   saveRounds,
+  deleteUnmatchedRounds,
   updateEventWithRounds,
   saveTotals,
   deleteUnmatchedTotals,
