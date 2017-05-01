@@ -1,27 +1,10 @@
-const Total = require('../../db/models/Total');
+const getTotalsAndScoresForRound = require('../../lib/db/getTotalsAndScoresForRound');
 
-function getRankings(id) {
-  return Total
-  .find({round: id})
-  .populate({path: 'player', select: 'firstName lastName initials'})
-  .lean()
-  .exec(
-    (err, totals) => {
-      if(err){console.log(err);}
-      return totals || [];
-    }
-  );
-}
-
-const main = (namespace, socket, round ) => {
-  socket.on('get rankings', () => {
-    getRankings(round)
-    .then(
-      (rankings) => {socket.emit('rankings', {totals: rankings});}
-    )
-    .catch(
-      (err) => {console.log(err);}
-    );
+const main = (namespace, socket, round) => {
+  socket.on('refresh', () => {
+    getTotalsAndScoresForRound(round)
+    .then((stats) => socket.emit('rankings', stats))
+    .catch((err) => console.log(err));
   });
 };
 
