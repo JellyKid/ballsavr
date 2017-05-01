@@ -8,7 +8,8 @@ const schema = new mongoose.Schema(
     group: String,
     points: {type: Number, default: 0},
     value: {type: Number, default: 0},
-    confirmed: {type: Boolean, default: false}
+    confirmed: {type: Boolean, default: false},
+    confirmedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
   },
   {
     timestamps: {
