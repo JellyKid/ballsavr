@@ -179,9 +179,9 @@ class RoundView extends React.Component {
     const scoresLegend = (
       <div>
         <Col xs={1}><div className='red-block'></div></Col>
-        <Col xs={3}> Unconfirmed</Col>
+        <Col xs={5}> Unconfirmed</Col>
         <Col xs={1}><div className='green-block'></div></Col>
-        <Col xs={3}> Confirmed</Col>
+        <Col xs={5}> Confirmed</Col>
       </div>
     );
 
