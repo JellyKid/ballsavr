@@ -102,3 +102,15 @@ h1 small {
 .score-modal-body{
   justify-content: center;
 }
+
+.red-block{
+  background-color: #d9534f;
+  width: 15px;
+  height: 15px;
+}
+
+.green-block{
+  background-color: #449d44;
+  width: 15px;
+  height: 15px;
+}
