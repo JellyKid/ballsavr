@@ -7,16 +7,18 @@ module.exports = (req, res, next) => {
   let round = res.locals.score.round;
 
   Score
-  .count({round: round})
+  .count({round: round, confirmed: true})
   .then(
     (count) => Round.findById(round)
     .then(
       (doc) => {
-        doc.set('currentProgress', count);
+        let progress = Math.floor((count/(doc.tables.length * doc.players.length))*100);
+        doc.set('progress', progress);        
         return doc.save();
       }
     )
   )
-  .then(() => next())
   .catch((err) => next(err));
+
+  return next();
 };

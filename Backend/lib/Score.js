@@ -43,6 +43,7 @@ router.post(
 router.get(
   '/score/confirm/:id',
   confirmScore,
+  tallyProgress,
   tallyAndPush,
   (req, res) => res.status(200).send({status:200})
 );
