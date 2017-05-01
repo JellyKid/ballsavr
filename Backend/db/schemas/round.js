@@ -25,10 +25,4 @@ const schema = new mongoose.Schema(
   }
 );
 
-schema.virtual('currentProgress').set(
-  function(numerator){
-    this.progress = Math.floor((numerator/(this.players.length*this.tables.length))*100);
-  }
-);
-
 module.exports = schema;
