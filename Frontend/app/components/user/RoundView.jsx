@@ -134,6 +134,10 @@ class RoundView extends React.Component {
           /> :
           <div><Glyphicon glyph="camera" /> submit</div>;
 
+        let disableButton = !this.props.player.admin && match && match.confirmed;
+
+        let buttonStyle = !match ? 'default' : match.confirmed ? 'success' : 'danger';
+
         const submitButton = (
           <Button
             onClick={() => this.setState({submitData:{
@@ -141,6 +145,8 @@ class RoundView extends React.Component {
               player: player,
               round: this.state.round
             }})}
+            disabled={disableButton}
+            bsStyle={buttonStyle}
             bsSize="small">
             {buttonContent}
           </Button>
@@ -170,6 +176,15 @@ class RoundView extends React.Component {
     const confirm = this.props.player.admin ?
     <ConfirmScores scores={this.state.scores} player={this.props.player}/> : null;
 
+    const scoresLegend = (
+      <div>
+        <Col xs={1}><div className='red-block'></div></Col>
+        <Col xs={3}> Unconfirmed</Col>
+        <Col xs={1}><div className='green-block'></div></Col>
+        <Col xs={3}> Confirmed</Col>
+      </div>
+    );
+
     return (
       <Grid>
         <SubmitScoreModal
@@ -197,6 +212,7 @@ class RoundView extends React.Component {
             </thead>
             <tbody>{tables}</tbody>
           </Table>
+          {scoresLegend}
         </Col>
         {confirm}
       </Grid>
