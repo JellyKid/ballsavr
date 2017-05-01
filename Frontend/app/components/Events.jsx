@@ -46,18 +46,23 @@ class Events extends React.Component {
     }
 
     const events = this.props.events.map(
-      (event) => (
-        <ListGroupItem
-          className="mBottom"
-          onClick={() => this.setState(
-            {event: event},
-            () => browserHistory.push(`/events/edit`)
-          )}
-          key={event._id}>
-          <h3>{event.title} <Label>{event.rounds.length} Rounds</Label></h3>
-          <Badge>{`${event.progress}%`}</Badge><ProgressBar striped bsStyle="success" now={event.progress} />
-        </ListGroupItem>
-      )
+      (event) => {
+
+        let progress = event.rounds.reduce((p, c) => p + c.progress,0) / event.rounds.length;
+
+        return (
+          <ListGroupItem
+            className="mBottom"
+            onClick={() => this.setState(
+              {event: event},
+              () => browserHistory.push(`/events/edit`)
+            )}
+            key={event._id}>
+            <h3>{event.title} <Label>{event.rounds.length} Rounds</Label></h3>
+            <Badge>{`${progress}%`}</Badge><ProgressBar striped bsStyle="success" now={progress} />
+          </ListGroupItem>
+        );
+      }
     );
 
     const eventGroup = events.length > 0 ? (
