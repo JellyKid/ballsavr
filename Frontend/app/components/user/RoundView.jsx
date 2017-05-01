@@ -1,6 +1,6 @@
 import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
-import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon } from 'react-bootstrap';
+import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon, Clearfix } from 'react-bootstrap';
 import browserHistory from 'react-router';
 import { connect } from 'react-redux';
 import SubmitScoreModal from './SubmitScoreModal';
@@ -214,6 +214,7 @@ class RoundView extends React.Component {
           </Table>
           {scoresLegend}
         </Col>
+        <Clearfix/>
         {confirm}
       </Grid>
     );
