@@ -32,16 +32,7 @@ class RoundView extends React.Component {
   }
 
   componentDidMount(){
-    socket.open();
-    socket.emit('join round', this.props.params.roundID);
-    socket.on(
-      'rankings',
-      (payload) => this.setState({
-        totals: payload.totals,
-        scores: payload.scores
-      })
-    );
-
+    this.handleSocket();
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
       handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}`)
@@ -59,6 +50,25 @@ class RoundView extends React.Component {
         });
       }
     ).catch((err) => {console.log(err);});
+  }
+
+  handleSocket(){
+    socket.open();
+    socket.on(
+      'connect',
+      () => socket.emit('join round', this.props.params.roundID)
+    );
+    socket.on(
+      'rankings',
+      (payload) => this.setState({
+        totals: payload.totals,
+        scores: payload.scores
+      })
+    );
+    socket.on(
+      'connect_error',
+      () => setTimeout(socket.open, 1000)
+    );
   }
 
   refreshScores(){
