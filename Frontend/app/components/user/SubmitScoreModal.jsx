@@ -14,6 +14,12 @@ class SubmitScoreModal extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps){ 
+    this.setState({
+      score: nextProps.data ? nextProps.data.score : 0
+    });
+  }
+
   handleChange(e, value){
     let submitDisabled = value.length === 0 ? true : false;
     this.setState(
@@ -39,14 +45,14 @@ class SubmitScoreModal extends React.Component {
     .then(
       () => {
         this.setState({score: "", submitDisabled: false});
-        this.props.finishSubmit();
+        this.props.hideMe();
       }
     )
     .catch(
       (err) => {
         console.log(err);
         this.setState({score: "", submitDisabled: false});
-        this.props.finishSubmit();
+        this.props.hideMe();
       }
     );
   }
