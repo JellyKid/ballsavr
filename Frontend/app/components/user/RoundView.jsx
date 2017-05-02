@@ -1,11 +1,12 @@
 import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
-import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon, Clearfix } from 'react-bootstrap';
+import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon, Clearfix, ProgressBar, Row, Label } from 'react-bootstrap';
 import browserHistory from 'react-router';
 import { connect } from 'react-redux';
 import SubmitScoreModal from './SubmitScoreModal';
 import NumberFormat from 'react-number-format';
 import ConfirmScores from '../admin/ConfirmScores';
+import update from 'immutability-helper';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -29,6 +30,7 @@ class RoundView extends React.Component {
     };
 
     this.refreshScores = this.refreshScores.bind(this);
+    this.updateRoundProgress = this.updateRoundProgress.bind(this);
   }
 
   componentDidMount(){
@@ -63,12 +65,23 @@ class RoundView extends React.Component {
       (payload) => this.setState({
         totals: payload.totals,
         scores: payload.scores
-      })
+      },this.updateRoundProgress)
     );
     socket.on(
       'connect_error',
       () => setTimeout(socket.open, 1000)
     );
+  }
+
+  updateRoundProgress(){
+    if(this.props.player.admin){
+      let scores = this.state.scores.filter((score) => score.confirmed).length;
+      let progress = Math.floor((scores/(this.state.round.tables.length * this.state.round.players.length))*100);
+      return this.setState(update(
+        this.state,
+        {round: {progress : {$set: progress}}}
+      ));
+    }
   }
 
   refreshScores(){
@@ -185,6 +198,26 @@ class RoundView extends React.Component {
       </div>
     );
 
+    var manage = null;
+    if(this.props.player.admin){
+      let roundProgress = (
+        <div>
+          <h3>Round <Label>{this.state.round.progress}%</Label> Complete</h3>
+          <ProgressBar striped bsStyle="info" now={this.state.round.progress}/>
+        </div>
+      );
+
+      manage = (
+        <div>
+          <h2>Manage</h2>
+          <hr />
+          {roundProgress}
+        </div>
+      );
+    }
+
+
+
     return (
       <Grid>
         <SubmitScoreModal
@@ -213,9 +246,12 @@ class RoundView extends React.Component {
             <tbody>{tables}</tbody>
           </Table>
           {scoresLegend}
+          <Clearfix/>
+          <hr />
+          {confirm}
+          {manage}
         </Col>
-        <Clearfix/>
-        {confirm}
+
       </Grid>
     );
   }

@@ -62,11 +62,10 @@ export default class ConfirmScores extends React.Component {
 
     if(filtered.length === 0){
       return (
-        <Col md={6} mdOffset={3}>
+        <div>
           <h2>Approve</h2>
-          <hr/>
           <p>No scores awaiting approval!</p>
-        </Col>
+        </div>
       );
     }
 
@@ -92,10 +91,9 @@ export default class ConfirmScores extends React.Component {
     const popup = <Popup visible={this.state.score ? true : false} score={this.state.score} hideMe={() => this.setState({score: null})}/>;
 
     return (
-      <Col md={6} mdOffset={3}>
+      <div>
         {popup}
         <h2>Approve</h2>
-        <hr/>
         <Table striped style={{background: '#fff'}}>
           <thead>
             <tr>
@@ -107,7 +105,7 @@ export default class ConfirmScores extends React.Component {
           </thead>
           <tbody>{scores}</tbody>
         </Table>
-      </Col>
+      </div>
     );
   }
 }
