@@ -2,7 +2,7 @@ const Score = require('../../db/models/Score');
 const Round = require('../../db/models/Round');
 
 module.exports = (req, res, next) => {
-  if(!res.locals.score || !res.locals.score.confirmed){return next();}
+  if(!res.locals.score){return next();}
 
   let round = res.locals.score.round;
 
@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     .then(
       (doc) => {
         let progress = Math.floor((count/(doc.tables.length * doc.players.length))*100);
-        doc.set('progress', progress);        
+        doc.set('progress', progress);
         return doc.save();
       }
     )
