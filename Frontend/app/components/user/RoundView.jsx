@@ -26,11 +26,16 @@ class RoundView extends React.Component {
       },
       scores: [],
       totals: [],
-      submitData: null
+      submitData: null,
+      submitModal: {
+        data: null,
+        show: false
+      }
     };
 
     this.refreshScores = this.refreshScores.bind(this);
     this.updateRoundProgress = this.updateRoundProgress.bind(this);
+    this.hideSubmitModal = this.hideSubmitModal.bind(this);
   }
 
   componentDidMount(){
@@ -91,6 +96,15 @@ class RoundView extends React.Component {
     ).catch((err) => {console.log(err);});
   }
 
+  hideSubmitModal(){
+    this.setState({
+      submitModal: {
+        data: null,
+        show: false
+      }
+    });
+  }
+
   componentWillUnmount(){
     socket.close();
   }
@@ -147,18 +161,23 @@ class RoundView extends React.Component {
           /> :
           <div><Glyphicon glyph="camera" /> submit</div>;
 
-        let disableButton = !this.props.player.admin && match && match.confirmed;
+
 
         let buttonStyle = !match ? 'default' : match.confirmed ? 'success' : 'danger';
 
         const submitButton = (
           <Button
-            onClick={() => this.setState({submitData:{
-              table: table,
-              player: player,
-              round: this.state.round
-            }})}
-            disabled={disableButton}
+            onClick={() => this.setState({
+              submitModal: {
+                data: {
+                  table: table,
+                  player: player,
+                  round: this.state.round,
+                  score: match ? match.value : 0
+                },
+                show: true
+              }
+            })}
             bsStyle={buttonStyle}
             bsSize="small">
             {buttonContent}
@@ -186,7 +205,7 @@ class RoundView extends React.Component {
       return p;
     }, []);
 
-    const confirm = this.props.player.admin ?
+    const confirm = this.props.player.admin || this.props.player.scoreKeeper ?
     <ConfirmScores scores={this.state.scores} player={this.props.player}/> : null;
 
     const scoresLegend = (
@@ -221,10 +240,9 @@ class RoundView extends React.Component {
     return (
       <Grid>
         <SubmitScoreModal
-          visible={this.state.submitData ? true : false}
-          data={this.state.submitData}
-          hideMe={() => this.setState({submitData:null})}
-          finishSubmit={() => this.setState({submitData: null})}
+          visible={this.state.submitModal.show}
+          data={this.state.submitModal.data}
+          hideMe={this.hideSubmitModal}
         />
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>
