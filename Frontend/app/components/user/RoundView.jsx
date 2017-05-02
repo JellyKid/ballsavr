@@ -121,7 +121,7 @@ class RoundView extends React.Component {
       (total) => {
         if(total.value != lastValue){rank++;}
         let row = (
-          <tr key={total._id} >
+          <tr key={total._id} className='flipitrealgood'>
             <td>{rank}</td>
             <td>{`${total.player.firstName} ${total.player.lastName.charAt(0)}`}</td>
             <td>{total.player.initials}</td>
