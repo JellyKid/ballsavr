@@ -38,7 +38,7 @@ class User extends React.Component {
     ) : "";
 
     const logo = (
-      <Grid>
+      <Grid className="fadein">
         <Col sm={12} lg={8} lgOffset={2}>
           <Image src={logoImage} responsive />
         </Col>
