@@ -1,0 +1,97 @@
+.fadein {
+  animation-duration: 2s;
+  animation-name: fadein;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounceinright {
+  /*from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }*/
+
+  from {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+.bounceinright {
+  animation-name: bounceinright;
+  animation-duration: 0.7s;
+}
+
+
+@keyframes growToHeight {
+  from {
+    max-height: 0px;
+  }
+
+  to {
+    max-height: 1000px;
+  }
+}
+
+.growToHeight {
+  animation-name: growToHeight;
+  animation-timing-function: ease-out;
+  animation-duration: 2s;
+}
+
+
+@keyframes flipitrealgood {
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    animation-timing-function: ease-out;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 480deg);
+
+  }
+
+  90% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 340deg);
+  }
+
+  to {
+    transform: perspective(400px) rotate3d(1, 0, 0, 360deg);
+  }
+}
+
+.flipitrealgood {
+  backface-visibility: visible !important;
+  animation-name: flipitrealgood;
+  animation-duration: 1.4s;
+}
