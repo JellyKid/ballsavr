@@ -1,6 +1,6 @@
 const Score = require('../../db/models/Score');
 
-module.exports = (req, res, next) => {  
+module.exports = (req, res, next) => {
   if(!req.params.id || !req.user || (!req.user.scoreKeeper && !req.user.admin) ){
     return next(new Error("Missing param.id or user is not scorekeeper/admin"));
   }
@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
         throw "Scorekeeper cannot confirm own score, unless they are an admin";
       }
       score.set('confirmed', true);
+      score.set('confirmedBy', req.user._id);
       return score.save({new: true});
     }
   )
