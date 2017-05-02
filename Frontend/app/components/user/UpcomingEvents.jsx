@@ -26,7 +26,7 @@ class UpcomingEvents extends React.Component {
     .map(
       (round) => <Panel
         onClick={() => browserHistory.push(`/round/${round._id}`)}
-        className='bounceinright'
+        className='bounceinrightdelay'
         key={round._id}>
         <h3>{round.event.title} <Label>{round.name}</Label></h3>
         <h4>{moment(round.start).format("MMM Do 'YY, h:mm a")}</h4>
@@ -40,7 +40,7 @@ class UpcomingEvents extends React.Component {
     return (
       <Grid>
         <Col sm={12}>
-          <PageHeader><small>Current Events</small></PageHeader>
+          <PageHeader className="fadeindelay"><small>Current Events</small></PageHeader>
           {rounds}
         </Col>
       </Grid>

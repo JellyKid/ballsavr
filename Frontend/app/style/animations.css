@@ -38,6 +38,7 @@
 
   to {
     transform: none;
+    opacity: 1;
   }
 }
 
@@ -95,4 +96,20 @@
   /*backface-visibility: hidden !important;*/
   animation-name: flipitrealgood;
   animation-duration: 1.4s;
+}
+
+.fadeindelay {
+  opacity: 0;
+  animation-name: fadein;
+  animation-delay: 0.5s;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.bounceinrightdelay {
+  opacity: 0;
+  animation-name: bounceinright;
+  animation-delay: 0.5s;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
 }
