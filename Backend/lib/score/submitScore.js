@@ -18,6 +18,7 @@ module.exports = function (req, res, next) {
       player: req.user,
       table: req.body.table,
       value: req.body.value,
+      points: 0,      
       group: req.body.group || null,
       confirmed: false
     },
