@@ -8,7 +8,7 @@ import { setCurrentRounds } from '../../redux/actions';
 
 class UpcomingEvents extends React.Component {
   constructor(props) {
-    super(props);  
+    super(props);
   }
 
   componentDidMount(){
@@ -26,6 +26,7 @@ class UpcomingEvents extends React.Component {
     .map(
       (round) => <Panel
         onClick={() => browserHistory.push(`/round/${round._id}`)}
+        className='bounceinright'
         key={round._id}>
         <h3>{round.event.title} <Label>{round.name}</Label></h3>
         <h4>{moment(round.start).format("MMM Do 'YY, h:mm a")}</h4>
