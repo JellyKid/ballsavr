@@ -30,7 +30,7 @@ function tallyAndSaveTotals(round) {
     }
   )
   .then(
-    (results) => {      
+    (results) => {
       const promises = results.map(
         (res) => Total.findOneAndUpdate(
           {
@@ -52,11 +52,7 @@ function tallyAndSaveTotals(round) {
 }
 
 module.exports = (req, res, next) => {
-  if(!res.locals.score){return next();}
-  if(!res.locals.score.confirmed){
-    broadcastRankingsToRound(res.locals.score.round);
-    return next();
-  }
+  if(!res.locals.score){return next();}  
   let score = res.locals.score;
   let round = score.round;
   //this is async on purpose
