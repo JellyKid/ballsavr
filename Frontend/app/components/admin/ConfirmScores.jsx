@@ -57,7 +57,7 @@ export default class ConfirmScores extends React.Component {
 
     const filtered = this.props.scores
     .filter(
-      (score) => score.confirmed === false && score.player._id !== this.props.player._id
+      (score) => score.confirmed === false && (score.player._id !== this.props.player._id || this.props.player.admin)
     );
 
     if(filtered.length === 0){
