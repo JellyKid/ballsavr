@@ -9,7 +9,8 @@ const schema = new mongoose.Schema(
     points: {type: Number, default: 0},
     value: {type: Number, default: 0},
     confirmed: {type: Boolean, default: false},
-    confirmedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
+    confirmedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+    locked: {type: Boolean, default: false}
   },
   {
     timestamps: {
