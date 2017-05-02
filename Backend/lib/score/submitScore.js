@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
       table: req.body.table,
       value: req.body.value,
       group: req.body.group || null,
-      confirmed: req.user.admin ? true : false
+      confirmed: false
     },
     {
       upsert: true,
