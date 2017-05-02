@@ -92,6 +92,7 @@
 
 .flipitrealgood {
   backface-visibility: visible !important;
+  /*backface-visibility: hidden !important;*/
   animation-name: flipitrealgood;
   animation-duration: 1.4s;
 }

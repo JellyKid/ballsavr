@@ -114,3 +114,15 @@ h1 small {
   width: 15px;
   height: 15px;
 }
+
+.table-common>thead>tr{
+  background-color: rgb(255, 255, 255);
+}
+
+.table-common>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.table-common>tbody>tr:nth-of-type(even) {
+    background-color: rgb(255, 255, 255);
+}

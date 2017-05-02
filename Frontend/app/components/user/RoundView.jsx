@@ -134,7 +134,7 @@ class RoundView extends React.Component {
     );
 
     const stats = (
-      <Table striped style={{background: '#fff'}}>
+      <Table className='table-common' >
         <thead>
           <tr>
             <th>#</th>
