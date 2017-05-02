@@ -34,7 +34,7 @@ class UpcomingEvents extends React.Component {
     );
 
     if(rounds.length < 1){
-      rounds = <p>No upcoming events found!</p>;
+      rounds = <p className="fadeindelay">No upcoming events found!</p>;
     }
 
     return (
