@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, PageHeader, Button, Col, Modal } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-import handleFetch from '../../helpers/handleFetch';
+import handleFetch from '../../../helpers/handleFetch';
 
 class Popup extends React.Component {
   constructor(props) {

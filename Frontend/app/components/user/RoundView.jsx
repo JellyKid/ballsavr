@@ -2,12 +2,14 @@ import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
 import { Grid, Col, PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import ConfirmScores from '../admin/ConfirmScores';
 import update from 'immutability-helper';
+
+import ConfirmScores from './view/ConfirmScores';
 import Rankings from './view/Rankings';
 import Scores from './view/Scores';
 import Group from './view/Group';
 import Manage from './view/Manage';
+
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
