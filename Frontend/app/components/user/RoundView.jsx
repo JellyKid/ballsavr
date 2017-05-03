@@ -8,6 +8,7 @@ import ConfirmScores from '../admin/ConfirmScores';
 import update from 'immutability-helper';
 import Rankings from './view/Rankings';
 import Scores from './view/Scores';
+import Group from './view/Group';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -31,7 +32,6 @@ class RoundView extends React.Component {
 
     this.refreshScores = this.refreshScores.bind(this);
     this.updateRoundProgress = this.updateRoundProgress.bind(this);
-    this.hideSubmitModal = this.hideSubmitModal.bind(this);
   }
 
   componentDidMount(){
@@ -92,15 +92,6 @@ class RoundView extends React.Component {
     ).catch((err) => {console.log(err);});
   }
 
-  hideSubmitModal(){
-    this.setState({
-      submitModal: {
-        data: null,
-        show: false
-      }
-    });
-  }
-
   componentWillUnmount(){
     socket.close();
   }
@@ -108,18 +99,6 @@ class RoundView extends React.Component {
   render(){
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
-
-    const group = this.state.round.players.reduce((p, c) => {
-      if(c.group === groupName){
-        p.push(
-          <div key={c._id} className="group-player-token">{`${c.user.firstName} ${c.user.lastName.charAt(0)}`}</div>
-        );
-      }
-      return p;
-    }, []);
-
-    const confirm = this.props.player.admin || this.props.player.scoreKeeper ?
-    <ConfirmScores scores={this.state.scores} player={this.props.player}/> : null;
 
     var manage = null;
     if(this.props.player.admin){
@@ -144,16 +123,20 @@ class RoundView extends React.Component {
     return (
       <Grid>
         <Col md={6} mdOffset={3}>
-          <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>
+          <PageHeader>
+            {this.state.round.event.title}<br/><small>{this.state.round.name}</small>
+          </PageHeader>
           <Rankings
             totals={this.state.totals}
             players={this.state.round.players}
             player={this.props.player}
           />
-          <hr/>
-          <h2>{`Your Group - ${groupName}`}</h2>
-          <div>{group}</div>
-          <hr/>
+          <hr />
+          <Group
+            group={groupName}
+            players={this.state.round.players}
+          />
+          <hr />
           <Scores
             player={this.props.player}
             scores={this.state.scores}
@@ -161,10 +144,12 @@ class RoundView extends React.Component {
             group={groupName}
           />
           <hr />
-          {confirm}
+          <ConfirmScores
+            scores={this.state.scores}
+            player={this.props.player}
+          />
           {manage}
         </Col>
-
       </Grid>
     );
   }

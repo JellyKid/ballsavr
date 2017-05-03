@@ -21,7 +21,7 @@ class Popup extends React.Component {
   }
 
   render(){
-    if(!this.props.score){
+    if(!this.props.score || !this.props.player || (!this.props.player.admin && !this.props.player.scoreKeeper)){
       return null;
     }
 
