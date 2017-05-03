@@ -3,11 +3,11 @@ import handleFetch from '../../helpers/handleFetch';
 import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon, Clearfix, ProgressBar, Row, Label } from 'react-bootstrap';
 import browserHistory from 'react-router';
 import { connect } from 'react-redux';
-import SubmitScoreModal from './SubmitScoreModal';
 import NumberFormat from 'react-number-format';
 import ConfirmScores from '../admin/ConfirmScores';
 import update from 'immutability-helper';
 import Rankings from './view/Rankings';
+import Scores from './view/Scores';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -26,12 +26,7 @@ class RoundView extends React.Component {
         players: []
       },
       scores: [],
-      totals: [],
-      submitData: null,
-      submitModal: {
-        data: null,
-        show: false
-      }
+      totals: []
     };
 
     this.refreshScores = this.refreshScores.bind(this);
@@ -114,55 +109,6 @@ class RoundView extends React.Component {
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
 
-    const tables = this.state.round.tables.map(
-      (table) => {
-        let match = this.state.scores.find(
-          (score) => score.table._id == table._id && score.player._id == this.props.player._id
-        );
-
-        let buttonContent = match ?
-          <NumberFormat
-            value={match.value}
-            displayType={"text"}
-            thousandSeparator={true}
-          /> :
-          <div><Glyphicon glyph="camera" /> submit</div>;
-
-
-
-        let buttonStyle = !match ? 'default' : match.confirmed ? 'success' : 'danger';
-
-        const submitButton = (
-          <Button
-            onClick={() => this.setState({
-              submitModal: {
-                data: {
-                  table: table,
-                  player: player,
-                  round: this.state.round,
-                  score: match ? match.value : 0
-                },
-                show: true
-              }
-            })}
-            bsStyle={buttonStyle}
-            bsSize="small">
-            {buttonContent}
-          </Button>
-        );
-
-        let points = match ? match.points : 0;
-
-        return (
-          <tr key={table._id} >
-            <td>{table.name}</td>
-            <td>{points}</td>
-            <td>{submitButton}</td>
-          </tr>
-        );}
-    );
-
-
     const group = this.state.round.players.reduce((p, c) => {
       if(c.group === groupName){
         p.push(
@@ -174,15 +120,6 @@ class RoundView extends React.Component {
 
     const confirm = this.props.player.admin || this.props.player.scoreKeeper ?
     <ConfirmScores scores={this.state.scores} player={this.props.player}/> : null;
-
-    const scoresLegend = (
-      <div>
-        <Col xs={1}><div className='red-block'></div></Col>
-        <Col xs={4}> Unconfirmed</Col>
-        <Col xs={1}><div className='green-block'></div></Col>
-        <Col xs={4}> Confirmed</Col>
-      </div>
-    );
 
     var manage = null;
     if(this.props.player.admin){
@@ -206,15 +143,8 @@ class RoundView extends React.Component {
 
     return (
       <Grid>
-        <SubmitScoreModal
-          visible={this.state.submitModal.show}
-          data={this.state.submitModal.data}
-          hideMe={this.hideSubmitModal}
-        />
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>
-          {/* <h2>Rankings</h2>
-          {stats} */}
           <Rankings
             totals={this.state.totals}
             players={this.state.round.players}
@@ -224,19 +154,12 @@ class RoundView extends React.Component {
           <h2>{`Your Group - ${groupName}`}</h2>
           <div>{group}</div>
           <hr/>
-          <h2>{this.props.player.initials} Scores</h2>
-          <Table striped style={{background: '#fff'}}>
-            <thead>
-              <tr>
-                <th>Table</th>
-                <th>Points</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>{tables}</tbody>
-          </Table>
-          {scoresLegend}
-          <Clearfix/>
+          <Scores
+            player={this.props.player}
+            scores={this.state.scores}
+            round={this.state.round}
+            group={groupName}
+          />
           <hr />
           {confirm}
           {manage}

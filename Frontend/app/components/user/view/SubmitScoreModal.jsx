@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, ButtonToolbar, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import handleFetch from '../../helpers/handleFetch';
+import handleFetch from '../../../helpers/handleFetch';
 import NumberFormat from 'react-number-format';
 
 class SubmitScoreModal extends React.Component {
@@ -14,7 +14,7 @@ class SubmitScoreModal extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){ 
+  componentWillReceiveProps(nextProps){
     this.setState({
       score: nextProps.data ? nextProps.data.score : 0
     });
@@ -34,8 +34,8 @@ class SubmitScoreModal extends React.Component {
     e.preventDefault();
 
     let submitData = {
-      group: this.props.data.player.group,
-      player: this.props.data.player.user._id,
+      group: this.props.data.group,
+      player: this.props.data.player._id,
       round: this.props.data.round._id,
       table: this.props.data.table._id,
       value: this.state.score
@@ -57,13 +57,15 @@ class SubmitScoreModal extends React.Component {
     );
   }
   render(){
-    let header = this.props.data ? `${this.props.data.table.name} - ${this.props.data.round.name}` : "";
-    let initials = this.props.data ? this.props.data.player.user.initials : "";
+    if(!this.props.data){
+      return null;
+    }
+    let header = `${this.props.data.table.name} - ${this.props.data.round.name}`;
+    let initials = this.props.data.player.initials;
 
     const form = (
       <form onSubmit={this.handleSubmit}>
         <FormGroup>
-
           <NumberFormat
             className="score-input"
             value={this.state.score}
