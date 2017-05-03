@@ -26,8 +26,6 @@ export default class Group extends React.Component {
 
     return (
       <div>
-        {/* <h2>{`Your Group - ${this.props.group}`}</h2>
-        {playerTokens} */}
         <h2>Group</h2>
         <Panel header={title}>
           {playerTokens}
