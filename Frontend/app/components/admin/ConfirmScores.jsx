@@ -21,7 +21,7 @@ class Popup extends React.Component {
   }
 
   render(){
-    if(!this.props.score || !this.props.player || (!this.props.player.admin && !this.props.player.scoreKeeper)){
+    if(!this.props.score){
       return null;
     }
 
@@ -51,7 +51,7 @@ export default class ConfirmScores extends React.Component {
   }
   render(){
 
-    if(!this.props.scores){
+    if(!this.props.scores || !this.props.player || (!this.props.player.admin && !this.props.player.scoreKeeper)){
       return null;
     }
 
