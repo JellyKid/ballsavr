@@ -9,6 +9,7 @@ import update from 'immutability-helper';
 import Rankings from './view/Rankings';
 import Scores from './view/Scores';
 import Group from './view/Group';
+import Manage from './view/Manage';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -100,26 +101,6 @@ class RoundView extends React.Component {
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
 
-    var manage = null;
-    if(this.props.player.admin){
-      let roundProgress = (
-        <div>
-          <h3>Round <Label>{this.state.round.progress}%</Label> Complete</h3>
-          <ProgressBar striped bsStyle="info" now={this.state.round.progress}/>
-        </div>
-      );
-
-      manage = (
-        <div>
-          <h2>Manage</h2>
-          <hr />
-          {roundProgress}
-        </div>
-      );
-    }
-
-
-
     return (
       <Grid>
         <Col md={6} mdOffset={3}>
@@ -148,7 +129,11 @@ class RoundView extends React.Component {
             scores={this.state.scores}
             player={this.props.player}
           />
-          {manage}
+          <hr />
+          <Manage
+            round={this.state.round}
+            player={this.props.player}
+          />
         </Col>
       </Grid>
     );
