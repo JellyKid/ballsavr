@@ -1,4 +1,5 @@
 import React from 'react';
+import { Panel } from 'react-bootstrap';
 
 export default class Group extends React.Component {
   constructor(props) {
@@ -19,10 +20,18 @@ export default class Group extends React.Component {
       return p;
     }, []);
 
+    const title = (
+      <h3>{this.props.group}</h3>
+    );
+
     return (
       <div>
-        <h2>{`Your Group - ${this.props.group}`}</h2>
-        {playerTokens}
+        {/* <h2>{`Your Group - ${this.props.group}`}</h2>
+        {playerTokens} */}
+        <h2>Group</h2>
+        <Panel header={title}>
+          {playerTokens}
+        </Panel>
       </div>
     );
   }
