@@ -11,7 +11,7 @@ export default class Rankings extends React.Component {
     if(!this.props.totals || !this.props.players || !this.props.player){
       return null;
     }
-    
+
     let rank = 0;
     let lastValue = 0;
     const statRows = this.props.totals
@@ -19,8 +19,9 @@ export default class Rankings extends React.Component {
     .map(
       (total) => {
         if(total.value != lastValue){rank++;}
+        let style = total.player._id === this.props.player._id ? 'highlight-row flipitrealgood' : 'flipitrealgood';
         let row = (
-          <tr key={total._id} className='flipitrealgood'>
+          <tr key={total._id} className={style}>
             <td>{rank}</td>
             <td>{`${total.player.firstName} ${total.player.lastName.charAt(0)}`}</td>
             <td>{total.player.initials}</td>

@@ -126,3 +126,7 @@ h1 small {
 .table-common>tbody>tr:nth-of-type(even) {
     background-color: rgb(255, 255, 255);
 }
+
+.highlight-row{
+  background-color: rgb(255, 235, 90)!important
+}
