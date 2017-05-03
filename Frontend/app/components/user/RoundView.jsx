@@ -1,9 +1,7 @@
 import React from 'react';
 import handleFetch from '../../helpers/handleFetch';
-import { Grid, Col, PageHeader, Table, ListGroup, ListGroupItem, Button, Glyphicon, Clearfix, ProgressBar, Row, Label } from 'react-bootstrap';
-import browserHistory from 'react-router';
+import { Grid, Col, PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import NumberFormat from 'react-number-format';
 import ConfirmScores from '../admin/ConfirmScores';
 import update from 'immutability-helper';
 import Rankings from './view/Rankings';
