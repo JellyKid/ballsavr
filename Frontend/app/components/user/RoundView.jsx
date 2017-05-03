@@ -7,6 +7,7 @@ import SubmitScoreModal from './SubmitScoreModal';
 import NumberFormat from 'react-number-format';
 import ConfirmScores from '../admin/ConfirmScores';
 import update from 'immutability-helper';
+import Rankings from './view/Rankings';
 const socket = require('socket.io-client')('/round',{
   path: '/api/socket.io',
   autoConnect: false
@@ -113,40 +114,6 @@ class RoundView extends React.Component {
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
 
-    let rank = 0;
-    let lastValue = 0;
-    const statRows = this.state.totals
-    .sort((a,b) => b.value - a.value)
-    .map(
-      (total) => {
-        if(total.value != lastValue){rank++;}
-        let row = (
-          <tr key={total._id} className='flipitrealgood'>
-            <td>{rank}</td>
-            <td>{`${total.player.firstName} ${total.player.lastName.charAt(0)}`}</td>
-            <td>{total.player.initials}</td>
-            <td>{total.value}</td>
-          </tr>
-        );
-        lastValue = total.value;
-        return row;
-      }
-    );
-
-    const stats = (
-      <Table className='table-common' >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Initials</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>{statRows}</tbody>
-      </Table>
-    );
-
     const tables = this.state.round.tables.map(
       (table) => {
         let match = this.state.scores.find(
@@ -246,8 +213,13 @@ class RoundView extends React.Component {
         />
         <Col md={6} mdOffset={3}>
           <PageHeader>{this.state.round.event.title}<br/><small>{this.state.round.name}</small></PageHeader>
-          <h2>Rankings</h2>
-          {stats}
+          {/* <h2>Rankings</h2>
+          {stats} */}
+          <Rankings
+            totals={this.state.totals}
+            players={this.state.round.players}
+            player={this.props.player}
+          />
           <hr/>
           <h2>{`Your Group - ${groupName}`}</h2>
           <div>{group}</div>
