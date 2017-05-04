@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import FlipMove from 'react-flip-move';
 
 export default class Rankings extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class Rankings extends React.Component {
     .map(
       (total) => {
         if(total.value != lastValue){rank++;}
-        let style = total.player._id === this.props.player._id ? 'highlight-row flipitrealgood' : 'flipitrealgood';
+        let style = total.player._id === this.props.player._id ? 'highlight-row' : '';
         let row = (
           <tr key={total._id} className={style}>
             <td>{rank}</td>
@@ -33,6 +34,30 @@ export default class Rankings extends React.Component {
       }
     );
 
+    const flipitrealgood = {
+      from: {
+        transform: 'perspective(400px) rotate3d(1, 0, 0, 0deg)',
+        opacity: 0
+      },
+
+      '20%': {
+        opacity: 1
+      },
+
+      '40%': {
+        transform: 'perspective(400px) rotate3d(1, 0, 0, 480deg)'
+
+      },
+
+      '90%': {
+        transform: 'perspective(400px) rotate3d(1, 0, 0, 340deg)'
+      },
+
+      to: {
+        transform: 'perspective(400px) rotate3d(1, 0, 0, 360deg)'
+      }
+    };
+
     return (
       <div>
         <h2>Rankings</h2>
@@ -45,7 +70,14 @@ export default class Rankings extends React.Component {
               <th>Points</th>
             </tr>
           </thead>
-          <tbody>{statRows}</tbody>
+          <FlipMove
+            duration={600}
+            easing='ease-out'
+            enterAnimation={flipitrealgood}
+            staggerDurationBy={20}
+            typeName='tbody'>
+            {statRows}
+          </FlipMove>
         </Table>
       </div>
     );
