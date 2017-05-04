@@ -10,10 +10,7 @@ import Scores from './view/Scores';
 import Group from './view/Group';
 import Manage from './view/Manage';
 
-const socket = require('socket.io-client')('/round',{
-  path: '/api/socket.io',
-  autoConnect: false
-});
+import RoundViewSocket from './RoundViewSocket';
 
 class RoundView extends React.Component {
   constructor(props) {
@@ -36,7 +33,6 @@ class RoundView extends React.Component {
   }
 
   componentDidMount(){
-    this.handleSocket();
     let fetches = [
       handleFetch('GET',`/api/score/totals?round=${this.props.params.roundID}`),
       handleFetch('GET',`/api/score/round?id=${this.props.params.roundID}`)
@@ -54,25 +50,6 @@ class RoundView extends React.Component {
         });
       }
     ).catch((err) => {console.log(err);});
-  }
-
-  handleSocket(){
-    socket.open();
-    socket.on(
-      'connect',
-      () => socket.emit('join round', this.props.params.roundID)
-    );
-    socket.on(
-      'rankings',
-      (payload) => this.setState({
-        totals: payload.totals,
-        scores: payload.scores
-      },this.updateRoundProgress)
-    );
-    socket.on(
-      'connect_error',
-      () => setTimeout(socket.open, 1000)
-    );
   }
 
   updateRoundProgress(){
@@ -93,16 +70,16 @@ class RoundView extends React.Component {
     ).catch((err) => {console.log(err);});
   }
 
-  componentWillUnmount(){
-    socket.close();
-  }
-
   render(){
     let player = this.state.round.players.find((p) => p.user._id === this.props.player._id);
     let groupName = (player) ? player.group : "";
 
     return (
       <Grid>
+        <RoundViewSocket
+          round={this.props.params.roundID}
+          setRankings={(rankings) => this.setState(rankings, this.updateRoundProgress)}
+        />
         <Col md={6} mdOffset={3}>
           <PageHeader>
             {this.state.round.event.title}<br/><small>{this.state.round.name}</small>
