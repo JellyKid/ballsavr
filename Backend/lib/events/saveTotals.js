@@ -11,13 +11,16 @@ function saveTotals(req, res, next) {
     for (var j = 0; j < rounds[i].players.length; j++) {
       let total = {
         player: rounds[i].players[j].user,
-        group: rounds[i].players[j].group,
         round: rounds[i]._id
       };
       promises.push(
         Total.findOneAndUpdate(
           total,
-          total,
+          {
+            group: rounds[i].players[j].group,
+            player: rounds[i].players[j].user,
+            round: rounds[i]._id
+          },
           {
             new: true,
             upsert: true,
