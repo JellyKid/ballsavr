@@ -31,17 +31,7 @@ module.exports = (req, res, next) => {
 
   return Promise
   .all(promises)
-  .then(
-    (p) => {
-      res.locals.deleted = {
-        Rounds: p[0],
-        Totals: p[1],
-        Scores: p[2]
-      };
-      console.log(res.locals.deleted);
-      return next();
-    }
-  )
+  .then((p) => next())
   .catch(
     (err) => next(err)
   );
