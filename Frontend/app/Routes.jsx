@@ -25,10 +25,12 @@ import { setUser } from './redux/actions';
 function checkAuthentication(nextState, replace, done) {
   handleFetch('GET','/api/currentuser').then(
     (res) => {
+      console.log(res);
       if(res.status === 202){
+        console.log(nextState);
         replace('/setup');
       }
-      if(res.status != 200){
+      if(res.status !== 202 && res.status !== 200){
         replace('/login');
       }
       if(res.user){
