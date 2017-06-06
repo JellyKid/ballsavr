@@ -1,22 +1,35 @@
 const User = require('../../../db/models/User');
 
 function updateUser(req, res, next) {
-  if(!req.body){
-    return next('No body to parse with request');
+  var updates, id;
+
+  if(req.body){
+    updates = {
+      $set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        initials: req.body.initials,
+        admin : req.body.admin,
+        enabled: req.body.enabled,
+        scoreKeeper: req.body.scoreKeeper
+      }
+    };
+    id = req.body._id;
   }
-  var updates = {
-    $set: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      initials: req.body.initials,
-      admin : req.body.admin,
-      enabled: req.body.enabled,
-      scoreKeeper: req.body.scoreKeeper
-    }
-  };
+
+  if(res.locals.user && res.locals.user._id && res.locals.updates){
+    updates = res.locals.updates;
+    id = res.locals.user._id;
+  }
+
+  if(!id || !updates){
+    return next('ID or Updates missing');
+  }
+
+
   return User.findByIdAndUpdate(
-    req.body.user._id,
+    id,
     updates,
     {runValidators: true},
     (err, raw) => {

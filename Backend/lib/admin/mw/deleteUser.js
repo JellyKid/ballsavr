@@ -1,7 +1,6 @@
-const path = require('path');
-const User = require(path.normalize('../../../db/models/User'));
+const User = require('../../../db/models/User');
 
-function deleteUser(req, res, next) {
+module.exports = (req, res, next) => {
   return User.findOneAndRemove(
     {_id: req.params.id},
     (err, user) => {
@@ -18,6 +17,4 @@ function deleteUser(req, res, next) {
       );
     }
   );
-}
-
-module.exports = deleteUser;
+};

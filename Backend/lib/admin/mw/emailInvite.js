@@ -1,9 +1,9 @@
 const ejs = require('ejs');
 const read = require('fs').readFileSync;
 const join = require('path').join;
-const template = join(__dirname, '../../invitation.ejs');
+const template = join(__dirname, '../../../invitation.ejs');
 
-const env = join(__dirname, '../../../.env');
+const env = join(__dirname, '../../../../.env');
 const site = require('habitat').load(env).get('SITE');
 const mail = require('habitat').load(env).get('MAIL');
 
@@ -26,7 +26,7 @@ function emailInvite(req, res, next) {
 
   var html = ejs.compile(read(template, 'utf8'), {filename: template})({user: res.locals.user, site: site, token: token});
 
-  if(/localhost/i.test(site.url)){ //for testing purposes, if site url is localhost don't sendmail, log HTML    
+  if(/localhost/i.test(site.url)){ //for testing purposes, if site url is localhost don't sendmail, log HTML
     return next();
   }
 

@@ -5,8 +5,8 @@ const login = require('./auth/login');
 const noUsersCheck = require('./user/noUsersCheck');
 const getUserByToken = require('./db/getUserByToken');
 const register = require('./user/register');
-const inviteUser = require('./admin/inviteUser');
-const addUser = require('./db/addUser');
+
+// const addUser = require('./db/addUser');
 const hashPassword = require('./auth/hash');
 const updateUser = require('./db/updateUser');
 const jsonParser = require('body-parser').json();
@@ -64,7 +64,7 @@ router.post(
     if(res.locals.nousers){return next();}
     return res.sendStatus(401);
   },
-  addUser,
+  // addUser,
   hashPassword,
   createFirstUserUpdates,
   updateUser,

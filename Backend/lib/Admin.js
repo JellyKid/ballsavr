@@ -1,13 +1,7 @@
 const router = require('express').Router();
-const getCurrentUser = require('./db/getCurrentUser');
-const isAdmin = require('./auth/isAdmin');
-const updateTablesFromIPDB = require('./admin/updateTablesFromIPDB');
 const getUsers = require('./db/getUsers');
-const parseUpdates = require('./user/parseUpdates');
-const updateUser = require('./db/updateUser');
-const jsonParser = require('body-parser').json();
 const parseForm = require('multer')().none();
-// const Admin = require('./admin/index');
+const Admin = require('./admin/index');
 
 
 router.all(
@@ -17,7 +11,10 @@ router.all(
 
 router.post(
   '/admin/invite',
-  Admin.inviteUser,
+  parseForm,
+  Admin.addUser,
+  Admin.emailInvite,
+  Admin.updateUser,
   (req,res) => res.status(200).send({
     status: 200,
     message: `Invitation sent to ${res.locals.user.email}`,
@@ -27,7 +24,7 @@ router.post(
 
 router.get(
   '/admin/syncIPDB',
-  updateTablesFromIPDB,
+  Admin.syncTables,
   (req,res) => res.status(200).send({
     status: 200,
     message: `${res.locals.tables.length} tables updated from IPDB`,
@@ -48,8 +45,7 @@ router.get(
 router.post(
   '/admin/user',
   parseForm,
-  parseUpdates,
-  updateUser,
+  Admin.updateUser,
   (req, res) => res.status(200).send({
     status: 200
   })

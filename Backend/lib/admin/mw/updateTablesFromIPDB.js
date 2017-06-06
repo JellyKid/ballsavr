@@ -1,7 +1,5 @@
-const path = require('path');
 const router = require('express').Router();
-
-const updateTablesDB = require(path.normalize('../db/updateTables'));
+const updateTablesDB = require('../../db/updateTables');
 
 const fetch = require('node-fetch');
 const jsdom = require('jsdom');
