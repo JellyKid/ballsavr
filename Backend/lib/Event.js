@@ -13,6 +13,7 @@ const saveTotals = require('./events/saveTotals');
 const deleteUnmatchedTotals = require('./events/deleteUnmatchedTotals');
 const getRoundByID = require('./events/getRoundByID');
 const deleteUnmatchedRounds = require('./events/deleteUnmatchedRounds');
+const currentRounds = require('./events/currentRounds');
 
 router.all(
   '/event/*',
@@ -66,7 +67,8 @@ router.delete(
 
 router.get(
   '/rounds/current',
-  currentRoundsByUser,
+  //currentRoundsByUser,
+  currentRounds,
   (req,res) => res.status(200).send(
     {
       status:200,
