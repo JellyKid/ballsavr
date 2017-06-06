@@ -1,24 +1,23 @@
 const router = require('express').Router();
 const getCurrentUser = require('./db/getCurrentUser');
 const isAdmin = require('./auth/isAdmin');
-const inviteUser = require('./admin/inviteUser');
-const deleteUser = require('./admin/deleteUser');
 const updateTablesFromIPDB = require('./admin/updateTablesFromIPDB');
 const getUsers = require('./db/getUsers');
 const parseUpdates = require('./user/parseUpdates');
 const updateUser = require('./db/updateUser');
 const jsonParser = require('body-parser').json();
 const parseForm = require('multer')().none();
+// const Admin = require('./admin/index');
+
 
 router.all(
   '/admin/*',
-  getCurrentUser,
-  isAdmin
+  Admin.check
 );
 
 router.post(
   '/admin/invite',
-  inviteUser,
+  Admin.inviteUser,
   (req,res) => res.status(200).send({
     status: 200,
     message: `Invitation sent to ${res.locals.user.email}`,
@@ -58,7 +57,7 @@ router.post(
 
 router.delete(
   '/admin/user/:id',
-  deleteUser,
+  Admin.deleteUser,
   (req, res) => res.status(200).send({
     status: 200,
     message: `User ${res.locals.user.firstName + res.locals.user.lastName} deleted succesfully`
